@@ -1,13 +1,13 @@
 <script setup lang="ts">
 useHead({
-  title: 'MemoryGame — Cross-Modal Memory Training',
+  title: 'Memojo — Cross-Modal Memory Training',
 })
 </script>
 
 <template>
   <div class="flex flex-col items-center gap-8 py-12 text-center">
     <h1 class="text-5xl font-bold tracking-tight">
-      Memory<span class="text-primary-500">Game</span>
+      Memojo
     </h1>
     <p class="max-w-md text-lg text-surface-700">
       Match images to words. Train your memory with cross-modal matching across
