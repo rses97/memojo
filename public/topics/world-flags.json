@@ -1,0 +1,17 @@
+{
+  "topic": "world-flags",
+  "name": "World Flags",
+  "description": "Match country flags to their names",
+  "pairs": [
+    { "id": "ua", "image": "/img/flags/ua.webp", "text": "Ukraine", "hint": "Eastern Europe" },
+    { "id": "jp", "image": "/img/flags/jp.webp", "text": "Japan", "hint": "East Asia" },
+    { "id": "br", "image": "/img/flags/br.webp", "text": "Brazil", "hint": "South America" },
+    { "id": "ca", "image": "/img/flags/ca.webp", "text": "Canada", "hint": "North America" },
+    { "id": "fr", "image": "/img/flags/fr.webp", "text": "France", "hint": "Western Europe" },
+    { "id": "au", "image": "/img/flags/au.webp", "text": "Australia", "hint": "Oceania" },
+    { "id": "ke", "image": "/img/flags/ke.webp", "text": "Kenya", "hint": "East Africa" },
+    { "id": "mx", "image": "/img/flags/mx.webp", "text": "Mexico", "hint": "North America" },
+    { "id": "in", "image": "/img/flags/in.webp", "text": "India", "hint": "South Asia" },
+    { "id": "de", "image": "/img/flags/de.webp", "text": "Germany", "hint": "Central Europe" }
+  ]
+}
