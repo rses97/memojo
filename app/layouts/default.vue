@@ -3,7 +3,7 @@
     <header class="border-b border-surface-200 px-6 py-4">
       <div class="mx-auto flex max-w-4xl items-center justify-between">
         <NuxtLink to="/" class="text-xl font-bold text-primary-600">
-          MemoryGame
+          Memojo
         </NuxtLink>
       </div>
     </header>

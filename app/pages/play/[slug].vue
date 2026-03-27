@@ -55,7 +55,7 @@ watch(
 )
 
 useHead({
-  title: `Play ${topicPack.value.name} — MemoryGame`,
+  title: `Play ${topicPack.value.name} — Memojo`,
 })
 
 startGame()
