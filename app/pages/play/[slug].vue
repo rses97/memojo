@@ -15,7 +15,7 @@ if (error.value || !topicPack.value) {
   })
 }
 
-const level = LEVELS[0]
+const level = LEVELS[0]!
 const selectedPairs = topicPack.value.pairs.slice(0, level.pairs)
 
 const game = useGame()
