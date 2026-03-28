@@ -7,7 +7,7 @@ useHead({
 <template>
   <div class="flex flex-col items-center gap-8 py-12 text-center">
     <h1 class="text-5xl font-bold tracking-tight">
-      Memojo
+      Memo<span class="text-primary-500">jo</span>
     </h1>
     <p class="max-w-md text-lg text-surface-700">
       Match images to words. Train your memory with cross-modal matching across

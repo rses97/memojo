@@ -8,6 +8,8 @@ export function useTimer() {
   const isExpired = ref(false)
 
   let initialTime = 0
+  let startedAt = 0
+  let startRemaining = 0
   let intervalId: ReturnType<typeof setInterval> | null = null
   let onExpireCallback: (() => void) | undefined
 
@@ -26,16 +28,19 @@ export function useTimer() {
     if (isRunning.value || isExpired.value) return
 
     isRunning.value = true
+    startedAt = performance.now()
+    startRemaining = remaining.value
+
     intervalId = setInterval(() => {
-      remaining.value--
+      const secondsElapsed = Math.floor((performance.now() - startedAt) / 1000)
+      remaining.value = Math.max(0, startRemaining - secondsElapsed)
 
       if (remaining.value <= 0) {
-        remaining.value = 0
         stop()
         isExpired.value = true
         onExpireCallback?.()
       }
-    }, 1000)
+    }, 250)
   }
 
   function pause() {
