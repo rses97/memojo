@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { formatTime } from '~/utils/time'
+
 defineProps<{
   moves: number
   matchedPairs: number
@@ -30,7 +32,7 @@ defineProps<{
         class="text-2xl font-bold tabular-nums"
         :class="{ 'text-danger': timeRemaining <= 10 }"
       >
-        {{ Math.floor(timeRemaining / 60) }}:{{ String(timeRemaining % 60).padStart(2, '0') }}
+        {{ formatTime(timeRemaining) }}
       </div>
     </div>
   </div>
