@@ -7,6 +7,10 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  routeRules: {
+    '/play/**': { ssr: false },
+  },
+
   css: ['~/assets/css/main.css'],
 
   modules: [
