@@ -44,6 +44,8 @@ export function useGame() {
     const card = cards.value.find(c => c.id === cardId)
     if (!card || card.isFlipped || card.isMatched) return
 
+    // Mutating card objects directly is intentional: readonly(cards) prevents ref reassignment
+    // but not object property mutation. flipCard is the sole intended mutation path.
     card.isFlipped = true
     flippedCards.value.push(card)
 
