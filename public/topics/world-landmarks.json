@@ -1,0 +1,17 @@
+{
+  "topic": "world-landmarks",
+  "name": "World Landmarks",
+  "description": "Match famous landmarks to their names",
+  "pairs": [
+    { "id": "statue-of-liberty", "image": "/img/landmarks/statue-of-liberty.svg", "text": "Statue of Liberty", "hint": "New York, USA" },
+    { "id": "mount-fuji", "image": "/img/landmarks/mount-fuji.svg", "text": "Mount Fuji", "hint": "Japan's tallest peak" },
+    { "id": "moai", "image": "/img/landmarks/moai.svg", "text": "Moai", "hint": "Easter Island, Chile" },
+    { "id": "tokyo-tower", "image": "/img/landmarks/tokyo-tower.svg", "text": "Tokyo Tower", "hint": "Tokyo, Japan" },
+    { "id": "european-castle", "image": "/img/landmarks/european-castle.svg", "text": "European Castle", "hint": "Medieval fortress" },
+    { "id": "japanese-castle", "image": "/img/landmarks/japanese-castle.svg", "text": "Japanese Castle", "hint": "Feudal Japan" },
+    { "id": "eiffel-tower", "image": "/img/landmarks/eiffel-tower.svg", "text": "Eiffel Tower", "hint": "Paris, France" },
+    { "id": "pyramid", "image": "/img/landmarks/pyramid.svg", "text": "Great Pyramid", "hint": "Giza, Egypt" },
+    { "id": "lighthouse", "image": "/img/landmarks/lighthouse.svg", "text": "Lighthouse of Alexandria", "hint": "Ancient wonder" },
+    { "id": "classical-building", "image": "/img/landmarks/classical-building.svg", "text": "Classical Building", "hint": "Greco-Roman architecture" }
+  ]
+}
