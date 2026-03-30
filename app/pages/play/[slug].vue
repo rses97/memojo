@@ -5,8 +5,11 @@ import { calculateScore } from '~/utils/scoring'
 
 const route = useRoute()
 const slug = route.params.slug as string
+const { origin } = useRequestURL()
 
-const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`)
+const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`, {
+  baseURL: origin,
+})
 
 if (error.value || !topicPack.value) {
   throw createError({
@@ -18,7 +21,7 @@ if (error.value || !topicPack.value) {
 const level = LEVELS[0]!
 const selectedPairs = topicPack.value.pairs.slice(0, level.pairs)
 
-const { cards, moves, matchedPairs, totalPairs, streak, maxStreak, isComplete, init: initGame, flipCard, reset: resetGame } = useGame()
+const { cards, moves, matchedPairs, totalPairs, streak, maxStreak, isComplete, init: initGame, flipCard } = useGame()
 const { remaining, elapsed, init: initTimer, start: startTimer, pause: pauseTimer } = useTimer()
 
 const finalScore = ref<number | null>(null)
@@ -33,6 +36,7 @@ function startGame() {
 }
 
 function endGame() {
+  if (finalScore.value !== null) return
   pauseTimer()
   finalScore.value = calculateScore({
     moves: moves.value,
