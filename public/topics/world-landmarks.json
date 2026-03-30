@@ -11,7 +11,7 @@
     { "id": "japanese-castle", "image": "/img/landmarks/japanese-castle.svg", "text": "Japanese Castle", "hint": "Feudal Japan" },
     { "id": "eiffel-tower", "image": "/img/landmarks/eiffel-tower.svg", "text": "Eiffel Tower", "hint": "Paris, France" },
     { "id": "pyramid", "image": "/img/landmarks/pyramid.svg", "text": "Great Pyramid", "hint": "Giza, Egypt" },
-    { "id": "lighthouse-of-alexandria", "image": "/img/landmarks/lighthouse.svg", "text": "Lighthouse of Alexandria", "hint": "Ancient wonder" },
+    { "id": "lighthouse", "image": "/img/landmarks/lighthouse.svg", "text": "Lighthouse of Alexandria", "hint": "Ancient wonder" },
     { "id": "classical-building", "image": "/img/landmarks/classical-building.svg", "text": "Classical Building", "hint": "Greco-Roman architecture" }
   ]
 }
