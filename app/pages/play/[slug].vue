@@ -75,11 +75,22 @@ startGame()
       :time-remaining="remaining"
     />
 
-    <GameBoard
-      :cards="cards"
-      :grid-cols="level.gridCols"
-      @flip="flipCard"
-    />
+    <ClientOnly>
+      <GameBoard
+        :cards="cards"
+        :grid-cols="level.gridCols"
+        @flip="flipCard"
+      />
+      <template #fallback>
+        <div class="grid grid-cols-4 gap-3">
+          <div
+            v-for="n in level.pairs * 2"
+            :key="n"
+            class="aspect-[3/4] animate-pulse rounded-2xl bg-surface-200"
+          />
+        </div>
+      </template>
+    </ClientOnly>
 
     <div
       v-if="finalScore !== null"
