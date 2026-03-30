@@ -1,0 +1,17 @@
+{
+  "topic": "human-body",
+  "name": "Human Body",
+  "description": "Match organs and body parts to their names",
+  "pairs": [
+    { "id": "heart", "image": "/img/human-body/heart.svg", "text": "Heart", "hint": "Pumps blood" },
+    { "id": "brain", "image": "/img/human-body/brain.svg", "text": "Brain", "hint": "Control center" },
+    { "id": "lungs", "image": "/img/human-body/lungs.svg", "text": "Lungs", "hint": "Breathing organs" },
+    { "id": "liver", "image": "/img/human-body/liver.svg", "text": "Liver", "hint": "Detoxification" },
+    { "id": "kidney", "image": "/img/human-body/kidney.svg", "text": "Kidneys", "hint": "Filter blood" },
+    { "id": "stomach", "image": "/img/human-body/stomach.svg", "text": "Stomach", "hint": "Digests food" },
+    { "id": "bone", "image": "/img/human-body/bone.svg", "text": "Skeletal System", "hint": "206 bones" },
+    { "id": "muscle", "image": "/img/human-body/muscle.svg", "text": "Muscular System", "hint": "Over 600 muscles" },
+    { "id": "eye", "image": "/img/human-body/eye.svg", "text": "Eye", "hint": "Window to the world" },
+    { "id": "ear", "image": "/img/human-body/ear.svg", "text": "Ear", "hint": "Sound receptor" }
+  ]
+}
