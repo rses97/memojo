@@ -1,0 +1,17 @@
+{
+  "topic": "animals",
+  "name": "Animals",
+  "description": "Match animals to their names",
+  "pairs": [
+    { "id": "lion", "image": "/img/animals/lion.svg", "text": "Lion", "hint": "King of the jungle" },
+    { "id": "elephant", "image": "/img/animals/elephant.svg", "text": "Elephant", "hint": "Largest land animal" },
+    { "id": "penguin", "image": "/img/animals/penguin.svg", "text": "Penguin", "hint": "Flightless bird" },
+    { "id": "dolphin", "image": "/img/animals/dolphin.svg", "text": "Dolphin", "hint": "Intelligent marine mammal" },
+    { "id": "eagle", "image": "/img/animals/eagle.svg", "text": "Eagle", "hint": "Bird of prey" },
+    { "id": "panda", "image": "/img/animals/panda.svg", "text": "Giant Panda", "hint": "Eats bamboo" },
+    { "id": "tiger", "image": "/img/animals/tiger.svg", "text": "Tiger", "hint": "Largest wild cat" },
+    { "id": "octopus", "image": "/img/animals/octopus.svg", "text": "Octopus", "hint": "Eight arms" },
+    { "id": "giraffe", "image": "/img/animals/giraffe.svg", "text": "Giraffe", "hint": "Tallest animal" },
+    { "id": "koala", "image": "/img/animals/koala.svg", "text": "Koala", "hint": "Australian marsupial" }
+  ]
+}
