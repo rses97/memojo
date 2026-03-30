@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
+# Usage: Run from repo root: bash scripts/download-openmoji.sh
+# Requires: curl
+# License: OpenMoji CC BY-SA 4.0 — https://openmoji.org
 set -euo pipefail
+
+[[ -f package.json ]] || { echo "Error: Run from repo root" >&2; exit 1; }
 
 BASE="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg"
 OUT="public/img"
