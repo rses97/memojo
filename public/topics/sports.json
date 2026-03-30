@@ -1,0 +1,17 @@
+{
+  "topic": "sports",
+  "name": "Sports",
+  "description": "Match sports equipment and activities to their names",
+  "pairs": [
+    { "id": "soccer", "image": "/img/sports/soccer.svg", "text": "Soccer", "hint": "The beautiful game" },
+    { "id": "basketball", "image": "/img/sports/basketball.svg", "text": "Basketball", "hint": "Slam dunk" },
+    { "id": "tennis", "image": "/img/sports/tennis.svg", "text": "Tennis", "hint": "Love means zero" },
+    { "id": "swimming", "image": "/img/sports/swimming.svg", "text": "Swimming", "hint": "Freestyle & backstroke" },
+    { "id": "skiing", "image": "/img/sports/skiing.svg", "text": "Skiing", "hint": "Winter sport" },
+    { "id": "baseball", "image": "/img/sports/baseball.svg", "text": "Baseball", "hint": "Home run" },
+    { "id": "volleyball", "image": "/img/sports/volleyball.svg", "text": "Volleyball", "hint": "Spike and serve" },
+    { "id": "boxing", "image": "/img/sports/boxing.svg", "text": "Boxing", "hint": "Gloves on" },
+    { "id": "cycling", "image": "/img/sports/cycling.svg", "text": "Cycling", "hint": "Two wheels" },
+    { "id": "surfing", "image": "/img/sports/surfing.svg", "text": "Surfing", "hint": "Ride the wave" }
+  ]
+}
