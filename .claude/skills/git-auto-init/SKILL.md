@@ -1,14 +1,15 @@
 ---
 name: git-auto-init
-description: Use when setting up a new project's git tooling, CI/CD pipelines, or when checking what dev tooling is missing — commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
+description: Use when setting up a new project's git tooling, code quality tools, CI/CD pipelines, or when checking what dev tooling is missing — ESLint, Prettier, TypeScript, commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
 ---
 
 # git-auto-init
 
-One-time project setup. Detect what's installed, offer to set up what's missing. Includes CI/CD pipeline generation.
+One-time project setup. Detect what's installed, offer to set up what's missing. Includes code quality tools and CI/CD pipeline generation.
 
 ## When to Use
 
+- New project needs code quality tools (ESLint, Prettier, TypeScript)
 - New project needs git tooling (commitlint, husky, lint-staged, semantic-release)
 - Project missing CI/CD workflows
 - Checking what tooling is already configured
@@ -16,7 +17,7 @@ One-time project setup. Detect what's installed, offer to set up what's missing.
 
 ---
 
-## Phase 1: Git & Tooling
+## Phase 1: Code Quality & Git Tooling
 
 ### Detection
 
@@ -26,6 +27,9 @@ Check each tool and show status:
 |---|---|---|
 | git | `.git/` exists | — |
 | GitHub remote | `git remote -v` | — |
+| TypeScript | `devDependencies` has `typescript` | — |
+| ESLint | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts` |
+| Prettier | `devDependencies` has `prettier` + config file exists | `.prettierrc` / `prettier.config.*` |
 | commitlint | `devDependencies` has `@commitlint/cli` | `commitlint.config.ts` |
 | husky | `devDependencies` has `husky` + `.husky/` exists | `.husky/` |
 | lint-staged | config in `package.json` or `.lintstagedrc` | — |
@@ -38,6 +42,9 @@ Display status:
 Setup Status:
   ✓ git initialized
   ✓ GitHub remote: origin → user/repo
+  ✗ TypeScript — not found
+  ✗ ESLint — not found
+  ✗ Prettier — not found
   ✗ commitlint — not found
   ✗ husky — not found
   ✓ lint-staged — already configured
@@ -61,9 +68,243 @@ Detect from lockfile:
 Use `{pm}` for install command (`pnpm add`, `npm install`, `yarn add`).
 Use `{pm-exec}` for exec (`pnpm exec`, `npx`, `yarn`).
 
+### Framework Detection
+
+Detect project type from `dependencies`/`devDependencies` in `package.json`:
+
+| Check | Framework |
+|---|---|
+| `nuxt` in dependencies | Nuxt |
+| `vue` in dependencies (no nuxt) | Vue |
+| Neither | Plain TypeScript |
+
+Display: `Detected framework: {Nuxt|Vue|Plain TypeScript}`
+
+This drives ESLint package selection and typecheck command.
+
 ### Installation
 
 For each missing tool, ask separately before installing. Never batch-install without confirmation.
+
+**TypeScript:**
+
+Ask: "Install TypeScript? [Y/n]"
+
+**Nuxt:**
+
+```bash
+{pm} add -D typescript vue-tsc
+```
+
+**Vue / Plain TypeScript:**
+
+```bash
+{pm} add -D typescript
+```
+
+Add typecheck script to `package.json`:
+- Nuxt: `"typecheck": "nuxi typecheck"`
+- Vue / Plain TS: `"typecheck": "tsc --noEmit"`
+
+**Code quality tools:**
+
+Ask which tools to set up:
+
+```
+Code quality tools?
+  1. ESLint only
+  2. ESLint + Prettier
+  3. Prettier only
+  4. None — skip
+Choice:
+```
+
+If None selected: skip ESLint and Prettier sections below.
+
+**ESLint** (if option 1 or 2):
+
+Ask rule strictness:
+
+```
+ESLint rule strictness?
+  1. Recommended — catches real issues without noise (Recommended)
+  2. Strict — more opinionated, catches more issues
+Choice:
+```
+
+If "ESLint only" (option 1), ask about formatting:
+
+```
+Include stylistic/formatting rules in ESLint?
+  1. Yes — enforce formatting via @stylistic/eslint-plugin
+  2. No — linting only, no formatting
+Choice:
+```
+
+**Nuxt ESLint:**
+
+```bash
+{pm} add -D @nuxt/eslint eslint
+```
+
+Add `@nuxt/eslint` to `modules` array in `nuxt.config.ts`.
+
+Create `eslint.config.ts`:
+
+```ts
+import withNuxt from './.nuxt/eslint.config.mjs'
+
+export default withNuxt(
+  // Your custom rules here
+)
+```
+
+`@nuxt/eslint` bundles typescript-eslint, eslint-plugin-vue, and @stylistic — no separate installs needed. If user chose strict, configure via Nuxt module options in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxt/eslint'],
+  eslint: {
+    config: {
+      stylistic: true, // if user chose stylistic formatting
+    },
+  },
+})
+```
+
+**Vue ESLint (non-Nuxt):**
+
+```bash
+{pm} add -D eslint eslint-plugin-vue @vue/eslint-config-typescript
+```
+
+If user wants stylistic rules:
+
+```bash
+{pm} add -D @stylistic/eslint-plugin
+```
+
+Create `eslint.config.ts` (without stylistic):
+
+```ts
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+
+export default defineConfigWithVueTs(
+  pluginVue.configs['flat/recommended'],   // or 'flat/strongly-recommended' for strict
+  vueTsConfigs.recommended,                // or vueTsConfigs.strict
+)
+```
+
+Create `eslint.config.ts` (with stylistic):
+
+```ts
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import stylistic from '@stylistic/eslint-plugin'
+
+export default defineConfigWithVueTs(
+  pluginVue.configs['flat/recommended'],
+  vueTsConfigs.recommended,
+  stylistic.configs['recommended-flat'],
+)
+```
+
+**Plain TypeScript ESLint:**
+
+```bash
+{pm} add -D eslint @eslint/js typescript-eslint
+```
+
+If user wants stylistic rules:
+
+```bash
+{pm} add -D @stylistic/eslint-plugin
+```
+
+Create `eslint.config.ts` (without stylistic):
+
+```ts
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,   // or .strict
+)
+```
+
+Create `eslint.config.ts` (with stylistic):
+
+```ts
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import stylistic from '@stylistic/eslint-plugin'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  stylistic.configs['recommended-flat'],
+)
+```
+
+**All frameworks — add scripts to `package.json`:**
+
+```json
+"lint": "eslint .",
+"lint:fix": "eslint . --fix"
+```
+
+**Prettier** (if option 2 or 3):
+
+Ask style preset:
+
+```
+Prettier style preset?
+  1. Vue ecosystem (no semi, single quotes, trailing commas) — used by Vue, Nuxt, Vite (Recommended)
+  2. Prettier defaults (semi, double quotes, trailing commas)
+  3. Airbnb-ish (semi, single quotes, trailing commas)
+Choice:
+```
+
+```bash
+{pm} add -D prettier
+```
+
+Create `.prettierrc` based on chosen preset:
+
+**Vue ecosystem (recommended):**
+
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
+**Prettier defaults:**
+
+No `.prettierrc` file created — use Prettier's built-in defaults.
+
+**Airbnb-ish:**
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
+Add scripts to `package.json`:
+
+```json
+"format": "prettier --write .",
+"format:check": "prettier --check ."
+```
+
+No `eslint-config-prettier` or `eslint-plugin-prettier` needed — modern ESLint configs don't include formatting rules that conflict with Prettier.
 
 **commitlint:**
 
@@ -108,16 +349,52 @@ Ask: "Install lint-staged? [Y/n]"
 {pm} add -D lint-staged
 ```
 
-Add to `package.json` (adapt patterns to project's actual linter/formatter):
+Add to `package.json` — adapt based on installed code quality tools:
+
+**ESLint only (with or without stylistic):**
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue}": ["eslint --fix"]
+  }
+}
+```
+
+**ESLint + Prettier:**
 
 ```json
 {
   "lint-staged": {
     "*.{ts,vue}": ["eslint --fix"],
-    "*.{ts,vue,css,md}": ["prettier --write"]
+    "*.{ts,vue,css,md,json}": ["prettier --write"]
   }
 }
 ```
+
+**Prettier only:**
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue,css,md,json}": ["prettier --write"]
+  }
+}
+```
+
+**None (no code quality tools):**
+
+Fall back to test runner if available:
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue}": ["vitest related --run"]
+  }
+}
+```
+
+Adapt glob patterns to detected framework: use `*.{ts,vue}` for Nuxt/Vue, `*.ts` for plain TypeScript.
 
 **semantic-release:**
 
@@ -256,7 +533,21 @@ Trigger logic (auto vs manual, approval gates) is identical regardless of platfo
 
 #### ci.yml — lint, test, typecheck on PRs
 
-Resolve `{detected-pm}`, `{install-cmd}`, `{lint-cmd}`, `{typecheck-cmd}`, `{test-cmd}`, `{build-cmd}` from the project's detected package manager and `package.json` scripts.
+Resolve placeholders from the project's detected package manager and `package.json` scripts. Include `{format-check-cmd}` if Prettier is installed. Omit steps for tools that are not installed.
+
+**Placeholder resolution:**
+
+| Placeholder | Condition | Value |
+|---|---|---|
+| `{detected-pm}` | Always | Detected package manager name |
+| `{install-cmd}` | Always | `{pm} install --frozen-lockfile` |
+| `{lint-cmd}` | ESLint installed | `{pm} run lint` |
+| `{format-check-cmd}` | Prettier installed | `{pm} run format:check` |
+| `{typecheck-cmd}` | TypeScript installed | `{pm} run typecheck` |
+| `{test-cmd}` | test:run script exists | `{pm} run test:run` |
+| `{build-cmd}` | Always | `{pm} run build` |
+
+If a tool is not installed, omit the corresponding `- run:` step entirely.
 
 **Trunk-based ci.yml:**
 
@@ -280,6 +571,7 @@ jobs:
           cache: '{detected-pm}'
       - run: {install-cmd}
       - run: {lint-cmd}
+      - run: {format-check-cmd}
       - run: {typecheck-cmd}
       - run: {test-cmd}
       - run: {build-cmd}
@@ -307,6 +599,7 @@ jobs:
           cache: '{detected-pm}'
       - run: {install-cmd}
       - run: {lint-cmd}
+      - run: {format-check-cmd}
       - run: {typecheck-cmd}
       - run: {test-cmd}
       - run: {build-cmd}

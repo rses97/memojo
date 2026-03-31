@@ -1,5 +1,6 @@
 import type { TopicPair, GameCard } from '~/types'
 import { shuffle } from '~/utils/shuffle'
+import { onScopeDispose } from 'vue'
 
 export function useGame() {
   const cards = ref<GameCard[]>([])
@@ -11,6 +12,13 @@ export function useGame() {
 
   const flippedCards = ref<GameCard[]>([])
   let mismatchTimeout: ReturnType<typeof setTimeout> | null = null
+
+  onScopeDispose(() => {
+    if (mismatchTimeout !== null) {
+      clearTimeout(mismatchTimeout)
+      mismatchTimeout = null
+    }
+  })
 
   const totalPairs = computed(() => cards.value.length / 2)
   const isComplete = computed(() => matchedPairs.value === totalPairs.value && totalPairs.value > 0)
@@ -44,6 +52,8 @@ export function useGame() {
     const card = cards.value.find(c => c.id === cardId)
     if (!card || card.isFlipped || card.isMatched) return
 
+    // Mutating card objects directly is intentional: readonly(cards) prevents ref reassignment
+    // but not object property mutation. flipCard is the sole intended mutation path.
     card.isFlipped = true
     flippedCards.value.push(card)
 

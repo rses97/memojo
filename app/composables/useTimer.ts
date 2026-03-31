@@ -2,7 +2,8 @@ interface TimerOptions {
   onExpire?: () => void
 }
 
-export function useTimer() {
+// clock is injectable for testing — avoids relying on vi.useFakeTimers() faking performance.now()
+export function useTimer(clock: () => number = () => performance.now()) {
   const remaining = ref(0)
   const isRunning = ref(false)
   const isExpired = ref(false)
@@ -12,6 +13,7 @@ export function useTimer() {
   let startRemaining = 0
   let intervalId: ReturnType<typeof setInterval> | null = null
   let onExpireCallback: (() => void) | undefined
+  let pausedByVisibility = false
 
   const elapsed = computed(() => initialTime - remaining.value)
 
@@ -28,11 +30,11 @@ export function useTimer() {
     if (isRunning.value || isExpired.value) return
 
     isRunning.value = true
-    startedAt = performance.now()
+    startedAt = clock()
     startRemaining = remaining.value
 
     intervalId = setInterval(() => {
-      const secondsElapsed = Math.floor((performance.now() - startedAt) / 1000)
+      const secondsElapsed = Math.floor((clock() - startedAt) / 1000)
       remaining.value = Math.max(0, startRemaining - secondsElapsed)
 
       if (remaining.value <= 0) {
@@ -61,8 +63,27 @@ export function useTimer() {
     isRunning.value = false
   }
 
+  // client-only: uses document.visibilityState — only ever called via addEventListener registered in onMounted
+  function handleVisibilityChange() {
+    if (document.hidden) {
+      if (isRunning.value) {
+        pause()
+        pausedByVisibility = true
+      }
+    }
+    else if (pausedByVisibility) {
+      pausedByVisibility = false
+      start()
+    }
+  }
+
+  onMounted(() => {
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+  })
+
   onUnmounted(() => {
     stop()
+    document.removeEventListener('visibilitychange', handleVisibilityChange)
   })
 
   return {

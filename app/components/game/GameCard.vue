@@ -52,7 +52,7 @@ const ariaLabel = computed(() => {
           v-if="card.type === 'image'"
           :src="card.content"
           :alt="card.pairId"
-          class="h-full w-full rounded-[--radius-card] object-cover"
+          class="h-full w-full rounded-[--radius-card] object-contain"
           loading="lazy"
         />
         <span v-else class="text-center text-lg font-semibold">
