@@ -533,7 +533,21 @@ Trigger logic (auto vs manual, approval gates) is identical regardless of platfo
 
 #### ci.yml — lint, test, typecheck on PRs
 
-Resolve `{detected-pm}`, `{install-cmd}`, `{lint-cmd}`, `{typecheck-cmd}`, `{test-cmd}`, `{build-cmd}` from the project's detected package manager and `package.json` scripts.
+Resolve placeholders from the project's detected package manager and `package.json` scripts. Include `{format-check-cmd}` if Prettier is installed. Omit steps for tools that are not installed.
+
+**Placeholder resolution:**
+
+| Placeholder | Condition | Value |
+|---|---|---|
+| `{detected-pm}` | Always | Detected package manager name |
+| `{install-cmd}` | Always | `{pm} install --frozen-lockfile` |
+| `{lint-cmd}` | ESLint installed | `{pm} run lint` |
+| `{format-check-cmd}` | Prettier installed | `{pm} run format:check` |
+| `{typecheck-cmd}` | TypeScript installed | `{pm} run typecheck` |
+| `{test-cmd}` | test:run script exists | `{pm} run test:run` |
+| `{build-cmd}` | Always | `{pm} run build` |
+
+If a tool is not installed, omit the corresponding `- run:` step entirely.
 
 **Trunk-based ci.yml:**
 
@@ -557,6 +571,7 @@ jobs:
           cache: '{detected-pm}'
       - run: {install-cmd}
       - run: {lint-cmd}
+      - run: {format-check-cmd}
       - run: {typecheck-cmd}
       - run: {test-cmd}
       - run: {build-cmd}
@@ -584,6 +599,7 @@ jobs:
           cache: '{detected-pm}'
       - run: {install-cmd}
       - run: {lint-cmd}
+      - run: {format-check-cmd}
       - run: {typecheck-cmd}
       - run: {test-cmd}
       - run: {build-cmd}
