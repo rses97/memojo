@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     '@nuxt/test-utils/module',
+    '@nuxt/eslint',
   ],
 
   vite: {
