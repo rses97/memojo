@@ -63,6 +63,7 @@ export function useTimer(clock: () => number = () => performance.now()) {
     isRunning.value = false
   }
 
+  // client-only: uses document.visibilityState — only ever called via addEventListener registered in onMounted
   function handleVisibilityChange() {
     if (document.hidden) {
       if (isRunning.value) {

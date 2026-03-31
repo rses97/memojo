@@ -1,4 +1,18 @@
+import { defineComponent, h } from 'vue'
+import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+
+// Mounts useTimer inside a real component so onMounted/onUnmounted fire correctly
+function withTimer(clockFn: () => number) {
+  let result: ReturnType<typeof useTimer>
+  const wrapper = mount(defineComponent({
+    setup() {
+      result = useTimer(clockFn)
+      return () => h('div')
+    },
+  }))
+  return { timer: result!, wrapper }
+}
 
 describe('useTimer', () => {
   let fakeNow = 0
@@ -11,6 +25,7 @@ describe('useTimer', () => {
 
   afterEach(() => {
     vi.useRealTimers()
+    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
   })
 
   it('initializes with the given time limit', () => {
@@ -97,5 +112,60 @@ describe('useTimer', () => {
     fakeNow = 2000
     vi.advanceTimersByTime(2000)
     expect(onExpire).toHaveBeenCalledOnce()
+  })
+
+  it('auto-pauses when tab becomes hidden and resumes when visible again', () => {
+    const { timer, wrapper } = withTimer(clock)
+    timer.init(60)
+    timer.start()
+
+    fakeNow = 5000
+    vi.advanceTimersByTime(5000)
+    expect(timer.remaining.value).toBe(55)
+
+    // tab hidden
+    Object.defineProperty(document, 'hidden', { value: true, writable: true, configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+    expect(timer.isRunning.value).toBe(false)
+
+    // time passes while hidden — should not count
+    fakeNow = 15000
+    vi.advanceTimersByTime(10000)
+    expect(timer.remaining.value).toBe(55)
+
+    // tab visible again
+    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+    expect(timer.isRunning.value).toBe(true)
+
+    fakeNow = 16000
+    vi.advanceTimersByTime(1000)
+    expect(timer.remaining.value).toBe(54)
+
+    wrapper.unmount()
+  })
+
+  it('does not auto-resume if timer was manually paused before tab hide', () => {
+    const { timer, wrapper } = withTimer(clock)
+    timer.init(60)
+    timer.start()
+
+    fakeNow = 5000
+    vi.advanceTimersByTime(5000)
+
+    // user manually pauses
+    timer.pause()
+    expect(timer.isRunning.value).toBe(false)
+
+    // tab hides then shows — should not restart a manually-paused timer
+    Object.defineProperty(document, 'hidden', { value: true, writable: true, configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
+    document.dispatchEvent(new Event('visibilitychange'))
+
+    expect(timer.isRunning.value).toBe(false)
+    expect(timer.remaining.value).toBe(55)
+
+    wrapper.unmount()
   })
 })
