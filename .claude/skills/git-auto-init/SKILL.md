@@ -1,14 +1,15 @@
 ---
 name: git-auto-init
-description: Use when setting up a new project's git tooling, CI/CD pipelines, or when checking what dev tooling is missing — commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
+description: Use when setting up a new project's git tooling, code quality tools, CI/CD pipelines, or when checking what dev tooling is missing — ESLint, Prettier, TypeScript, commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
 ---
 
 # git-auto-init
 
-One-time project setup. Detect what's installed, offer to set up what's missing. Includes CI/CD pipeline generation.
+One-time project setup. Detect what's installed, offer to set up what's missing. Includes code quality tools and CI/CD pipeline generation.
 
 ## When to Use
 
+- New project needs code quality tools (ESLint, Prettier, TypeScript)
 - New project needs git tooling (commitlint, husky, lint-staged, semantic-release)
 - Project missing CI/CD workflows
 - Checking what tooling is already configured
@@ -16,7 +17,7 @@ One-time project setup. Detect what's installed, offer to set up what's missing.
 
 ---
 
-## Phase 1: Git & Tooling
+## Phase 1: Code Quality & Git Tooling
 
 ### Detection
 
