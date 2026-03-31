@@ -106,6 +106,155 @@ Add typecheck script to `package.json`:
 - Nuxt: `"typecheck": "nuxi typecheck"`
 - Vue / Plain TS: `"typecheck": "tsc --noEmit"`
 
+**Code quality tools:**
+
+Ask which tools to set up:
+
+```
+Code quality tools?
+  1. ESLint only
+  2. ESLint + Prettier
+  3. Prettier only
+  4. None — skip
+Choice:
+```
+
+If None selected: skip ESLint and Prettier sections below.
+
+**ESLint** (if option 1 or 2):
+
+Ask rule strictness:
+
+```
+ESLint rule strictness?
+  1. Recommended — catches real issues without noise (Recommended)
+  2. Strict — more opinionated, catches more issues
+Choice:
+```
+
+If "ESLint only" (option 1), ask about formatting:
+
+```
+Include stylistic/formatting rules in ESLint?
+  1. Yes — enforce formatting via @stylistic/eslint-plugin
+  2. No — linting only, no formatting
+Choice:
+```
+
+**Nuxt ESLint:**
+
+```bash
+{pm} add -D @nuxt/eslint eslint
+```
+
+Add `@nuxt/eslint` to `modules` array in `nuxt.config.ts`.
+
+Create `eslint.config.ts`:
+
+```ts
+import withNuxt from './.nuxt/eslint.config.mjs'
+
+export default withNuxt(
+  // Your custom rules here
+)
+```
+
+`@nuxt/eslint` bundles typescript-eslint, eslint-plugin-vue, and @stylistic — no separate installs needed. If user chose strict, configure via Nuxt module options in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxt/eslint'],
+  eslint: {
+    config: {
+      stylistic: true, // if user chose stylistic formatting
+    },
+  },
+})
+```
+
+**Vue ESLint (non-Nuxt):**
+
+```bash
+{pm} add -D eslint eslint-plugin-vue @vue/eslint-config-typescript
+```
+
+If user wants stylistic rules:
+
+```bash
+{pm} add -D @stylistic/eslint-plugin
+```
+
+Create `eslint.config.ts` (without stylistic):
+
+```ts
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+
+export default defineConfigWithVueTs(
+  pluginVue.configs['flat/recommended'],   // or 'flat/strongly-recommended' for strict
+  vueTsConfigs.recommended,                // or vueTsConfigs.strict
+)
+```
+
+Create `eslint.config.ts` (with stylistic):
+
+```ts
+import pluginVue from 'eslint-plugin-vue'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import stylistic from '@stylistic/eslint-plugin'
+
+export default defineConfigWithVueTs(
+  pluginVue.configs['flat/recommended'],
+  vueTsConfigs.recommended,
+  stylistic.configs['recommended-flat'],
+)
+```
+
+**Plain TypeScript ESLint:**
+
+```bash
+{pm} add -D eslint @eslint/js typescript-eslint
+```
+
+If user wants stylistic rules:
+
+```bash
+{pm} add -D @stylistic/eslint-plugin
+```
+
+Create `eslint.config.ts` (without stylistic):
+
+```ts
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,   // or .strict
+)
+```
+
+Create `eslint.config.ts` (with stylistic):
+
+```ts
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import stylistic from '@stylistic/eslint-plugin'
+
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  stylistic.configs['recommended-flat'],
+)
+```
+
+**All frameworks — add scripts to `package.json`:**
+
+```json
+"lint": "eslint .",
+"lint:fix": "eslint . --fix"
+```
+
 **commitlint:**
 
 Ask: "Install commitlint + @commitlint/config-conventional? [Y/n]"
