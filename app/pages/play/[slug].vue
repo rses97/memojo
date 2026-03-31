@@ -100,7 +100,7 @@ startGame();
     <ClientOnly>
       <GameBoard :cards="cards" :grid-cols="level.gridCols" @flip="flipCard" />
       <template #fallback>
-        <div class="grid grid-cols-4 gap-3">
+        <div class="grid gap-3" :style="{ gridTemplateColumns: `repeat(${level.gridCols}, minmax(0, 1fr))` }">
           <div
             v-for="n in level.pairs * 2"
             :key="n"

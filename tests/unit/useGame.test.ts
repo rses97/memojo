@@ -1,4 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { effectScope } from 'vue'
 import type { TopicPair } from '~/types'
 
 const testPairs: TopicPair[] = [
@@ -207,6 +208,37 @@ describe('useGame', () => {
 
     expect(game.isComplete.value).toBe(true)
     expect(game.matchedPairs.value).toBe(4)
+  })
+
+  it('cancels mismatch timeout when scope is disposed', async () => {
+    vi.useFakeTimers()
+
+    let game: ReturnType<typeof useGame>
+    const scope = effectScope()
+    scope.run(() => {
+      game = useGame()
+    })
+    game!.init(testPairs)
+
+    const c1 = game!.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
+    const c2 = game!.cards.value.find(c => c.pairId === 'b' && c.type === 'text')!
+    game!.flipCard(c1.id)
+    game!.flipCard(c2.id)
+    await nextTick()
+
+    // Cards are still flipped (mismatch timeout pending)
+    expect(game!.cards.value.find(c => c.id === c1.id)!.isFlipped).toBe(true)
+
+    // Dispose the scope — timeout should be cleared
+    scope.stop()
+
+    // Advancing time should NOT flip the cards back (timeout was cleared)
+    vi.advanceTimersByTime(1000)
+    await nextTick()
+
+    expect(game!.cards.value.find(c => c.id === c1.id)!.isFlipped).toBe(true)
+
+    vi.useRealTimers()
   })
 
   it('tracks maxStreak across the game', async () => {
