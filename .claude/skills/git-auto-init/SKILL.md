@@ -68,9 +68,43 @@ Detect from lockfile:
 Use `{pm}` for install command (`pnpm add`, `npm install`, `yarn add`).
 Use `{pm-exec}` for exec (`pnpm exec`, `npx`, `yarn`).
 
+### Framework Detection
+
+Detect project type from `dependencies`/`devDependencies` in `package.json`:
+
+| Check | Framework |
+|---|---|
+| `nuxt` in dependencies | Nuxt |
+| `vue` in dependencies (no nuxt) | Vue |
+| Neither | Plain TypeScript |
+
+Display: `Detected framework: {Nuxt|Vue|Plain TypeScript}`
+
+This drives ESLint package selection and typecheck command.
+
 ### Installation
 
 For each missing tool, ask separately before installing. Never batch-install without confirmation.
+
+**TypeScript:**
+
+Ask: "Install TypeScript? [Y/n]"
+
+**Nuxt:**
+
+```bash
+{pm} add -D typescript vue-tsc
+```
+
+**Vue / Plain TypeScript:**
+
+```bash
+{pm} add -D typescript
+```
+
+Add typecheck script to `package.json`:
+- Nuxt: `"typecheck": "nuxi typecheck"`
+- Vue / Plain TS: `"typecheck": "tsc --noEmit"`
 
 **commitlint:**
 
