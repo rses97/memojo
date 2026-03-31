@@ -6,7 +6,7 @@ set -euo pipefail
 
 [[ -f package.json ]] || { echo "Error: Run from repo root" >&2; exit 1; }
 
-BASE="https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg"
+BASE="https://raw.githubusercontent.com/hfg-gmuend/openmoji/15.1.0/color/svg"
 OUT="public/img"
 
 fetch() {

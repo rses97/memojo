@@ -103,7 +103,7 @@ import { createApp } from 'vue'
 /**
  * Helper to test composables that need component context
  */
-export function withSetup(composable) {
+export function withSetup(composable, options = {}) {
   let result
 
   const app = createApp({
@@ -113,6 +113,12 @@ export function withSetup(composable) {
       return () => {}
     }
   })
+
+  if (options.provide) {
+    Object.entries(options.provide).forEach(([key, value]) => {
+      app.provide(key, value)
+    })
+  }
 
   app.mount(document.createElement('div'))
 
@@ -141,11 +147,10 @@ describe('useFetch', () => {
   it('fetches data on mount', async () => {
     mockApiClient.get.mockResolvedValue({ data: { id: 1, name: 'Test' } })
 
-    const [result, testApp] = withSetup(() => useFetch('/api/test'))
+    const [result, testApp] = withSetup(() => useFetch('/api/test'), {
+      provide: { apiClient: mockApiClient }
+    })
     app = testApp
-
-    // Provide mocked dependency
-    app.provide('apiClient', mockApiClient)
 
     // Wait for async operations
     await flushPromises()
@@ -159,9 +164,10 @@ describe('useFetch', () => {
     const testError = new Error('Network error')
     mockApiClient.get.mockRejectedValue(testError)
 
-    const [result, testApp] = withSetup(() => useFetch('/api/test'))
+    const [result, testApp] = withSetup(() => useFetch('/api/test'), {
+      provide: { apiClient: mockApiClient }
+    })
     app = testApp
-    app.provide('apiClient', mockApiClient)
 
     await flushPromises()
 

@@ -16,7 +16,8 @@ Use `await` with triggers and `setValue`, use `nextTick` for reactive updates, a
 
 - [ ] Always await `trigger()` and `setValue()` calls
 - [ ] Use `await nextTick()` after programmatic reactive state changes
-- [ ] Use `await flushPromises()` for external async operations (API calls, timers)
+- [ ] Use `await flushPromises()` for external async operations (API calls, resolved promises)
+- [ ] Use `vi.runAllTimers()` or `vi.advanceTimersByTime()` for timer-based async (setTimeout, setInterval)
 - [ ] Don't chain multiple `nextTick` calls - use `flushPromises` instead
 - [ ] Consider using `waitFor` from testing-library for polling assertions
 

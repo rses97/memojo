@@ -18,7 +18,13 @@
         rel="noopener noreferrer"
         class="underline hover:text-surface-700"
       >OpenMoji</a>
-      — CC BY-SA 4.0
+      —
+      <a
+        href="https://creativecommons.org/licenses/by-sa/4.0/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="underline hover:text-surface-700"
+      >CC BY-SA 4.0</a>
     </footer>
   </div>
 </template>

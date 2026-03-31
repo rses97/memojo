@@ -31,19 +31,11 @@ This reference covers the core reactivity decisions for local state, external da
 
 ## Declare reactive state correctly
 
-### Always use `shallowRef()` instead of `ref()` for primitive values (string, number, boolean, null, etc.) for better performance.
+### Use `shallowRef()` instead of `ref()` for objects/arrays when you don't need deep reactivity.
 
-**Incorrect:**
-```ts
-import { ref } from 'vue'
-const count = ref(0)
-```
+For **primitive values** (string, number, boolean, null), `ref()` and `shallowRef()` are equivalent — primitives cannot be deeply reactive, so there is no performance difference. Use `ref()` for clarity.
 
-**Correct:**
-```ts
-import { shallowRef } from 'vue'
-const count = shallowRef(0)
-```
+For **objects and arrays**, prefer `shallowRef()` when you only replace the whole value and don't need Vue to track nested changes.
 
 ### Choose the correct reactive declaration method for objects/arrays/map/set
 
