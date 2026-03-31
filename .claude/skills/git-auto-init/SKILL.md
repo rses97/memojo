@@ -255,6 +255,57 @@ export default tseslint.config(
 "lint:fix": "eslint . --fix"
 ```
 
+**Prettier** (if option 2 or 3):
+
+Ask style preset:
+
+```
+Prettier style preset?
+  1. Vue ecosystem (no semi, single quotes, trailing commas) — used by Vue, Nuxt, Vite (Recommended)
+  2. Prettier defaults (semi, double quotes, trailing commas)
+  3. Airbnb-ish (semi, single quotes, trailing commas)
+Choice:
+```
+
+```bash
+{pm} add -D prettier
+```
+
+Create `.prettierrc` based on chosen preset:
+
+**Vue ecosystem (recommended):**
+
+```json
+{
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
+**Prettier defaults:**
+
+No `.prettierrc` file created — use Prettier's built-in defaults.
+
+**Airbnb-ish:**
+
+```json
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+```
+
+Add scripts to `package.json`:
+
+```json
+"format": "prettier --write .",
+"format:check": "prettier --check ."
+```
+
+No `eslint-config-prettier` or `eslint-plugin-prettier` needed — modern ESLint configs don't include formatting rules that conflict with Prettier.
+
 **commitlint:**
 
 Ask: "Install commitlint + @commitlint/config-conventional? [Y/n]"
@@ -298,16 +349,52 @@ Ask: "Install lint-staged? [Y/n]"
 {pm} add -D lint-staged
 ```
 
-Add to `package.json` (adapt patterns to project's actual linter/formatter):
+Add to `package.json` — adapt based on installed code quality tools:
+
+**ESLint only (with or without stylistic):**
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue}": ["eslint --fix"]
+  }
+}
+```
+
+**ESLint + Prettier:**
 
 ```json
 {
   "lint-staged": {
     "*.{ts,vue}": ["eslint --fix"],
-    "*.{ts,vue,css,md}": ["prettier --write"]
+    "*.{ts,vue,css,md,json}": ["prettier --write"]
   }
 }
 ```
+
+**Prettier only:**
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue,css,md,json}": ["prettier --write"]
+  }
+}
+```
+
+**None (no code quality tools):**
+
+Fall back to test runner if available:
+
+```json
+{
+  "lint-staged": {
+    "*.{ts,vue}": ["vitest related --run"]
+  }
+}
+```
+
+Adapt glob patterns to detected framework: use `*.{ts,vue}` for Nuxt/Vue, `*.ts` for plain TypeScript.
 
 **semantic-release:**
 
