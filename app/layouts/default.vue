@@ -10,21 +10,25 @@
     <main class="mx-auto w-full max-w-4xl flex-1 px-6 py-8">
       <slot />
     </main>
-    <footer class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500">
-      Emoji graphics by
+    <footer
+      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500"
+    >
+      All emojis designed by
       <a
         href="https://openmoji.org/"
         target="_blank"
         rel="noopener noreferrer"
         class="underline hover:text-surface-700"
-      >OpenMoji</a>
-      —
+        >OpenMoji</a
+      >
+      – the open-source emoji and icon project. License:
       <a
         href="https://creativecommons.org/licenses/by-sa/4.0/"
         target="_blank"
         rel="noopener noreferrer"
         class="underline hover:text-surface-700"
-      >CC BY-SA 4.0</a>
+        >CC BY-SA 4.0</a
+      >
     </footer>
   </div>
 </template>
