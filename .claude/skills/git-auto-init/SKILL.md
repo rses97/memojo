@@ -27,6 +27,9 @@ Check each tool and show status:
 |---|---|---|
 | git | `.git/` exists | — |
 | GitHub remote | `git remote -v` | — |
+| TypeScript | `devDependencies` has `typescript` | — |
+| ESLint | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts` |
+| Prettier | `devDependencies` has `prettier` + config file exists | `.prettierrc` / `prettier.config.*` |
 | commitlint | `devDependencies` has `@commitlint/cli` | `commitlint.config.ts` |
 | husky | `devDependencies` has `husky` + `.husky/` exists | `.husky/` |
 | lint-staged | config in `package.json` or `.lintstagedrc` | — |
@@ -39,6 +42,9 @@ Display status:
 Setup Status:
   ✓ git initialized
   ✓ GitHub remote: origin → user/repo
+  ✗ TypeScript — not found
+  ✗ ESLint — not found
+  ✗ Prettier — not found
   ✗ commitlint — not found
   ✗ husky — not found
   ✓ lint-staged — already configured
