@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { calculateScore } from '~/utils/scoring'
+import { HINT_COSTS } from '~/types'
 
 describe('calculateScore', () => {
   it('returns maximum accuracy score for perfect play (one move per pair)', () => {
@@ -91,5 +92,90 @@ describe('calculateScore', () => {
       maxStreak: 0,
     })
     expect(score).toBe(0)
+  })
+})
+
+describe('calculateScore with hint penalties', () => {
+  it('deducts peek cost from final score', () => {
+    const baseScore = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 0, eliminate: 0 },
+    })
+    const withPeek = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 1, eliminate: 0 },
+    })
+    expect(withPeek).toBe(baseScore - HINT_COSTS.peek)
+  })
+
+  it('deducts eliminate cost from final score', () => {
+    const baseScore = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 0, eliminate: 0 },
+    })
+    const withEliminate = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 0, eliminate: 1 },
+    })
+    expect(withEliminate).toBe(baseScore - HINT_COSTS.eliminate)
+  })
+
+  it('deducts both hint costs when both used', () => {
+    const baseScore = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 0, eliminate: 0 },
+    })
+    const withBoth = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 1, eliminate: 1 },
+    })
+    expect(withBoth).toBe(baseScore - HINT_COSTS.peek - HINT_COSTS.eliminate)
+  })
+
+  it('never returns a negative score', () => {
+    const score = calculateScore({
+      moves: 100,
+      totalPairs: 4,
+      timeElapsed: 119,
+      timeLimit: 120,
+      maxStreak: 0,
+      hintsUsed: { peek: 1, eliminate: 1 },
+    })
+    expect(score).toBeGreaterThanOrEqual(0)
+  })
+
+  it('works with no hintsUsed field (backward compatible)', () => {
+    const score = calculateScore({
+      moves: 4,
+      totalPairs: 4,
+      timeElapsed: 60,
+      timeLimit: 120,
+      maxStreak: 0,
+    })
+    expect(score).toBeGreaterThan(0)
   })
 })
