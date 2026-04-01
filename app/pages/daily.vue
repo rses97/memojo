@@ -9,6 +9,7 @@ const timer = useTimer()
 
 const level = LEVELS[1] // Daily uses level 2 (6 pairs, 90s)
 const isLoading = ref(true)
+const isError = ref(false)
 const isGameOver = ref(false)
 const finalScore = ref(0)
 
@@ -21,15 +22,18 @@ const formattedDate = new Date().toLocaleDateString('en-US', {
 })
 
 async function loadAndStart() {
-  const data = await $fetch<TopicPack>('/topics/world-flags.json')
-
-  const shuffledPairs = seededShuffle(data.pairs, todaySeed)
-  const selectedPairs = shuffledPairs.slice(0, level.pairs)
-
-  game.init(selectedPairs, todaySeed)
-  timer.init(level.timeLimit)
-  timer.start()
-  isLoading.value = false
+  try {
+    const data = await $fetch<TopicPack>('/topics/world-flags.json')
+    const shuffledPairs = seededShuffle(data.pairs, todaySeed)
+    const selectedPairs = shuffledPairs.slice(0, level.pairs)
+    game.init(selectedPairs, todaySeed)
+    timer.init(level.timeLimit)
+    timer.start()
+    isLoading.value = false
+  } catch {
+    isError.value = true
+    isLoading.value = false
+  }
 }
 
 function handleFlip(cardId: string) {
@@ -57,6 +61,7 @@ watch(
 )
 
 function endGame() {
+  if (isGameOver.value) return
   isGameOver.value = true
   finalScore.value = calculateScore({
     moves: game.moves.value,
@@ -89,6 +94,12 @@ onMounted(() => {
 
     <div v-if="isLoading" class="py-20 text-center text-surface-500">
       Loading today's challenge...
+    </div>
+    <div v-else-if="isError" class="py-20 text-center text-surface-500">
+      <p class="mb-4">Failed to load today's challenge.</p>
+      <NuxtLink to="/" class="text-primary-500 hover:text-primary-600"
+        >Back to Menu</NuxtLink
+      >
     </div>
 
     <template v-else>
