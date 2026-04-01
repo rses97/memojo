@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { useTopicPractice } from '~/composables/useTopicPractice'
 import { LEVELS } from '~/types'
 import type { TopicPair } from '~/types'
@@ -10,14 +10,6 @@ const testPairs: TopicPair[] = Array.from({ length: 12 }, (_, i) => ({
 }))
 
 describe('useTopicPractice', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
-  })
-
-  afterEach(() => {
-    vi.useRealTimers()
-  })
-
   it('starts at level 0', () => {
     const practice = useTopicPractice()
     practice.start(testPairs)
