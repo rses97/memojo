@@ -2,8 +2,9 @@
 import type { GameCard } from '~/types'
 
 defineProps<{
-  cards: readonly GameCard[]
+  cards: GameCard[]
   gridCols: number
+  disabled: boolean
 }>()
 
 const emit = defineEmits<{
@@ -18,11 +19,16 @@ const emit = defineEmits<{
     role="grid"
     aria-label="Game board"
   >
-    <GameCard
+    <div
       v-for="card in cards"
       :key="card.id"
-      :card="card"
-      @flip="emit('flip', $event)"
-    />
+      :class="{ invisible: card.isEliminated }"
+    >
+      <GameCard
+        :card="card"
+        :disabled="disabled"
+        @flip="emit('flip', card.id)"
+      />
+    </div>
   </div>
 </template>

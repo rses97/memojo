@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { TopicPack } from '~/types';
-import { LEVELS } from '~/types';
-import { calculateScore } from '~/utils/scoring';
+import type { TopicPack } from '~/types'
+import { LEVELS } from '~/types'
+import { calculateScore } from '~/utils/scoring'
 
-const route = useRoute();
-const slug = route.params.slug as string;
-const { origin } = useRequestURL();
+const route = useRoute()
+const slug = route.params.slug as string
+const { origin } = useRequestURL()
 
 const { data: topicPack, error } = await useFetch<TopicPack>(
   `/topics/${slug}.json`,
   {
     baseURL: origin,
   },
-);
+)
 
 if (error.value || !topicPack.value) {
   throw createError({
     statusCode: 404,
     statusMessage: `Topic "${slug}" not found`,
-  });
+  })
 }
 
-const level = LEVELS[0]!;
-const selectedPairs = topicPack.value.pairs.slice(0, level.pairs);
+const level = LEVELS[0]!
+const selectedPairs = topicPack.value.pairs.slice(0, level.pairs)
 
 const {
   cards,
@@ -32,49 +32,58 @@ const {
   streak,
   maxStreak,
   isComplete,
+  isProcessing,
+  hints,
+  isPeeking,
   init: initGame,
   flipCard,
-} = useGame();
+  peekAll,
+  eliminatePair,
+} = useGame()
 const {
   remaining,
   elapsed,
   init: initTimer,
   start: startTimer,
   pause: pauseTimer,
-} = useTimer();
+} = useTimer()
 
-const finalScore = ref<number | null>(null);
+const finalScore = ref<number | null>(null)
 
 function startGame() {
-  finalScore.value = null;
-  initGame(selectedPairs);
+  finalScore.value = null
+  initGame(selectedPairs)
   initTimer(level.timeLimit, {
     onExpire: () => endGame(),
-  });
-  startTimer();
+  })
+  startTimer()
 }
 
 function endGame() {
-  if (finalScore.value !== null) return;
-  pauseTimer();
+  if (finalScore.value !== null) return
+  pauseTimer()
   finalScore.value = calculateScore({
     moves: moves.value,
     totalPairs: totalPairs.value,
     timeElapsed: elapsed.value,
     timeLimit: level.timeLimit,
     maxStreak: maxStreak.value,
-  });
+    hintsUsed: {
+      peek: hints.value.peekUsed,
+      eliminate: hints.value.eliminateUsed,
+    },
+  })
 }
 
 watch(isComplete, (complete) => {
-  if (complete) endGame();
-});
+  if (complete) endGame()
+})
 
 useHead({
   title: `Play ${topicPack.value.name} — Memojo`,
-});
+})
 
-startGame();
+startGame()
 </script>
 
 <template>
@@ -97,10 +106,29 @@ startGame();
       :time-remaining="remaining"
     />
 
+    <GameHints
+      class="my-4 flex justify-center"
+      :hints="hints"
+      :is-peeking="isPeeking"
+      :disabled="isProcessing || isPeeking || finalScore !== null"
+      @peek="peekAll()"
+      @eliminate="eliminatePair()"
+    />
+
     <ClientOnly>
-      <GameBoard :cards="cards" :grid-cols="level.gridCols" @flip="flipCard" />
+      <GameBoard
+        :cards="cards"
+        :grid-cols="level.gridCols"
+        :disabled="isProcessing || isPeeking || finalScore !== null"
+        @flip="flipCard"
+      />
       <template #fallback>
-        <div class="grid gap-3" :style="{ gridTemplateColumns: `repeat(${level.gridCols}, minmax(0, 1fr))` }">
+        <div
+          class="grid gap-3"
+          :style="{
+            gridTemplateColumns: `repeat(${level.gridCols}, minmax(0, 1fr))`,
+          }"
+        >
           <div
             v-for="n in level.pairs * 2"
             :key="n"
