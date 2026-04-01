@@ -54,7 +54,7 @@ const ariaLabel = computed(() => {
           :alt="card.pairId"
           class="h-full w-full rounded-[--radius-card] object-contain"
           loading="lazy"
-        />
+        >
         <span v-else class="text-center text-lg font-semibold">
           {{ card.content }}
         </span>
@@ -114,8 +114,13 @@ const ariaLabel = computed(() => {
 }
 
 @keyframes matchBounce {
-  0%, 100% { transform: rotateY(180deg) scale(1); }
-  50% { transform: rotateY(180deg) scale(1.05); }
+  0%,
+  100% {
+    transform: rotateY(180deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.05);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
