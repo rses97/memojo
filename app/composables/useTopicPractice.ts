@@ -8,16 +8,23 @@ export function useTopicPractice() {
   const showLevelComplete = ref(false)
   const lastLevelScore = ref(0)
 
-  const currentLevel = computed(() => LEVELS[currentLevelIndex.value])
+  const availableLevels = computed(() =>
+    LEVELS.filter((level) => allPairs.value.length >= level.pairs),
+  )
 
-  const isAllComplete = computed(() => currentLevelIndex.value >= LEVELS.length)
+  const currentLevel = computed(
+    () => availableLevels.value[currentLevelIndex.value],
+  )
 
-  const totalLevels = computed(() => LEVELS.length)
+  const isAllComplete = computed(
+    () => currentLevelIndex.value >= availableLevels.value.length,
+  )
+
+  const totalLevels = computed(() => availableLevels.value.length)
 
   const selectedPairs = computed(() => {
-    if (isAllComplete.value) return []
-    const count = currentLevel.value.pairs
-    return allPairs.value.slice(0, count)
+    if (isAllComplete.value || !currentLevel.value) return []
+    return allPairs.value.slice(0, currentLevel.value.pairs)
   })
 
   function start(pairs: TopicPair[]) {
@@ -26,6 +33,9 @@ export function useTopicPractice() {
     totalScore.value = 0
     showLevelComplete.value = false
     lastLevelScore.value = 0
+    if (availableLevels.value.length === 0) {
+      throw new Error('Topic has too few pairs for any level')
+    }
   }
 
   function advanceLevel() {

@@ -31,6 +31,7 @@ const emit = defineEmits<{
     </div>
 
     <button
+      type="button"
       class="rounded-xl bg-primary-500 px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-primary-600"
       @click="emit('next')"
     >

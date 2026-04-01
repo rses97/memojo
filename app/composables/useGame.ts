@@ -1,7 +1,7 @@
 import type { TopicPair, GameCard, HintState } from '~/types'
 import { INITIAL_HINTS } from '~/types'
 import { shuffle } from '~/utils/shuffle'
-import { seededShuffle } from '~/utils/seededRandom'
+import { seededShuffle, createRng } from '~/utils/seededRandom'
 import { onScopeDispose } from 'vue'
 
 export function useGame() {
@@ -17,6 +17,7 @@ export function useGame() {
   const flippedCards = ref<GameCard[]>([])
   let mismatchTimeout: ReturnType<typeof setTimeout> | null = null
   let peekTimeout: ReturnType<typeof setTimeout> | null = null
+  let rng: (() => number) | null = null
 
   onScopeDispose(() => {
     if (mismatchTimeout !== null) {
@@ -79,8 +80,10 @@ export function useGame() {
       },
     ])
     if (seed !== undefined) {
+      rng = createRng(seed)
       cards.value = seededShuffle(createdCards, seed)
     } else {
+      rng = null
       cards.value = shuffle(createdCards)
     }
   }
@@ -166,17 +169,22 @@ export function useGame() {
   function eliminatePair() {
     if (hints.value.eliminateAvailable <= 0 || isProcessing.value) return
 
+    const activePairIds = new Set(flippedCards.value.map((c) => c.pairId))
     const unmatchedPairIds = [
       ...new Set(
         cards.value
-          .filter((c) => !c.isMatched && !c.isEliminated)
+          .filter(
+            (c) =>
+              !c.isMatched && !c.isEliminated && !activePairIds.has(c.pairId),
+          )
           .map((c) => c.pairId),
       ),
     ]
 
     if (unmatchedPairIds.length === 0) return
 
-    const randomIndex = Math.floor(Math.random() * unmatchedPairIds.length)
+    const rand = rng ?? Math.random
+    const randomIndex = Math.floor(rand() * unmatchedPairIds.length)
     const pairIdToRemove = unmatchedPairIds[randomIndex]
 
     cards.value.forEach((card) => {

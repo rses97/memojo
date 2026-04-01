@@ -1,4 +1,4 @@
-function mulberry32(seed: number): () => number {
+export function createRng(seed: number): () => number {
   let s = seed | 0
   return () => {
     s = (s + 0x6d2b79f5) | 0
@@ -17,7 +17,7 @@ export function dateSeed(date: Date): number {
 
 export function seededShuffle<T>(array: T[], seed: number): T[] {
   const result = [...array]
-  const random = mulberry32(seed)
+  const random = createRng(seed)
 
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1))

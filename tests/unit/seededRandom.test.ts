@@ -14,8 +14,8 @@ describe('dateSeed', () => {
   })
 
   it('returns the same seed regardless of time-of-day', () => {
-    const morning = dateSeed(new Date('2026-03-26T08:00:00'))
-    const evening = dateSeed(new Date('2026-03-26T22:30:00'))
+    const morning = dateSeed(new Date('2026-03-26T08:00:00Z'))
+    const evening = dateSeed(new Date('2026-03-26T22:30:00Z'))
     expect(morning).toBe(evening)
   })
 })

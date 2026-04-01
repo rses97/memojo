@@ -15,6 +15,15 @@ const isError = ref(false)
 const topicData = ref<TopicPack | null>(null)
 const hasPreview = ref(false)
 
+let previewTimeout: ReturnType<typeof setTimeout> | null = null
+
+onScopeDispose(() => {
+  if (previewTimeout !== null) {
+    clearTimeout(previewTimeout)
+    previewTimeout = null
+  }
+})
+
 async function loadTopic() {
   try {
     topicData.value = await $fetch<TopicPack>(`/topics/${slug}.json`)
@@ -42,7 +51,7 @@ function startCurrentLevel() {
     game.cards.value.forEach((card) => {
       card.isFlipped = true
     })
-    setTimeout(() => {
+    previewTimeout = setTimeout(() => {
       game.cards.value.forEach((card) => {
         if (!card.isMatched) {
           card.isFlipped = false
@@ -50,6 +59,7 @@ function startCurrentLevel() {
       })
       hasPreview.value = false
       timer.start()
+      previewTimeout = null
     }, level.previewTime * 1000)
   } else {
     hasPreview.value = false

@@ -13,13 +13,15 @@ const isError = ref(false)
 const isGameOver = ref(false)
 const finalScore = ref(0)
 
-const todaySeed = dateSeed(new Date())
-const formattedDate = new Date().toLocaleDateString('en-US', {
+const challengeDate = new Date()
+const todaySeed = dateSeed(challengeDate)
+const formattedDate = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-})
+  timeZone: 'UTC',
+}).format(challengeDate)
 
 async function loadAndStart() {
   try {

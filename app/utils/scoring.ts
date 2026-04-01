@@ -25,8 +25,10 @@ export function calculateScore(params: ScoreParams): number {
   let total = Math.round((accuracyScore + speedScore) * streakMultiplier)
 
   if (hintsUsed) {
-    total -= hintsUsed.peek * HINT_COSTS.peek
-    total -= hintsUsed.eliminate * HINT_COSTS.eliminate
+    const peekUsed = Math.max(0, hintsUsed.peek)
+    const eliminateUsed = Math.max(0, hintsUsed.eliminate)
+    total -= peekUsed * HINT_COSTS.peek
+    total -= eliminateUsed * HINT_COSTS.eliminate
   }
 
   return Math.max(0, total)
