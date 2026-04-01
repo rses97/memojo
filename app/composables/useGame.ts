@@ -1,6 +1,7 @@
 import type { TopicPair, GameCard, HintState } from '~/types'
 import { INITIAL_HINTS } from '~/types'
 import { shuffle } from '~/utils/shuffle'
+import { seededShuffle } from '~/utils/seededRandom'
 import { onScopeDispose } from 'vue'
 
 export function useGame() {
@@ -55,30 +56,33 @@ export function useGame() {
     }
   }
 
-  function init(pairs: TopicPair[]) {
+  function init(pairs: TopicPair[], seed?: number) {
     resetState()
-    cards.value = shuffle(
-      pairs.flatMap((pair) => [
-        {
-          id: `${pair.id}-image`,
-          pairId: pair.id,
-          type: 'image' as const,
-          content: pair.image,
-          isFlipped: false,
-          isMatched: false,
-          isEliminated: false,
-        },
-        {
-          id: `${pair.id}-text`,
-          pairId: pair.id,
-          type: 'text' as const,
-          content: pair.text,
-          isFlipped: false,
-          isMatched: false,
-          isEliminated: false,
-        },
-      ]),
-    )
+    const createdCards = pairs.flatMap((pair) => [
+      {
+        id: `${pair.id}-image`,
+        pairId: pair.id,
+        type: 'image' as const,
+        content: pair.image,
+        isFlipped: false,
+        isMatched: false,
+        isEliminated: false,
+      },
+      {
+        id: `${pair.id}-text`,
+        pairId: pair.id,
+        type: 'text' as const,
+        content: pair.text,
+        isFlipped: false,
+        isMatched: false,
+        isEliminated: false,
+      },
+    ])
+    if (seed !== undefined) {
+      cards.value = seededShuffle(createdCards, seed)
+    } else {
+      cards.value = shuffle(createdCards)
+    }
   }
 
   function flipCard(cardId: string) {
