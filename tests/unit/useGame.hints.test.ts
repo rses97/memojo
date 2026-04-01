@@ -87,12 +87,9 @@ describe('useGame hints', () => {
 
       game.peekAll()
 
-      const matchedCards = game.cards.value.filter((c) => c.isMatched)
-      expect(matchedCards.every((c) => c.isFlipped)).toBe(true)
-
       vi.advanceTimersByTime(1000)
 
-      // Matched cards should stay flipped
+      // Peek timeout must not unflip matched cards — they stay face-up
       const matchedAfter = game.cards.value.filter((c) => c.isMatched)
       expect(matchedAfter.every((c) => c.isFlipped)).toBe(true)
     })
@@ -109,6 +106,7 @@ describe('useGame hints', () => {
 
       vi.advanceTimersByTime(1000)
       expect(game.isPeeking.value).toBe(false)
+      expect(game.moves.value).toBe(0)
     })
   })
 
