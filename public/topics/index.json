@@ -1,0 +1,10 @@
+{
+  "topics": [
+    {
+      "slug": "world-flags",
+      "name": "World Flags",
+      "description": "Match country flags to their names",
+      "pairCount": 10
+    }
+  ]
+}
