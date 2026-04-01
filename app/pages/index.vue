@@ -1,26 +1,48 @@
 <script setup lang="ts">
-useHead({
-  title: 'Memojo — Cross-Modal Memory Training',
-})
+const modes = [
+  {
+    title: 'Daily Challenge',
+    description:
+      'A new puzzle every day. Same cards for everyone — compare your score!',
+    icon: '📅',
+    to: '/daily',
+  },
+  {
+    title: 'Topic Practice',
+    description:
+      'Pick a topic and master it through three progressively harder levels.',
+    icon: '📚',
+    to: '/topics',
+  },
+  {
+    title: 'Quick Play',
+    description: 'Jump right in with random cards. No pressure, just practice.',
+    icon: '⚡',
+    to: '/play/world-flags',
+  },
+]
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-8 py-12 text-center">
-    <h1 class="text-5xl font-bold tracking-tight">
-      Memo<span class="text-primary-500">jo</span>
-    </h1>
-    <p class="max-w-md text-lg text-surface-700">
-      Match images to words. Train your memory with cross-modal matching across
-      diverse topics.
-    </p>
+  <div class="mx-auto max-w-3xl px-4 py-12">
+    <div class="mb-12 text-center">
+      <h1 class="mb-3 text-4xl font-bold text-surface-900 dark:text-surface-50">
+        Memojo
+      </h1>
+      <p class="text-lg text-surface-600 dark:text-surface-400">
+        Match images to text. Train your memory. Beat your best.
+      </p>
+    </div>
 
-    <div class="flex flex-col gap-4">
-      <NuxtLink
-        to="/play/world-flags"
-        class="rounded-xl bg-primary-500 px-8 py-4 text-lg font-semibold text-white shadow-lg transition hover:bg-primary-600 hover:shadow-xl"
-      >
-        Quick Play
-      </NuxtLink>
+    <div class="grid gap-6 sm:grid-cols-3">
+      <GameModeCard
+        v-for="mode in modes"
+        :key="mode.to"
+        :title="mode.title"
+        :description="mode.description"
+        :icon="mode.icon"
+        :to="mode.to"
+      />
     </div>
   </div>
 </template>
