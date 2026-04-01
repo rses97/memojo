@@ -19,6 +19,7 @@ export interface GameCard {
   content: string
   isFlipped: boolean
   isMatched: boolean
+  isEliminated: boolean
 }
 
 export interface GameLevel {
