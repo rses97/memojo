@@ -24,16 +24,19 @@ Commits must follow Conventional Commits (enforced by commitlint + husky). Lint-
 
 **Tailwind CSS v4** — configured CSS-first in `app/assets/css/main.css` via `@theme {}`. No `tailwind.config.ts`. Custom tokens: `primary-*` (indigo oklch scale), `surface-*` (neutral scale), `success`, `danger`, `--radius-card`, `--ease-flip`, `--ease-bounce`.
 
-**Types** (`app/types/index.ts`) are the source of truth for data shapes: `TopicPair`, `TopicPack`, `GameCard`, `GameLevel`, `GameResult`, and the `LEVELS` constant (3 difficulty levels driving pairs count, grid cols, time limit, and optional preview time).
+**Types** (`app/types/index.ts`) are the source of truth for data shapes: `TopicPair`, `TopicPack`, `GameCard` (includes `isEliminated`), `GameLevel`, `GameResult`, `HintState`, `GameMode`, and the `LEVELS` constant (3 difficulty levels driving pairs count, grid cols, time limit, and optional preview time). `HINT_COSTS` and `INITIAL_HINTS` are also exported constants.
 
-**Topic packs** are static JSON files served from `public/topics/{slug}.json`. Images are SVGs under `public/img/{category}/`. No backend — all game data is client-side static.
+**Topic packs** are static JSON files served from `public/topics/{slug}.json`. Images are SVGs under `public/img/{category}/`. Topic manifest at `public/topics/index.json`. No backend — all game data is client-side static.
 
 **Core composables:**
 
-- `useGame` — card state machine. Cards are created in `init(pairs)`, shuffled, and stored as `readonly(cards)`. Direct property mutation on card objects (e.g. `card.isFlipped = true`) is intentional — `readonly()` only blocks ref reassignment. Returns `flipCard`, `reset`, and derived state (`matchedPairs`, `totalPairs`, `isComplete`, `isProcessing`).
-- `useTimer` — countdown timer using `performance.now()` sampled every 250ms. Accepts an injectable `clock` function for testing. Pauses automatically on `visibilitychange` (tab hide). Use `init(seconds, { onExpire })` then `start()`.
+- `useGame` — card state machine. `init(pairs, seed?)` accepts an optional seed for deterministic shuffles. Returns `flipCard`, `reset`, `peekAll`, `eliminatePair`, and state including `hints` (HintState ref), `isPeeking`, `isProcessing`, `matchedPairs`, `totalPairs`, `isComplete`. Direct property mutation on card objects is intentional — `readonly()` only blocks ref reassignment.
+- `useTimer` — countdown timer using `performance.now()` sampled every 250ms. Accepts an injectable `clock` function for testing. Pauses automatically on `visibilitychange`. Use `init(seconds, { onExpire })` then `start()`.
+- `useTopicPractice` — level progression wrapper for topic practice. Manages `currentLevelIndex`, `selectedPairs`, `totalScore`, `showLevelComplete`. Call `completeLevelAndShow(score)` when a level ends, `advanceLevel()` to move forward.
 
-**Scoring** (`app/utils/scoring.ts`) is a pure function: accuracy (moves vs perfect), speed ratio, and streak multiplier combined and rounded.
+**Scoring** (`app/utils/scoring.ts`) is a pure function: accuracy, speed ratio, streak multiplier, minus hint penalties (`HINT_COSTS.peek = 200`, `HINT_COSTS.eliminate = 300`). Accepts optional `hintsUsed: { peek, eliminate }`.
+
+**Seeded random** (`app/utils/seededRandom.ts`): `dateSeed(date)` uses UTC getters for cross-timezone consistency. `seededShuffle(array, seed)` uses mulberry32 PRNG.
 
 **Tests** use Vitest with `environment: 'nuxt'` (happy-dom). Unit tests live in `tests/unit/`, component tests in `tests/components/`. `useTimer` tests inject a manual clock instead of using `vi.useFakeTimers()` to avoid `performance.now()` conflicts.
 
