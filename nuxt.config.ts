@@ -7,6 +7,12 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  app: {
+    head: {
+      titleTemplate: '%s — Memojo',
+    },
+  },
+
   css: ['~/assets/css/main.css'],
 
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/eslint'],

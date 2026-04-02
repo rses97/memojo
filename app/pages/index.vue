@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Memojo', titleTemplate: '%s' })
+
 const modes = [
   {
     title: 'Daily Challenge',
@@ -43,6 +45,21 @@ const modes = [
         :icon="mode.icon"
         :to="mode.to"
       />
+    </div>
+
+    <div class="mt-6 flex justify-center gap-4">
+      <NuxtLink
+        to="/leaderboard"
+        class="rounded-lg border border-gray-300 px-6 py-3 text-center font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+      >
+        Leaderboard
+      </NuxtLink>
+      <NuxtLink
+        to="/profile"
+        class="rounded-lg border border-gray-300 px-6 py-3 text-center font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+      >
+        Profile
+      </NuxtLink>
     </div>
   </div>
 </template>

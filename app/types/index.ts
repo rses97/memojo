@@ -44,7 +44,7 @@ export const LEVELS: GameLevel[] = [
   { pairs: 9, gridCols: 6, timeLimit: 75, previewTime: 3 },
 ]
 
-export type GameMode = 'quick-play' | 'daily' | 'topic-practice'
+export type GameMode = 'quick-play' | 'daily-challenge' | 'topic-practice'
 
 export interface HintState {
   peekAvailable: number
@@ -70,4 +70,64 @@ export interface TopicManifestEntry {
   name: string
   description: string
   pairCount: number
+}
+
+// --- Persistence types (Plan 3) ---
+
+export interface StoredGameResult {
+  id: string
+  topic: string
+  mode: GameMode
+  level: number
+  score: number
+  moves: number
+  totalPairs: number
+  timeElapsed: number
+  timeLimit: number
+  maxStreak: number
+  hintsUsed: number
+  accuracy: number
+  date: string // ISO 8601
+}
+
+export interface PairPerformance {
+  pairId: string
+  topic: string
+  attempts: number
+  correctMatches: number
+  totalTimeMs: number
+  lastPlayed: string // ISO 8601
+}
+
+export interface SessionPerformance {
+  id: string
+  topic: string
+  mode: GameMode
+  level: number
+  accuracy: number
+  averageMatchTimeMs: number
+  maxStreak: number
+  date: string // ISO 8601
+}
+
+export interface SpacedRepetitionCard {
+  pairId: string
+  topic: string
+  easeFactor: number
+  interval: number
+  repetitions: number
+  nextReview: string // ISO 8601
+  lastReview: string // ISO 8601
+}
+
+export interface UserPreferences {
+  theme: 'light' | 'dark'
+  preferredTopics: string[]
+}
+
+export interface AdaptiveLevelAdjustment {
+  pairs: number
+  gridCols: number
+  timeLimit: number
+  previewTime?: number
 }

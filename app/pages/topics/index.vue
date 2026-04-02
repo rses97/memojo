@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
 
+useHead({ title: 'Topic Practice' })
+
 const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>(
   '/topics/index.json',
 )

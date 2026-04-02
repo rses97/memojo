@@ -4,8 +4,11 @@ import { calculateScore } from '~/utils/scoring'
 import { LEVELS } from '~/types'
 import type { TopicPack } from '~/types'
 
+useHead({ title: 'Daily Challenge' })
+
 const game = useGame()
 const timer = useTimer()
+const { saveGameResult } = useGamePersistence()
 
 const level = LEVELS[1] // Daily uses level 2 (6 pairs, 90s)
 const isLoading = ref(true)
@@ -54,15 +57,15 @@ watch(
 
 watch(
   () => game.isComplete.value,
-  (complete) => {
+  async (complete) => {
     if (complete) {
       timer.pause()
-      endGame()
+      await endGame()
     }
   },
 )
 
-function endGame() {
+async function endGame() {
   if (isGameOver.value) return
   isGameOver.value = true
   finalScore.value = calculateScore({
@@ -75,6 +78,21 @@ function endGame() {
       peek: game.hints.value.peekUsed,
       eliminate: game.hints.value.eliminateUsed,
     },
+  })
+  await saveGameResult({
+    result: {
+      score: finalScore.value,
+      moves: game.moves.value,
+      totalPairs: game.totalPairs.value,
+      timeElapsed: timer.elapsed.value,
+      timeLimit: level.timeLimit,
+      maxStreak: game.maxStreak.value,
+    },
+    topic: 'world-flags',
+    mode: 'daily-challenge',
+    level: 1,
+    hintsUsed: game.hints.value.peekUsed + game.hints.value.eliminateUsed,
+    pairAttempts: new Map(),
   })
 }
 

@@ -8,11 +8,16 @@ const slug = route.params.slug as string
 const game = useGame()
 const timer = useTimer()
 const practice = useTopicPractice()
+const adaptive = useAdaptive()
 
 const isLoading = ref(true)
 const isGameOver = ref(false)
 const isError = ref(false)
 const topicData = ref<TopicPack | null>(null)
+
+useHead({
+  title: computed(() => topicData.value?.name ?? ''),
+})
 const hasPreview = ref(false)
 
 let previewTimeout: ReturnType<typeof setTimeout> | null = null
@@ -28,7 +33,7 @@ async function loadTopic() {
   try {
     topicData.value = await $fetch<TopicPack>(`/topics/${slug}.json`)
     practice.start(topicData.value.pairs)
-    startCurrentLevel()
+    await startCurrentLevel()
     isLoading.value = false
   } catch {
     isError.value = true
@@ -36,11 +41,27 @@ async function loadTopic() {
   }
 }
 
-function startCurrentLevel() {
+async function startCurrentLevel() {
   if (practice.isAllComplete.value) return
 
   const level = practice.currentLevel.value
-  const pairs = practice.selectedPairs.value
+
+  // Use adaptive pair selection if topic data is loaded
+  let pairs = practice.selectedPairs.value
+  if (topicData.value) {
+    const allIds = topicData.value.pairs.map((p) => p.id)
+    const selectedIds = await adaptive.buildMixedSession(
+      slug,
+      allIds,
+      level.pairs,
+    )
+    const adaptivePairs = topicData.value.pairs.filter((p) =>
+      selectedIds.includes(p.id),
+    )
+    if (adaptivePairs.length > 0) {
+      pairs = adaptivePairs
+    }
+  }
 
   game.init(pairs)
   timer.init(level.timeLimit)
@@ -109,17 +130,17 @@ function handleLevelEnd() {
   practice.completeLevelAndShow(score)
 }
 
-function handleNext() {
+async function handleNext() {
   practice.advanceLevel()
   if (!practice.isAllComplete.value) {
-    startCurrentLevel()
+    await startCurrentLevel()
   }
 }
 
-function handleRestart() {
+async function handleRestart() {
   if (topicData.value) {
     practice.start(topicData.value.pairs)
-    startCurrentLevel()
+    await startCurrentLevel()
   }
 }
 
