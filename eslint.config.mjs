@@ -38,5 +38,7 @@ export default withNuxt(
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // Align with Prettier: allow self-closing void elements (<img />)
+      'vue/html-self-closing': ['warn', { html: { void: 'always' } }],
     },
   })
