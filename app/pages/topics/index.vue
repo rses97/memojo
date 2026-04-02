@@ -3,9 +3,7 @@ import type { TopicManifestEntry } from '~/types'
 
 useHead({ title: 'Topic Practice' })
 
-const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>(
-  '/topics/index.json',
-)
+const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
 
 const topics = computed(() => manifest.value?.topics ?? [])
 </script>
@@ -16,12 +14,9 @@ const topics = computed(() => manifest.value?.topics ?? [])
       <NuxtLink to="/" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to menu
       </NuxtLink>
-      <h1 class="mt-2 text-3xl font-bold text-surface-900 dark:text-surface-50">
-        Topic Practice
-      </h1>
+      <h1 class="mt-2 text-3xl font-bold text-surface-900 dark:text-surface-50">Topic Practice</h1>
       <p class="mt-1 text-surface-600 dark:text-surface-400">
-        Choose a topic and master it through three levels of increasing
-        difficulty.
+        Choose a topic and master it through three levels of increasing difficulty.
       </p>
     </div>
 

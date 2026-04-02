@@ -104,9 +104,7 @@ onMounted(() => {
 <template>
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="mb-6 text-center">
-      <h1 class="mb-1 text-2xl font-bold text-surface-900 dark:text-surface-50">
-        Daily Challenge
-      </h1>
+      <h1 class="mb-1 text-2xl font-bold text-surface-900 dark:text-surface-50">Daily Challenge</h1>
       <p class="text-sm text-surface-500 dark:text-surface-400">
         {{ formattedDate }}
       </p>
@@ -117,9 +115,7 @@ onMounted(() => {
     </div>
     <div v-else-if="isError" class="py-20 text-center text-surface-500">
       <p class="mb-4">Failed to load today's challenge.</p>
-      <NuxtLink to="/" class="text-primary-500 hover:text-primary-600"
-        >Back to Menu</NuxtLink
-      >
+      <NuxtLink to="/" class="text-primary-500 hover:text-primary-600">Back to Menu</NuxtLink>
     </div>
 
     <template v-else>
@@ -143,9 +139,7 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="level.gridCols"
-        :disabled="
-          game.isProcessing.value || game.isPeeking.value || isGameOver
-        "
+        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver"
         @flip="handleFlip"
       />
 
@@ -160,8 +154,8 @@ onMounted(() => {
           Score: <span class="font-bold">{{ finalScore }}</span>
         </p>
         <p class="text-sm text-surface-500">
-          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs
-          matched in {{ game.moves.value }} moves
+          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs matched in
+          {{ game.moves.value }} moves
         </p>
         <NuxtLink
           to="/"

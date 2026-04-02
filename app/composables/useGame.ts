@@ -34,9 +34,7 @@ export function useGame() {
     const eliminated = cards.value.filter((c) => c.isEliminated).length / 2
     return cards.value.length / 2 - eliminated
   })
-  const isComplete = computed(
-    () => matchedPairs.value === totalPairs.value && totalPairs.value > 0,
-  )
+  const isComplete = computed(() => matchedPairs.value === totalPairs.value && totalPairs.value > 0)
 
   function resetState() {
     matchedPairs.value = 0
@@ -131,8 +129,7 @@ export function useGame() {
   }
 
   function peekAll() {
-    if (hints.value.peekAvailable <= 0 || isPeeking.value || isProcessing.value)
-      return
+    if (hints.value.peekAvailable <= 0 || isPeeking.value || isProcessing.value) return
 
     isPeeking.value = true
     hints.value.peekAvailable--
@@ -140,9 +137,7 @@ export function useGame() {
 
     // Remember which unmatched cards were already face-up before peek
     const alreadyFlipped = new Set(
-      cards.value
-        .filter((c) => !c.isMatched && !c.isEliminated && c.isFlipped)
-        .map((c) => c.id),
+      cards.value.filter((c) => !c.isMatched && !c.isEliminated && c.isFlipped).map((c) => c.id),
     )
 
     cards.value.forEach((card) => {
@@ -153,11 +148,7 @@ export function useGame() {
 
     peekTimeout = setTimeout(() => {
       cards.value.forEach((card) => {
-        if (
-          !card.isMatched &&
-          !card.isEliminated &&
-          !alreadyFlipped.has(card.id)
-        ) {
+        if (!card.isMatched && !card.isEliminated && !alreadyFlipped.has(card.id)) {
           card.isFlipped = false
         }
       })
@@ -173,10 +164,7 @@ export function useGame() {
     const unmatchedPairIds = [
       ...new Set(
         cards.value
-          .filter(
-            (c) =>
-              !c.isMatched && !c.isEliminated && !activePairIds.has(c.pairId),
-          )
+          .filter((c) => !c.isMatched && !c.isEliminated && !activePairIds.has(c.pairId))
           .map((c) => c.pairId),
       ),
     ]

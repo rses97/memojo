@@ -7,12 +7,9 @@ const route = useRoute()
 const slug = route.params.slug as string
 const { origin } = useRequestURL()
 
-const { data: topicPack, error } = await useFetch<TopicPack>(
-  `/topics/${slug}.json`,
-  {
-    baseURL: origin,
-  },
-)
+const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`, {
+  baseURL: origin,
+})
 
 if (error.value || !topicPack.value) {
   throw createError({
@@ -40,33 +37,20 @@ const {
   peekAll,
   eliminatePair,
 } = useGame()
-const {
-  remaining,
-  elapsed,
-  init: initTimer,
-  start: startTimer,
-  pause: pauseTimer,
-} = useTimer()
+const { remaining, elapsed, init: initTimer, start: startTimer, pause: pauseTimer } = useTimer()
 
 const adaptive = useAdaptive()
 
 const { saveGameResult } = useGamePersistence()
-const pairAttempts = new Map<
-  string,
-  { attempts: number; timeMs: number; matched: boolean }
->()
+const pairAttempts = new Map<string, { attempts: number; timeMs: number; matched: boolean }>()
 const gameStartMs = ref(0)
 const prevMatchedPairIds = new Set<string>()
 
 watch(moves, () => {
   const now = Date.now()
-  const nowMatchedIds = new Set(
-    cards.value.filter((c) => c.isMatched).map((c) => c.pairId),
-  )
+  const nowMatchedIds = new Set(cards.value.filter((c) => c.isMatched).map((c) => c.pairId))
   const flippedPairIds = new Set(
-    cards.value
-      .filter((c) => c.isFlipped && !c.isEliminated)
-      .map((c) => c.pairId),
+    cards.value.filter((c) => c.isFlipped && !c.isEliminated).map((c) => c.pairId),
   )
   for (const pairId of flippedPairIds) {
     const entry = pairAttempts.get(pairId)
@@ -91,14 +75,8 @@ async function startGame() {
     const adjustment = await adaptive.getAdjustedLevel(slug, 0)
     currentLevel.value = adjustment
     const allIds = topicPack.value!.pairs.map((p) => p.id)
-    const selectedIds = await adaptive.buildMixedSession(
-      slug,
-      allIds,
-      adjustment.pairs,
-    )
-    selectedPairs.value = topicPack.value!.pairs.filter((p) =>
-      selectedIds.includes(p.id),
-    )
+    const selectedIds = await adaptive.buildMixedSession(slug, allIds, adjustment.pairs)
+    selectedPairs.value = topicPack.value!.pairs.filter((p) => selectedIds.includes(p.id))
     // Fallback: if no pairs selected (new topic), use first N
     if (selectedPairs.value.length === 0) {
       selectedPairs.value = topicPack.value!.pairs.slice(0, adjustment.pairs)
@@ -217,9 +195,7 @@ onMounted(() => {
       v-if="finalScore !== null"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
     >
-      <div
-        class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl"
-      >
+      <div class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
         <h2 class="mb-2 text-3xl font-bold">
           {{ isComplete ? 'Well Done!' : "Time's Up!" }}
         </h2>

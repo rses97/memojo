@@ -12,13 +12,9 @@ export function useTopicPractice() {
     LEVELS.filter((level) => allPairs.value.length >= level.pairs),
   )
 
-  const currentLevel = computed(
-    () => availableLevels.value[currentLevelIndex.value],
-  )
+  const currentLevel = computed(() => availableLevels.value[currentLevelIndex.value])
 
-  const isAllComplete = computed(
-    () => currentLevelIndex.value >= availableLevels.value.length,
-  )
+  const isAllComplete = computed(() => currentLevelIndex.value >= availableLevels.value.length)
 
   const totalLevels = computed(() => availableLevels.value.length)
 

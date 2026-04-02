@@ -19,16 +19,8 @@ const emit = defineEmits<{
     role="grid"
     aria-label="Game board"
   >
-    <div
-      v-for="card in cards"
-      :key="card.id"
-      :class="{ invisible: card.isEliminated }"
-    >
-      <GameCard
-        :card="card"
-        :disabled="disabled"
-        @flip="emit('flip', card.id)"
-      />
+    <div v-for="card in cards" :key="card.id" :class="{ invisible: card.isEliminated }">
+      <GameCard :card="card" :disabled="disabled" @flip="emit('flip', card.id)" />
     </div>
   </div>
 </template>

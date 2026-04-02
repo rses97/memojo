@@ -50,14 +50,8 @@ async function startCurrentLevel() {
   let pairs = practice.selectedPairs.value
   if (topicData.value) {
     const allIds = topicData.value.pairs.map((p) => p.id)
-    const selectedIds = await adaptive.buildMixedSession(
-      slug,
-      allIds,
-      level.pairs,
-    )
-    const adaptivePairs = topicData.value.pairs.filter((p) =>
-      selectedIds.includes(p.id),
-    )
+    const selectedIds = await adaptive.buildMixedSession(slug, allIds, level.pairs)
+    const adaptivePairs = topicData.value.pairs.filter((p) => selectedIds.includes(p.id))
     if (adaptivePairs.length > 0) {
       pairs = adaptivePairs
     }
@@ -152,23 +146,15 @@ onMounted(() => {
 <template>
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="mb-6">
-      <NuxtLink
-        to="/topics"
-        class="text-sm text-primary-500 hover:text-primary-600"
-      >
+      <NuxtLink to="/topics" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to topics
       </NuxtLink>
-      <h1
-        v-if="topicData"
-        class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50"
-      >
+      <h1 v-if="topicData" class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
         {{ topicData.name }}
       </h1>
     </div>
 
-    <div v-if="isLoading" class="py-20 text-center text-surface-500">
-      Loading topic...
-    </div>
+    <div v-if="isLoading" class="py-20 text-center text-surface-500">Loading topic...</div>
 
     <div v-else-if="isError" class="py-20 text-center text-surface-500">
       <p class="mb-4">Failed to load topic.</p>
@@ -178,12 +164,8 @@ onMounted(() => {
     </div>
 
     <template v-else-if="practice.isAllComplete.value">
-      <div
-        class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
-      >
-        <h2 class="mb-4 text-3xl font-bold text-primary-500">
-          All Levels Complete!
-        </h2>
+      <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
+        <h2 class="mb-4 text-3xl font-bold text-primary-500">All Levels Complete!</h2>
         <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
           Total Score:
           <span class="font-bold">{{ practice.totalScore.value }}</span>
@@ -213,25 +195,18 @@ onMounted(() => {
         :level-index="practice.currentLevelIndex.value"
         :total-levels="practice.totalLevels.value"
         :score="practice.lastLevelScore.value"
-        :is-last-level="
-          practice.currentLevelIndex.value >= practice.totalLevels.value - 1
-        "
+        :is-last-level="practice.currentLevelIndex.value >= practice.totalLevels.value - 1"
         @next="handleNext"
       />
     </template>
 
     <template v-else>
-      <div
-        class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400"
-      >
+      <div class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400">
         Level {{ practice.currentLevelIndex.value + 1 }} /
         {{ practice.totalLevels.value }}
       </div>
 
-      <div
-        v-if="hasPreview"
-        class="mb-4 text-center text-sm font-medium text-primary-500"
-      >
+      <div v-if="hasPreview" class="mb-4 text-center text-sm font-medium text-primary-500">
         Memorize the cards...
       </div>
 
@@ -255,12 +230,7 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="practice.currentLevel.value.gridCols"
-        :disabled="
-          game.isProcessing.value ||
-          game.isPeeking.value ||
-          isGameOver ||
-          hasPreview
-        "
+        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver || hasPreview"
         @flip="handleFlip"
       />
     </template>

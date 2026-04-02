@@ -17,9 +17,7 @@ const ariaLabel = computed(() => {
   if (!props.card.isFlipped && !props.card.isMatched) {
     return 'Hidden card — click to reveal'
   }
-  return props.card.type === 'text'
-    ? `Card: ${props.card.content}`
-    : 'Image card'
+  return props.card.type === 'text' ? `Card: ${props.card.content}` : 'Image card'
 })
 </script>
 
@@ -38,23 +36,17 @@ const ariaLabel = computed(() => {
     @keydown.space.prevent="handleClick"
   >
     <div class="game-card__inner">
-      <div
-        data-testid="card-back"
-        class="game-card__face game-card__face--back"
-      >
+      <div data-testid="card-back" class="game-card__face game-card__face--back">
         <span class="text-2xl">?</span>
       </div>
-      <div
-        data-testid="card-front"
-        class="game-card__face game-card__face--front"
-      >
+      <div data-testid="card-front" class="game-card__face game-card__face--front">
         <img
           v-if="card.type === 'image'"
           :src="card.content"
           :alt="card.pairId"
           class="h-full w-full rounded-[--radius-card] object-contain"
           loading="lazy"
-        />
+        >
         <span v-else class="text-center text-lg font-semibold">
           {{ card.content }}
         </span>

@@ -34,10 +34,7 @@ export function useAdaptive() {
     }
 
     // Check for consecutive high accuracy (increase difficulty)
-    const recentSessions = levelSessions.slice(
-      0,
-      CONSECUTIVE_SESSIONS_FOR_INCREASE,
-    )
+    const recentSessions = levelSessions.slice(0, CONSECUTIVE_SESSIONS_FOR_INCREASE)
     const allHighAccuracy =
       recentSessions.length >= CONSECUTIVE_SESSIONS_FOR_INCREASE &&
       recentSessions.every((s) => s.accuracy > HIGH_ACCURACY_THRESHOLD)
@@ -71,17 +68,14 @@ export function useAdaptive() {
     }
   }
 
-  async function categorizePairs(
-    topic: string,
-  ): Promise<{ weak: string[]; strong: string[] }> {
+  async function categorizePairs(topic: string): Promise<{ weak: string[]; strong: string[] }> {
     const performances = await db.getPairPerformanceByTopic(topic)
 
     const weak: string[] = []
     const strong: string[] = []
 
     for (const perf of performances) {
-      const accuracy =
-        perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
+      const accuracy = perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
       if (accuracy < WEAK_PAIR_ACCURACY_THRESHOLD) {
         weak.push(perf.pairId)
       } else if (accuracy >= STRONG_PAIR_ACCURACY_THRESHOLD) {
@@ -110,9 +104,7 @@ export function useAdaptive() {
     }
 
     // 2. Fill with unseen/neutral pairs (not strong)
-    const neutral = allPairIds.filter(
-      (id) => !selected.includes(id) && !strong.includes(id),
-    )
+    const neutral = allPairIds.filter((id) => !selected.includes(id) && !strong.includes(id))
     for (const id of neutral) {
       if (selected.length >= count) break
       selected.push(id)

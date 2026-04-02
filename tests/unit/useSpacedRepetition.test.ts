@@ -84,11 +84,7 @@ describe('useSpacedRepetition', () => {
     vi.setSystemTime(new Date('2026-03-28T12:00:00Z'))
 
     const allPairIds = ['p1', 'p2', 'p3', 'p4', 'p5']
-    const selected = await sr.selectPairsForSession(
-      'world-flags',
-      allPairIds,
-      4,
-    )
+    const selected = await sr.selectPairsForSession('world-flags', allPairIds, 4)
 
     expect(selected).toHaveLength(4)
     // p1 should be included because it's due

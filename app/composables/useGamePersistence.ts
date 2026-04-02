@@ -15,10 +15,7 @@ interface SaveGameOptions {
   mode: GameMode
   level: number
   hintsUsed: number
-  pairAttempts: Map<
-    string,
-    { attempts: number; timeMs: number; matched: boolean }
-  >
+  pairAttempts: Map<string, { attempts: number; timeMs: number; matched: boolean }>
 }
 
 export function useGamePersistence() {
@@ -55,15 +52,9 @@ export function useGamePersistence() {
     await db.putGameResult(storedResult)
 
     // 2. Store session performance
-    const totalTimeMs = Array.from(pairAttempts.values()).reduce(
-      (sum, p) => sum + p.timeMs,
-      0,
-    )
-    const matchedPairs = Array.from(pairAttempts.values()).filter(
-      (p) => p.matched,
-    )
-    const avgMatchTime =
-      matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
+    const totalTimeMs = Array.from(pairAttempts.values()).reduce((sum, p) => sum + p.timeMs, 0)
+    const matchedPairs = Array.from(pairAttempts.values()).filter((p) => p.matched)
+    const avgMatchTime = matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
 
     const session: SessionPerformance = {
       id: `session-${id}`,
@@ -85,19 +76,14 @@ export function useGamePersistence() {
         pairId,
         topic,
         attempts: (existing?.attempts ?? 0) + data.attempts,
-        correctMatches:
-          (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
+        correctMatches: (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
         totalTimeMs: (existing?.totalTimeMs ?? 0) + data.timeMs,
         lastPlayed: now,
       }
       await db.putPairPerformance(updated)
 
       // Update spaced repetition
-      const quality = rateMatchQuality(
-        data.matched ? data.attempts : 0,
-        data.timeMs,
-        avgMatchTime,
-      )
+      const quality = rateMatchQuality(data.matched ? data.attempts : 0, data.timeMs, avgMatchTime)
       await sr.recordReview(pairId, topic, quality)
     }
 
