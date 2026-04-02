@@ -3,18 +3,18 @@ import 'fake-indexeddb/auto'
 import { useSpacedRepetition } from '../../app/composables/useSpacedRepetition'
 
 describe('useSpacedRepetition', () => {
-  let fakeTime: number
-
   beforeEach(() => {
     indexedDB = new IDBFactory()
-    // Start at 2026-03-26T12:00:00Z
-    fakeTime = new Date('2026-03-26T12:00:00Z').getTime()
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(new Date('2026-03-26T12:00:00Z'))
   })
 
-  const clock = () => fakeTime
+  afterEach(() => {
+    vi.useRealTimers()
+  })
 
   it('initializes a new pair with default SM-2 values', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
     const card = await sr.getOrCreateCard('p1', 'world-flags')
 
     expect(card.easeFactor).toBe(2.5)
@@ -25,21 +25,18 @@ describe('useSpacedRepetition', () => {
   })
 
   it('updates a card after correct match', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
     await sr.getOrCreateCard('p1', 'world-flags')
 
     const updated = await sr.recordReview('p1', 'world-flags', 4)
 
     expect(updated.repetitions).toBe(1)
     expect(updated.interval).toBe(1)
-    // nextReview should be 1 day later (interval=1)
-    const expectedDate = new Date(fakeTime)
-    expectedDate.setDate(expectedDate.getDate() + 1)
-    expect(updated.nextReview).toBe(expectedDate.toISOString())
+    expect(updated.nextReview).toBe('2026-03-27T12:00:00.000Z')
   })
 
   it('updates a card after failed match', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
     await sr.getOrCreateCard('p1', 'world-flags')
     // First do a successful review to advance
     await sr.recordReview('p1', 'world-flags', 4)
@@ -51,7 +48,7 @@ describe('useSpacedRepetition', () => {
   })
 
   it('returns pairs due for review', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
 
     // Create a card with nextReview in the past
     await sr.getOrCreateCard('p1', 'world-flags')
@@ -62,14 +59,14 @@ describe('useSpacedRepetition', () => {
     await sr.recordReview('p2', 'world-flags', 5) // nextReview = tomorrow
 
     // Move time forward 2 days
-    fakeTime = new Date('2026-03-28T12:00:00Z').getTime()
+    vi.setSystemTime(new Date('2026-03-28T12:00:00Z'))
 
     const due = await sr.getDueCards('world-flags')
     expect(due).toHaveLength(2)
   })
 
   it('returns empty array when no cards are due', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
     await sr.getOrCreateCard('p1', 'world-flags')
     await sr.recordReview('p1', 'world-flags', 4) // due tomorrow
 
@@ -78,14 +75,13 @@ describe('useSpacedRepetition', () => {
   })
 
   it('selects pairs for session mixing due and new pairs', async () => {
-    const sr = useSpacedRepetition(clock)
+    const sr = useSpacedRepetition()
 
     // Simulate some due cards
     await sr.getOrCreateCard('p1', 'world-flags')
     await sr.recordReview('p1', 'world-flags', 2) // failed, due tomorrow
 
-    // Move time forward 2 days
-    fakeTime = new Date('2026-03-28T12:00:00Z').getTime()
+    vi.setSystemTime(new Date('2026-03-28T12:00:00Z'))
 
     const allPairIds = ['p1', 'p2', 'p3', 'p4', 'p5']
     const selected = await sr.selectPairsForSession(
