@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TopicPack } from '~/types'
+import type { TopicPack, AdaptiveLevelAdjustment } from '~/types'
 import { LEVELS } from '~/types'
 import { calculateScore } from '~/utils/scoring'
 
@@ -21,8 +21,8 @@ if (error.value || !topicPack.value) {
   })
 }
 
-const level = LEVELS[0]!
-const selectedPairs = topicPack.value.pairs.slice(0, level.pairs)
+const currentLevel = ref<AdaptiveLevelAdjustment>(LEVELS[0]!)
+const selectedPairs = ref(topicPack.value!.pairs.slice(0, LEVELS[0]!.pairs))
 
 const {
   cards,
@@ -48,6 +48,8 @@ const {
   pause: pauseTimer,
 } = useTimer()
 
+const adaptive = useAdaptive()
+
 const { saveGameResult } = useGamePersistence()
 const pairAttempts = new Map<
   string,
@@ -56,11 +58,31 @@ const pairAttempts = new Map<
 
 const finalScore = ref<number | null>(null)
 
-function startGame() {
+async function startGame() {
   finalScore.value = null
   pairAttempts.clear()
-  initGame(selectedPairs)
-  initTimer(level.timeLimit, {
+
+  // Client-only adaptive adjustment
+  if (import.meta.client) {
+    const adjustment = await adaptive.getAdjustedLevel(slug, 0)
+    currentLevel.value = adjustment
+    const allIds = topicPack.value!.pairs.map((p) => p.id)
+    const selectedIds = await adaptive.buildMixedSession(
+      slug,
+      allIds,
+      adjustment.pairs,
+    )
+    selectedPairs.value = topicPack.value!.pairs.filter((p) =>
+      selectedIds.includes(p.id),
+    )
+    // Fallback: if no pairs selected (new topic), use first N
+    if (selectedPairs.value.length === 0) {
+      selectedPairs.value = topicPack.value!.pairs.slice(0, adjustment.pairs)
+    }
+  }
+
+  initGame(selectedPairs.value)
+  initTimer(currentLevel.value.timeLimit, {
     onExpire: () => endGame(),
   })
   startTimer()
@@ -73,7 +95,7 @@ async function endGame() {
     moves: moves.value,
     totalPairs: totalPairs.value,
     timeElapsed: elapsed.value,
-    timeLimit: level.timeLimit,
+    timeLimit: currentLevel.value.timeLimit,
     maxStreak: maxStreak.value,
     hintsUsed: {
       peek: hints.value.peekUsed,
@@ -86,7 +108,7 @@ async function endGame() {
       moves: moves.value,
       totalPairs: totalPairs.value,
       timeElapsed: elapsed.value,
-      timeLimit: level.timeLimit,
+      timeLimit: currentLevel.value.timeLimit,
       maxStreak: maxStreak.value,
     },
     topic: slug,
@@ -105,7 +127,9 @@ useHead({
   title: `Play ${topicPack.value.name} — Memojo`,
 })
 
-startGame()
+onMounted(() => {
+  startGame()
+})
 </script>
 
 <template>
@@ -140,7 +164,7 @@ startGame()
     <ClientOnly>
       <GameBoard
         :cards="cards"
-        :grid-cols="level.gridCols"
+        :grid-cols="currentLevel.gridCols"
         :disabled="isProcessing || isPeeking || finalScore !== null"
         @flip="flipCard"
       />
@@ -148,11 +172,11 @@ startGame()
         <div
           class="grid gap-3"
           :style="{
-            gridTemplateColumns: `repeat(${level.gridCols}, minmax(0, 1fr))`,
+            gridTemplateColumns: `repeat(${currentLevel.gridCols}, minmax(0, 1fr))`,
           }"
         >
           <div
-            v-for="n in level.pairs * 2"
+            v-for="n in currentLevel.pairs * 2"
             :key="n"
             class="aspect-[3/4] animate-pulse rounded-2xl bg-surface-200"
           />
