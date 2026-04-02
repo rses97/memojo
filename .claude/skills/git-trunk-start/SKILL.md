@@ -26,6 +26,7 @@ With issue: `<type>/issue-<number>-<description-in-kebab-case>`
 Rules: all lowercase, hyphens only, kebab-case
 
 Examples:
+
 - `feat/add-leaderboard`
 - `fix/issue-18-score-overflow-bug`
 - `chore/update-deps`

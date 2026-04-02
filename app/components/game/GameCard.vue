@@ -54,7 +54,7 @@ const ariaLabel = computed(() => {
           :alt="card.pairId"
           class="h-full w-full rounded-[--radius-card] object-contain"
           loading="lazy"
-        >
+        />
         <span v-else class="text-center text-lg font-semibold">
           {{ card.content }}
         </span>

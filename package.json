@@ -27,8 +27,12 @@
     "vue-router": "^5.0.4"
   },
   "lint-staged": {
-    "*.{ts,vue}": ["eslint --fix"],
-    "*.{ts,vue,css,md,json}": ["prettier --write"]
+    "*.{ts,vue}": [
+      "eslint --fix"
+    ],
+    "*.{ts,vue,css,md,json}": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",

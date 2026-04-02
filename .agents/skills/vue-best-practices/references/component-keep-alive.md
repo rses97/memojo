@@ -24,6 +24,7 @@ tags: [vue3, keepalive, cache, performance, router, dynamic-components]
 Use KeepAlive when switching between views where state should persist (tabs, multi-step forms, dashboards). Avoid it when each visit should start fresh.
 
 **BAD:**
+
 ```vue
 <template>
   <!-- State resets on every switch -->
@@ -32,6 +33,7 @@ Use KeepAlive when switching between views where state should persist (tabs, mul
 ```
 
 **GOOD:**
+
 ```vue
 <template>
   <!-- State preserved between switches -->
@@ -97,7 +99,10 @@ function invalidateCache(view) {
 
 <template>
   <KeepAlive>
-    <component :is="currentView" :key="`${currentView}-${viewKeys[currentView]}`" />
+    <component
+      :is="currentView"
+      :key="`${currentView}-${viewKeys[currentView]}`"
+    />
   </KeepAlive>
 </template>
 ```

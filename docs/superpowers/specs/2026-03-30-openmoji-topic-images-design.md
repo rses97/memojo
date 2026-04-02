@@ -65,6 +65,7 @@ public/img/
 A one-time shell script (`scripts/download-openmoji.sh`) fetches SVGs from the OpenMoji GitHub repo and renames them to human-readable filenames.
 
 Source URL pattern:
+
 ```
 https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/{HEXCODE}.svg
 ```
@@ -73,78 +74,78 @@ https://raw.githubusercontent.com/hfg-gmuend/openmoji/master/color/svg/{HEXCODE}
 
 #### World Flags (update existing `world-flags.json`)
 
-| id | Hex Code | Filename |
-|----|----------|----------|
-| ua | `1F1FA-1F1E6` | `ua.svg` |
-| jp | `1F1EF-1F1F5` | `jp.svg` |
-| br | `1F1E7-1F1F7` | `br.svg` |
-| ca | `1F1E8-1F1E6` | `ca.svg` |
-| fr | `1F1EB-1F1F7` | `fr.svg` |
-| au | `1F1E6-1F1FA` | `au.svg` |
-| ke | `1F1F0-1F1EA` | `ke.svg` |
-| mx | `1F1F2-1F1FD` | `mx.svg` |
-| in | `1F1EE-1F1F3` | `in.svg` |
-| de | `1F1E9-1F1EA` | `de.svg` |
+| id  | Hex Code      | Filename |
+| --- | ------------- | -------- |
+| ua  | `1F1FA-1F1E6` | `ua.svg` |
+| jp  | `1F1EF-1F1F5` | `jp.svg` |
+| br  | `1F1E7-1F1F7` | `br.svg` |
+| ca  | `1F1E8-1F1E6` | `ca.svg` |
+| fr  | `1F1EB-1F1F7` | `fr.svg` |
+| au  | `1F1E6-1F1FA` | `au.svg` |
+| ke  | `1F1F0-1F1EA` | `ke.svg` |
+| mx  | `1F1F2-1F1FD` | `mx.svg` |
+| in  | `1F1EE-1F1F3` | `in.svg` |
+| de  | `1F1E9-1F1EA` | `de.svg` |
 
 #### Sports (new topic)
 
-| id | Hex Code | Text | Hint | Filename |
-|----|----------|------|------|----------|
-| soccer | `26BD` | Soccer | The beautiful game | `soccer.svg` |
-| basketball | `1F3C0` | Basketball | Slam dunk | `basketball.svg` |
-| tennis | `1F3BE` | Tennis | Love means zero | `tennis.svg` |
-| swimming | `1F3CA` | Swimming | Freestyle & backstroke | `swimming.svg` |
-| skiing | `1F3BF` | Skiing | Winter sport | `skiing.svg` |
-| baseball | `26BE` | Baseball | Home run | `baseball.svg` |
-| volleyball | `1F3D0` | Volleyball | Spike and serve | `volleyball.svg` |
-| boxing | `1F94A` | Boxing | Gloves on | `boxing.svg` |
-| cycling | `1F6B2` | Cycling | Two wheels | `cycling.svg` |
-| surfing | `1F3C4` | Surfing | Ride the wave | `surfing.svg` |
+| id         | Hex Code | Text       | Hint                   | Filename         |
+| ---------- | -------- | ---------- | ---------------------- | ---------------- |
+| soccer     | `26BD`   | Soccer     | The beautiful game     | `soccer.svg`     |
+| basketball | `1F3C0`  | Basketball | Slam dunk              | `basketball.svg` |
+| tennis     | `1F3BE`  | Tennis     | Love means zero        | `tennis.svg`     |
+| swimming   | `1F3CA`  | Swimming   | Freestyle & backstroke | `swimming.svg`   |
+| skiing     | `1F3BF`  | Skiing     | Winter sport           | `skiing.svg`     |
+| baseball   | `26BE`   | Baseball   | Home run               | `baseball.svg`   |
+| volleyball | `1F3D0`  | Volleyball | Spike and serve        | `volleyball.svg` |
+| boxing     | `1F94A`  | Boxing     | Gloves on              | `boxing.svg`     |
+| cycling    | `1F6B2`  | Cycling    | Two wheels             | `cycling.svg`    |
+| surfing    | `1F3C4`  | Surfing    | Ride the wave          | `surfing.svg`    |
 
 #### Animals (new topic)
 
-| id | Hex Code | Text | Hint | Filename |
-|----|----------|------|------|----------|
-| lion | `1F981` | Lion | King of the jungle | `lion.svg` |
-| elephant | `1F418` | Elephant | Largest land animal | `elephant.svg` |
-| penguin | `1F427` | Penguin | Flightless bird | `penguin.svg` |
-| dolphin | `1F42C` | Dolphin | Intelligent marine mammal | `dolphin.svg` |
-| eagle | `1F985` | Eagle | Bird of prey | `eagle.svg` |
-| panda | `1F43C` | Giant Panda | Eats bamboo | `panda.svg` |
-| tiger | `1F405` | Tiger | Largest wild cat | `tiger.svg` |
-| octopus | `1F419` | Octopus | Eight arms | `octopus.svg` |
-| giraffe | `1F992` | Giraffe | Tallest animal | `giraffe.svg` |
-| koala | `1F428` | Koala | Australian marsupial | `koala.svg` |
+| id       | Hex Code | Text        | Hint                      | Filename       |
+| -------- | -------- | ----------- | ------------------------- | -------------- |
+| lion     | `1F981`  | Lion        | King of the jungle        | `lion.svg`     |
+| elephant | `1F418`  | Elephant    | Largest land animal       | `elephant.svg` |
+| penguin  | `1F427`  | Penguin     | Flightless bird           | `penguin.svg`  |
+| dolphin  | `1F42C`  | Dolphin     | Intelligent marine mammal | `dolphin.svg`  |
+| eagle    | `1F985`  | Eagle       | Bird of prey              | `eagle.svg`    |
+| panda    | `1F43C`  | Giant Panda | Eats bamboo               | `panda.svg`    |
+| tiger    | `1F405`  | Tiger       | Largest wild cat          | `tiger.svg`    |
+| octopus  | `1F419`  | Octopus     | Eight arms                | `octopus.svg`  |
+| giraffe  | `1F992`  | Giraffe     | Tallest animal            | `giraffe.svg`  |
+| koala    | `1F428`  | Koala       | Australian marsupial      | `koala.svg`    |
 
 #### Human Body (new topic)
 
-| id | Hex Code | Text | Hint | Filename |
-|----|----------|------|------|----------|
-| heart | `1FAC0` | Heart | Pumps blood | `heart.svg` |
-| brain | `1F9E0` | Brain | Control center | `brain.svg` |
-| lungs | `1FAC1` | Lungs | Breathing organs | `lungs.svg` |
-| liver | `E312` | Liver | Detoxification | `liver.svg` |
-| kidney | `E316` | Kidneys | Filter blood | `kidney.svg` |
-| stomach | `E313` | Stomach | Digests food | `stomach.svg` |
-| bone | `1F9B4` | Skeletal System | 206 bones | `bone.svg` |
-| muscle | `1F4AA` | Muscular System | Over 600 muscles | `muscle.svg` |
-| eye | `1F441` | Eye | Window to the world | `eye.svg` |
-| ear | `1F442` | Ear | Sound receptor | `ear.svg` |
+| id      | Hex Code | Text            | Hint                | Filename      |
+| ------- | -------- | --------------- | ------------------- | ------------- |
+| heart   | `1FAC0`  | Heart           | Pumps blood         | `heart.svg`   |
+| brain   | `1F9E0`  | Brain           | Control center      | `brain.svg`   |
+| lungs   | `1FAC1`  | Lungs           | Breathing organs    | `lungs.svg`   |
+| liver   | `E312`   | Liver           | Detoxification      | `liver.svg`   |
+| kidney  | `E316`   | Kidneys         | Filter blood        | `kidney.svg`  |
+| stomach | `E313`   | Stomach         | Digests food        | `stomach.svg` |
+| bone    | `1F9B4`  | Skeletal System | 206 bones           | `bone.svg`    |
+| muscle  | `1F4AA`  | Muscular System | Over 600 muscles    | `muscle.svg`  |
+| eye     | `1F441`  | Eye             | Window to the world | `eye.svg`     |
+| ear     | `1F442`  | Ear             | Sound receptor      | `ear.svg`     |
 
 #### World Landmarks (new topic)
 
-| id | Hex Code | Text | Hint | Filename |
-|----|----------|------|------|----------|
-| statue-of-liberty | `1F5FD` | Statue of Liberty | New York, USA | `statue-of-liberty.svg` |
-| mount-fuji | `1F5FB` | Mount Fuji | Japan's tallest peak | `mount-fuji.svg` |
-| moai | `1F5FF` | Moai | Easter Island, Chile | `moai.svg` |
-| tokyo-tower | `1F5FC` | Tokyo Tower | Tokyo, Japan | `tokyo-tower.svg` |
-| european-castle | `1F3F0` | European Castle | Medieval fortress | `european-castle.svg` |
-| japanese-castle | `1F3EF` | Japanese Castle | Feudal Japan | `japanese-castle.svg` |
-| eiffel-tower | `E205` | Eiffel Tower | Paris, France | `eiffel-tower.svg` |
-| pyramid | `E20F` | Great Pyramid | Giza, Egypt | `pyramid.svg` |
-| lighthouse | `E212` | Lighthouse of Alexandria | Ancient wonder | `lighthouse.svg` |
-| classical-building | `1F3DB` | Classical Building | Greco-Roman architecture | `classical-building.svg` |
+| id                 | Hex Code | Text                     | Hint                     | Filename                 |
+| ------------------ | -------- | ------------------------ | ------------------------ | ------------------------ |
+| statue-of-liberty  | `1F5FD`  | Statue of Liberty        | New York, USA            | `statue-of-liberty.svg`  |
+| mount-fuji         | `1F5FB`  | Mount Fuji               | Japan's tallest peak     | `mount-fuji.svg`         |
+| moai               | `1F5FF`  | Moai                     | Easter Island, Chile     | `moai.svg`               |
+| tokyo-tower        | `1F5FC`  | Tokyo Tower              | Tokyo, Japan             | `tokyo-tower.svg`        |
+| european-castle    | `1F3F0`  | European Castle          | Medieval fortress        | `european-castle.svg`    |
+| japanese-castle    | `1F3EF`  | Japanese Castle          | Feudal Japan             | `japanese-castle.svg`    |
+| eiffel-tower       | `E205`   | Eiffel Tower             | Paris, France            | `eiffel-tower.svg`       |
+| pyramid            | `E20F`   | Great Pyramid            | Giza, Egypt              | `pyramid.svg`            |
+| lighthouse         | `E212`   | Lighthouse of Alexandria | Ancient wonder           | `lighthouse.svg`         |
+| classical-building | `1F3DB`  | Classical Building       | Greco-Roman architecture | `classical-building.svg` |
 
 ### Attribution
 

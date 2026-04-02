@@ -5,13 +5,11 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 const tsParser = require('@typescript-eslint/parser')
 
-export default withNuxt(
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parserOptions: {
-        parser: tsParser,
-      },
+export default withNuxt({
+  files: ['**/*.vue'],
+  languageOptions: {
+    parserOptions: {
+      parser: tsParser,
     },
   },
-)
+})

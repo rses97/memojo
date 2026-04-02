@@ -17,6 +17,7 @@
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — the only file changed
 
 Sections affected (by line ranges in current file):
+
 - Lines 1-4: Frontmatter (update description)
 - Lines 10-15: When to Use (add bullets)
 - Lines 19: Phase 1 heading (rename)
@@ -33,15 +34,19 @@ Sections affected (by line ranges in current file):
 ### Task 1: Update frontmatter and "When to Use"
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md:1-15`
 
 - [ ] **Step 1: Update frontmatter description**
 
 Change line 3 from:
+
 ```
 description: Use when setting up a new project's git tooling, CI/CD pipelines, or when checking what dev tooling is missing — commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
 ```
+
 to:
+
 ```
 description: Use when setting up a new project's git tooling, code quality tools, CI/CD pipelines, or when checking what dev tooling is missing — ESLint, Prettier, TypeScript, commitlint, husky, lint-staged, semantic-release, GitHub Actions workflows
 ```
@@ -49,10 +54,13 @@ description: Use when setting up a new project's git tooling, code quality tools
 - [ ] **Step 2: Update summary line**
 
 Change line 8 from:
+
 ```
 One-time project setup. Detect what's installed, offer to set up what's missing. Includes CI/CD pipeline generation.
 ```
+
 to:
+
 ```
 One-time project setup. Detect what's installed, offer to set up what's missing. Includes code quality tools and CI/CD pipeline generation.
 ```
@@ -60,11 +68,14 @@ One-time project setup. Detect what's installed, offer to set up what's missing.
 - [ ] **Step 3: Update "When to Use" bullets**
 
 Change lines 12-13 from:
+
 ```markdown
 - New project needs git tooling (commitlint, husky, lint-staged, semantic-release)
 - Project missing CI/CD workflows
 ```
+
 to:
+
 ```markdown
 - New project needs code quality tools (ESLint, Prettier, TypeScript)
 - New project needs git tooling (commitlint, husky, lint-staged, semantic-release)
@@ -74,10 +85,13 @@ to:
 - [ ] **Step 4: Update Phase 1 heading**
 
 Change line 19 from:
+
 ```markdown
 ## Phase 1: Git & Tooling
 ```
+
 to:
+
 ```markdown
 ## Phase 1: Code Quality & Git Tooling
 ```
@@ -98,6 +112,7 @@ git commit -m "docs(skill): update git-auto-init frontmatter and headings for co
 ### Task 2: Expand detection table and status display
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md:25-47`
 
 - [ ] **Step 1: Add new rows to detection table**
@@ -105,18 +120,18 @@ git commit -m "docs(skill): update git-auto-init frontmatter and headings for co
 Replace the detection table (lines 25-33) with:
 
 ```markdown
-| Tool | Check | Config file |
-|---|---|---|
-| git | `.git/` exists | — |
-| GitHub remote | `git remote -v` | — |
-| TypeScript | `devDependencies` has `typescript` | — |
-| ESLint | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts` |
-| Prettier | `devDependencies` has `prettier` + config file exists | `.prettierrc` / `prettier.config.*` |
-| commitlint | `devDependencies` has `@commitlint/cli` | `commitlint.config.ts` |
-| husky | `devDependencies` has `husky` + `.husky/` exists | `.husky/` |
-| lint-staged | config in `package.json` or `.lintstagedrc` | — |
-| semantic-release | `devDependencies` has `semantic-release` | `.releaserc` |
-| CHANGELOG.md | file exists | `CHANGELOG.md` |
+| Tool             | Check                                                     | Config file                         |
+| ---------------- | --------------------------------------------------------- | ----------------------------------- |
+| git              | `.git/` exists                                            | —                                   |
+| GitHub remote    | `git remote -v`                                           | —                                   |
+| TypeScript       | `devDependencies` has `typescript`                        | —                                   |
+| ESLint           | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts`                  |
+| Prettier         | `devDependencies` has `prettier` + config file exists     | `.prettierrc` / `prettier.config.*` |
+| commitlint       | `devDependencies` has `@commitlint/cli`                   | `commitlint.config.ts`              |
+| husky            | `devDependencies` has `husky` + `.husky/` exists          | `.husky/`                           |
+| lint-staged      | config in `package.json` or `.lintstagedrc`               | —                                   |
+| semantic-release | `devDependencies` has `semantic-release`                  | `.releaserc`                        |
+| CHANGELOG.md     | file exists                                               | `CHANGELOG.md`                      |
 ```
 
 - [ ] **Step 2: Update status display example**
@@ -154,6 +169,7 @@ git commit -m "docs(skill): expand detection table with TypeScript, ESLint, Pret
 ### Task 3: Add Framework Detection section
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — insert after Package Manager Detection section (after line 62)
 
 - [ ] **Step 1: Insert Framework Detection section**
@@ -161,16 +177,15 @@ git commit -m "docs(skill): expand detection table with TypeScript, ESLint, Pret
 After the line `Use `{pm-exec}` for exec (`pnpm exec`, `npx`, `yarn`).` (end of Package Manager Detection), insert:
 
 ```markdown
-
 ### Framework Detection
 
 Detect project type from `dependencies`/`devDependencies` in `package.json`:
 
-| Check | Framework |
-|---|---|
-| `nuxt` in dependencies | Nuxt |
-| `vue` in dependencies (no nuxt) | Vue |
-| Neither | Plain TypeScript |
+| Check                           | Framework        |
+| ------------------------------- | ---------------- |
+| `nuxt` in dependencies          | Nuxt             |
+| `vue` in dependencies (no nuxt) | Vue              |
+| Neither                         | Plain TypeScript |
 
 Display: `Detected framework: {Nuxt|Vue|Plain TypeScript}`
 
@@ -193,14 +208,14 @@ git commit -m "docs(skill): add framework detection section for ESLint config se
 ### Task 4: Add TypeScript installation section
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — insert after the Installation intro line ("For each missing tool, ask separately...") and before the commitlint section
 
 - [ ] **Step 1: Insert TypeScript section**
 
 After the line `For each missing tool, ask separately before installing. Never batch-install without confirmation.`, insert:
 
-```markdown
-
+````markdown
 **TypeScript:**
 
 Ask: "Install TypeScript? [Y/n]"
@@ -210,6 +225,7 @@ Ask: "Install TypeScript? [Y/n]"
 ```bash
 {pm} add -D typescript vue-tsc
 ```
+````
 
 **Vue / Plain TypeScript:**
 
@@ -218,9 +234,11 @@ Ask: "Install TypeScript? [Y/n]"
 ```
 
 Add typecheck script to `package.json`:
+
 - Nuxt: `"typecheck": "nuxi typecheck"`
 - Vue / Plain TS: `"typecheck": "tsc --noEmit"`
-```
+
+````
 
 - [ ] **Step 2: Verify changes**
 
@@ -231,13 +249,14 @@ Read the Installation section to confirm TypeScript appears before commitlint.
 ```bash
 git add .claude/skills/git-auto-init/SKILL.md
 git commit -m "docs(skill): add TypeScript installation section"
-```
+````
 
 ---
 
 ### Task 5: Add Code Quality Menu and ESLint section
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — insert after TypeScript section, before commitlint section
 
 - [ ] **Step 1: Insert Code Quality Menu**
@@ -245,7 +264,6 @@ git commit -m "docs(skill): add TypeScript installation section"
 After the TypeScript section (added in Task 4), insert:
 
 ````markdown
-
 **Code quality tools:**
 
 Ask which tools to set up:
@@ -294,9 +312,8 @@ Create `eslint.config.ts`:
 ```ts
 import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt(
-  // Your custom rules here
-)
+export default withNuxt()
+// Your custom rules here
 ```
 
 `@nuxt/eslint` bundles typescript-eslint, eslint-plugin-vue, and @stylistic — no separate installs needed. If user chose strict, configure via Nuxt module options in `nuxt.config.ts`:
@@ -328,11 +345,14 @@ Create `eslint.config.ts` (without stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
 
 export default defineConfigWithVueTs(
-  pluginVue.configs['flat/recommended'],   // or 'flat/strongly-recommended' for strict
-  vueTsConfigs.recommended,                // or vueTsConfigs.strict
+  pluginVue.configs['flat/recommended'], // or 'flat/strongly-recommended' for strict
+  vueTsConfigs.recommended, // or vueTsConfigs.strict
 )
 ```
 
@@ -340,7 +360,10 @@ Create `eslint.config.ts` (with stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
 import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfigWithVueTs(
@@ -370,7 +393,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   eslint.configs.recommended,
-  tseslint.configs.recommended,   // or .strict
+  tseslint.configs.recommended, // or .strict
 )
 ```
 
@@ -412,6 +435,7 @@ git commit -m "docs(skill): add code quality menu and ESLint section with framew
 ### Task 6: Add Prettier section
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — insert after ESLint section, before commitlint section
 
 - [ ] **Step 1: Insert Prettier section**
@@ -419,7 +443,6 @@ git commit -m "docs(skill): add code quality menu and ESLint section with framew
 After the ESLint section (added in Task 5), insert:
 
 ````markdown
-
 **Prettier** (if option 2 or 3):
 
 Ask style preset:
@@ -488,13 +511,14 @@ git commit -m "docs(skill): add Prettier section with style presets"
 ### Task 7: Rewrite lint-staged section
 
 **Files:**
+
 - Modify: `/.claude/skills/git-auto-init/SKILL.md` — replace the existing lint-staged section
 
 - [ ] **Step 1: Replace lint-staged section**
 
 Find and replace the existing lint-staged section:
 
-```markdown
+````markdown
 **lint-staged:**
 
 Ask: "Install lint-staged? [Y/n]"
@@ -502,6 +526,7 @@ Ask: "Install lint-staged? [Y/n]"
 ```bash
 {pm} add -D lint-staged
 ```
+````
 
 Add to `package.json` (adapt patterns to project's actual linter/formatter):
 
@@ -513,7 +538,8 @@ Add to `package.json` (adapt patterns to project's actual linter/formatter):
   }
 }
 ```
-```
+
+`````
 
 Replace with:
 
@@ -524,7 +550,7 @@ Ask: "Install lint-staged? [Y/n]"
 
 ```bash
 {pm} add -D lint-staged
-```
+`````
 
 Add to `package.json` — adapt based on installed code quality tools:
 
@@ -572,6 +598,7 @@ Fall back to test runner if available:
 ```
 
 Adapt glob patterns to detected framework: use `*.{ts,vue}` for Nuxt/Vue, `*.ts` for plain TypeScript.
+
 ````
 
 - [ ] **Step 2: Verify changes**
@@ -684,3 +711,4 @@ If any inconsistencies found in Step 1, fix them.
 git add .claude/skills/git-auto-init/SKILL.md
 git commit -m "docs(skill): fix inconsistencies in git-auto-init code quality sections"
 ```
+````

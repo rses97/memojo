@@ -13,6 +13,7 @@
 ### Task 1: Create download script and fetch all 50 SVGs
 
 **Files:**
+
 - Create: `scripts/download-openmoji.sh`
 - Create: `public/img/flags/` (10 SVGs)
 - Create: `public/img/sports/` (10 SVGs)
@@ -156,6 +157,7 @@ git commit -m "feat: download OpenMoji SVGs for all topic image assets"
 ### Task 2: Update world-flags.json to use .svg paths
 
 **Files:**
+
 - Modify: `public/topics/world-flags.json`
 
 - [ ] **Step 1: Update world-flags.json**
@@ -168,16 +170,66 @@ Replace the entire contents of `public/topics/world-flags.json`:
   "name": "World Flags",
   "description": "Match country flags to their names",
   "pairs": [
-    { "id": "ua", "image": "/img/flags/ua.svg", "text": "Ukraine", "hint": "Eastern Europe" },
-    { "id": "jp", "image": "/img/flags/jp.svg", "text": "Japan", "hint": "East Asia" },
-    { "id": "br", "image": "/img/flags/br.svg", "text": "Brazil", "hint": "South America" },
-    { "id": "ca", "image": "/img/flags/ca.svg", "text": "Canada", "hint": "North America" },
-    { "id": "fr", "image": "/img/flags/fr.svg", "text": "France", "hint": "Western Europe" },
-    { "id": "au", "image": "/img/flags/au.svg", "text": "Australia", "hint": "Oceania" },
-    { "id": "ke", "image": "/img/flags/ke.svg", "text": "Kenya", "hint": "East Africa" },
-    { "id": "mx", "image": "/img/flags/mx.svg", "text": "Mexico", "hint": "North America" },
-    { "id": "in", "image": "/img/flags/in.svg", "text": "India", "hint": "South Asia" },
-    { "id": "de", "image": "/img/flags/de.svg", "text": "Germany", "hint": "Central Europe" }
+    {
+      "id": "ua",
+      "image": "/img/flags/ua.svg",
+      "text": "Ukraine",
+      "hint": "Eastern Europe"
+    },
+    {
+      "id": "jp",
+      "image": "/img/flags/jp.svg",
+      "text": "Japan",
+      "hint": "East Asia"
+    },
+    {
+      "id": "br",
+      "image": "/img/flags/br.svg",
+      "text": "Brazil",
+      "hint": "South America"
+    },
+    {
+      "id": "ca",
+      "image": "/img/flags/ca.svg",
+      "text": "Canada",
+      "hint": "North America"
+    },
+    {
+      "id": "fr",
+      "image": "/img/flags/fr.svg",
+      "text": "France",
+      "hint": "Western Europe"
+    },
+    {
+      "id": "au",
+      "image": "/img/flags/au.svg",
+      "text": "Australia",
+      "hint": "Oceania"
+    },
+    {
+      "id": "ke",
+      "image": "/img/flags/ke.svg",
+      "text": "Kenya",
+      "hint": "East Africa"
+    },
+    {
+      "id": "mx",
+      "image": "/img/flags/mx.svg",
+      "text": "Mexico",
+      "hint": "North America"
+    },
+    {
+      "id": "in",
+      "image": "/img/flags/in.svg",
+      "text": "India",
+      "hint": "South Asia"
+    },
+    {
+      "id": "de",
+      "image": "/img/flags/de.svg",
+      "text": "Germany",
+      "hint": "Central Europe"
+    }
   ]
 }
 ```
@@ -194,6 +246,7 @@ git commit -m "fix: update world-flags topic to use real OpenMoji SVG paths"
 ### Task 3: Create sports.json topic pack
 
 **Files:**
+
 - Create: `public/topics/sports.json`
 
 - [ ] **Step 1: Create sports.json**
@@ -206,16 +259,66 @@ Create `public/topics/sports.json`:
   "name": "Sports",
   "description": "Match sports equipment and activities to their names",
   "pairs": [
-    { "id": "soccer", "image": "/img/sports/soccer.svg", "text": "Soccer", "hint": "The beautiful game" },
-    { "id": "basketball", "image": "/img/sports/basketball.svg", "text": "Basketball", "hint": "Slam dunk" },
-    { "id": "tennis", "image": "/img/sports/tennis.svg", "text": "Tennis", "hint": "Love means zero" },
-    { "id": "swimming", "image": "/img/sports/swimming.svg", "text": "Swimming", "hint": "Freestyle & backstroke" },
-    { "id": "skiing", "image": "/img/sports/skiing.svg", "text": "Skiing", "hint": "Winter sport" },
-    { "id": "baseball", "image": "/img/sports/baseball.svg", "text": "Baseball", "hint": "Home run" },
-    { "id": "volleyball", "image": "/img/sports/volleyball.svg", "text": "Volleyball", "hint": "Spike and serve" },
-    { "id": "boxing", "image": "/img/sports/boxing.svg", "text": "Boxing", "hint": "Gloves on" },
-    { "id": "cycling", "image": "/img/sports/cycling.svg", "text": "Cycling", "hint": "Two wheels" },
-    { "id": "surfing", "image": "/img/sports/surfing.svg", "text": "Surfing", "hint": "Ride the wave" }
+    {
+      "id": "soccer",
+      "image": "/img/sports/soccer.svg",
+      "text": "Soccer",
+      "hint": "The beautiful game"
+    },
+    {
+      "id": "basketball",
+      "image": "/img/sports/basketball.svg",
+      "text": "Basketball",
+      "hint": "Slam dunk"
+    },
+    {
+      "id": "tennis",
+      "image": "/img/sports/tennis.svg",
+      "text": "Tennis",
+      "hint": "Love means zero"
+    },
+    {
+      "id": "swimming",
+      "image": "/img/sports/swimming.svg",
+      "text": "Swimming",
+      "hint": "Freestyle & backstroke"
+    },
+    {
+      "id": "skiing",
+      "image": "/img/sports/skiing.svg",
+      "text": "Skiing",
+      "hint": "Winter sport"
+    },
+    {
+      "id": "baseball",
+      "image": "/img/sports/baseball.svg",
+      "text": "Baseball",
+      "hint": "Home run"
+    },
+    {
+      "id": "volleyball",
+      "image": "/img/sports/volleyball.svg",
+      "text": "Volleyball",
+      "hint": "Spike and serve"
+    },
+    {
+      "id": "boxing",
+      "image": "/img/sports/boxing.svg",
+      "text": "Boxing",
+      "hint": "Gloves on"
+    },
+    {
+      "id": "cycling",
+      "image": "/img/sports/cycling.svg",
+      "text": "Cycling",
+      "hint": "Two wheels"
+    },
+    {
+      "id": "surfing",
+      "image": "/img/sports/surfing.svg",
+      "text": "Surfing",
+      "hint": "Ride the wave"
+    }
   ]
 }
 ```
@@ -232,6 +335,7 @@ git commit -m "feat: add sports topic pack with OpenMoji SVGs"
 ### Task 4: Create animals.json topic pack
 
 **Files:**
+
 - Create: `public/topics/animals.json`
 
 - [ ] **Step 1: Create animals.json**
@@ -244,16 +348,66 @@ Create `public/topics/animals.json`:
   "name": "Animals",
   "description": "Match animals to their names",
   "pairs": [
-    { "id": "lion", "image": "/img/animals/lion.svg", "text": "Lion", "hint": "King of the jungle" },
-    { "id": "elephant", "image": "/img/animals/elephant.svg", "text": "Elephant", "hint": "Largest land animal" },
-    { "id": "penguin", "image": "/img/animals/penguin.svg", "text": "Penguin", "hint": "Flightless bird" },
-    { "id": "dolphin", "image": "/img/animals/dolphin.svg", "text": "Dolphin", "hint": "Intelligent marine mammal" },
-    { "id": "eagle", "image": "/img/animals/eagle.svg", "text": "Eagle", "hint": "Bird of prey" },
-    { "id": "panda", "image": "/img/animals/panda.svg", "text": "Giant Panda", "hint": "Eats bamboo" },
-    { "id": "tiger", "image": "/img/animals/tiger.svg", "text": "Tiger", "hint": "Largest wild cat" },
-    { "id": "octopus", "image": "/img/animals/octopus.svg", "text": "Octopus", "hint": "Eight arms" },
-    { "id": "giraffe", "image": "/img/animals/giraffe.svg", "text": "Giraffe", "hint": "Tallest animal" },
-    { "id": "koala", "image": "/img/animals/koala.svg", "text": "Koala", "hint": "Australian marsupial" }
+    {
+      "id": "lion",
+      "image": "/img/animals/lion.svg",
+      "text": "Lion",
+      "hint": "King of the jungle"
+    },
+    {
+      "id": "elephant",
+      "image": "/img/animals/elephant.svg",
+      "text": "Elephant",
+      "hint": "Largest land animal"
+    },
+    {
+      "id": "penguin",
+      "image": "/img/animals/penguin.svg",
+      "text": "Penguin",
+      "hint": "Flightless bird"
+    },
+    {
+      "id": "dolphin",
+      "image": "/img/animals/dolphin.svg",
+      "text": "Dolphin",
+      "hint": "Intelligent marine mammal"
+    },
+    {
+      "id": "eagle",
+      "image": "/img/animals/eagle.svg",
+      "text": "Eagle",
+      "hint": "Bird of prey"
+    },
+    {
+      "id": "panda",
+      "image": "/img/animals/panda.svg",
+      "text": "Giant Panda",
+      "hint": "Eats bamboo"
+    },
+    {
+      "id": "tiger",
+      "image": "/img/animals/tiger.svg",
+      "text": "Tiger",
+      "hint": "Largest wild cat"
+    },
+    {
+      "id": "octopus",
+      "image": "/img/animals/octopus.svg",
+      "text": "Octopus",
+      "hint": "Eight arms"
+    },
+    {
+      "id": "giraffe",
+      "image": "/img/animals/giraffe.svg",
+      "text": "Giraffe",
+      "hint": "Tallest animal"
+    },
+    {
+      "id": "koala",
+      "image": "/img/animals/koala.svg",
+      "text": "Koala",
+      "hint": "Australian marsupial"
+    }
   ]
 }
 ```
@@ -270,6 +424,7 @@ git commit -m "feat: add animals topic pack with OpenMoji SVGs"
 ### Task 5: Create human-body.json topic pack
 
 **Files:**
+
 - Create: `public/topics/human-body.json`
 
 - [ ] **Step 1: Create human-body.json**
@@ -282,16 +437,66 @@ Create `public/topics/human-body.json`:
   "name": "Human Body",
   "description": "Match organs and body parts to their names",
   "pairs": [
-    { "id": "heart", "image": "/img/human-body/heart.svg", "text": "Heart", "hint": "Pumps blood" },
-    { "id": "brain", "image": "/img/human-body/brain.svg", "text": "Brain", "hint": "Control center" },
-    { "id": "lungs", "image": "/img/human-body/lungs.svg", "text": "Lungs", "hint": "Breathing organs" },
-    { "id": "liver", "image": "/img/human-body/liver.svg", "text": "Liver", "hint": "Detoxification" },
-    { "id": "kidney", "image": "/img/human-body/kidney.svg", "text": "Kidneys", "hint": "Filter blood" },
-    { "id": "stomach", "image": "/img/human-body/stomach.svg", "text": "Stomach", "hint": "Digests food" },
-    { "id": "bone", "image": "/img/human-body/bone.svg", "text": "Skeletal System", "hint": "206 bones" },
-    { "id": "muscle", "image": "/img/human-body/muscle.svg", "text": "Muscular System", "hint": "Over 600 muscles" },
-    { "id": "eye", "image": "/img/human-body/eye.svg", "text": "Eye", "hint": "Window to the world" },
-    { "id": "ear", "image": "/img/human-body/ear.svg", "text": "Ear", "hint": "Sound receptor" }
+    {
+      "id": "heart",
+      "image": "/img/human-body/heart.svg",
+      "text": "Heart",
+      "hint": "Pumps blood"
+    },
+    {
+      "id": "brain",
+      "image": "/img/human-body/brain.svg",
+      "text": "Brain",
+      "hint": "Control center"
+    },
+    {
+      "id": "lungs",
+      "image": "/img/human-body/lungs.svg",
+      "text": "Lungs",
+      "hint": "Breathing organs"
+    },
+    {
+      "id": "liver",
+      "image": "/img/human-body/liver.svg",
+      "text": "Liver",
+      "hint": "Detoxification"
+    },
+    {
+      "id": "kidney",
+      "image": "/img/human-body/kidney.svg",
+      "text": "Kidneys",
+      "hint": "Filter blood"
+    },
+    {
+      "id": "stomach",
+      "image": "/img/human-body/stomach.svg",
+      "text": "Stomach",
+      "hint": "Digests food"
+    },
+    {
+      "id": "bone",
+      "image": "/img/human-body/bone.svg",
+      "text": "Skeletal System",
+      "hint": "206 bones"
+    },
+    {
+      "id": "muscle",
+      "image": "/img/human-body/muscle.svg",
+      "text": "Muscular System",
+      "hint": "Over 600 muscles"
+    },
+    {
+      "id": "eye",
+      "image": "/img/human-body/eye.svg",
+      "text": "Eye",
+      "hint": "Window to the world"
+    },
+    {
+      "id": "ear",
+      "image": "/img/human-body/ear.svg",
+      "text": "Ear",
+      "hint": "Sound receptor"
+    }
   ]
 }
 ```
@@ -308,6 +513,7 @@ git commit -m "feat: add human-body topic pack with OpenMoji SVGs"
 ### Task 6: Create world-landmarks.json topic pack
 
 **Files:**
+
 - Create: `public/topics/world-landmarks.json`
 
 - [ ] **Step 1: Create world-landmarks.json**
@@ -320,16 +526,66 @@ Create `public/topics/world-landmarks.json`:
   "name": "World Landmarks",
   "description": "Match famous landmarks to their names",
   "pairs": [
-    { "id": "statue-of-liberty", "image": "/img/landmarks/statue-of-liberty.svg", "text": "Statue of Liberty", "hint": "New York, USA" },
-    { "id": "mount-fuji", "image": "/img/landmarks/mount-fuji.svg", "text": "Mount Fuji", "hint": "Japan's tallest peak" },
-    { "id": "moai", "image": "/img/landmarks/moai.svg", "text": "Moai", "hint": "Easter Island, Chile" },
-    { "id": "tokyo-tower", "image": "/img/landmarks/tokyo-tower.svg", "text": "Tokyo Tower", "hint": "Tokyo, Japan" },
-    { "id": "european-castle", "image": "/img/landmarks/european-castle.svg", "text": "European Castle", "hint": "Medieval fortress" },
-    { "id": "japanese-castle", "image": "/img/landmarks/japanese-castle.svg", "text": "Japanese Castle", "hint": "Feudal Japan" },
-    { "id": "eiffel-tower", "image": "/img/landmarks/eiffel-tower.svg", "text": "Eiffel Tower", "hint": "Paris, France" },
-    { "id": "pyramid", "image": "/img/landmarks/pyramid.svg", "text": "Great Pyramid", "hint": "Giza, Egypt" },
-    { "id": "lighthouse", "image": "/img/landmarks/lighthouse.svg", "text": "Lighthouse of Alexandria", "hint": "Ancient wonder" },
-    { "id": "classical-building", "image": "/img/landmarks/classical-building.svg", "text": "Classical Building", "hint": "Greco-Roman architecture" }
+    {
+      "id": "statue-of-liberty",
+      "image": "/img/landmarks/statue-of-liberty.svg",
+      "text": "Statue of Liberty",
+      "hint": "New York, USA"
+    },
+    {
+      "id": "mount-fuji",
+      "image": "/img/landmarks/mount-fuji.svg",
+      "text": "Mount Fuji",
+      "hint": "Japan's tallest peak"
+    },
+    {
+      "id": "moai",
+      "image": "/img/landmarks/moai.svg",
+      "text": "Moai",
+      "hint": "Easter Island, Chile"
+    },
+    {
+      "id": "tokyo-tower",
+      "image": "/img/landmarks/tokyo-tower.svg",
+      "text": "Tokyo Tower",
+      "hint": "Tokyo, Japan"
+    },
+    {
+      "id": "european-castle",
+      "image": "/img/landmarks/european-castle.svg",
+      "text": "European Castle",
+      "hint": "Medieval fortress"
+    },
+    {
+      "id": "japanese-castle",
+      "image": "/img/landmarks/japanese-castle.svg",
+      "text": "Japanese Castle",
+      "hint": "Feudal Japan"
+    },
+    {
+      "id": "eiffel-tower",
+      "image": "/img/landmarks/eiffel-tower.svg",
+      "text": "Eiffel Tower",
+      "hint": "Paris, France"
+    },
+    {
+      "id": "pyramid",
+      "image": "/img/landmarks/pyramid.svg",
+      "text": "Great Pyramid",
+      "hint": "Giza, Egypt"
+    },
+    {
+      "id": "lighthouse",
+      "image": "/img/landmarks/lighthouse.svg",
+      "text": "Lighthouse of Alexandria",
+      "hint": "Ancient wonder"
+    },
+    {
+      "id": "classical-building",
+      "image": "/img/landmarks/classical-building.svg",
+      "text": "Classical Building",
+      "hint": "Greco-Roman architecture"
+    }
   ]
 }
 ```
@@ -346,6 +602,7 @@ git commit -m "feat: add world-landmarks topic pack with OpenMoji SVGs"
 ### Task 7: Add OpenMoji attribution to the layout footer
 
 **Files:**
+
 - Modify: `app/layouts/default.vue`
 
 OpenMoji requires CC BY-SA 4.0 attribution. The current layout has a header but no footer. Add a minimal footer with the attribution.
@@ -367,14 +624,17 @@ Replace the entire contents of `app/layouts/default.vue`:
     <main class="mx-auto max-w-4xl w-full px-6 py-8 flex-1">
       <slot />
     </main>
-    <footer class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500">
+    <footer
+      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500"
+    >
       Emoji graphics by
       <a
         href="https://openmoji.org/"
         target="_blank"
         rel="noopener noreferrer"
         class="underline hover:text-surface-700"
-      >OpenMoji</a>
+        >OpenMoji</a
+      >
       — CC BY-SA 4.0
     </footer>
   </div>

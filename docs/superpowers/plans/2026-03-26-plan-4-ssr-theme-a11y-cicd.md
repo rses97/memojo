@@ -65,6 +65,7 @@ memojo/
 ### Task 1: ESLint + Prettier Setup
 
 **Files:**
+
 - Create: `eslint.config.mjs`
 - Create: `.prettierrc`
 - Create: `.prettierignore`
@@ -106,7 +107,10 @@ export default createConfigForNuxt({
       'vue/multi-word-component-names': 'off',
       'vue/no-multiple-template-root': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   })
@@ -172,16 +176,10 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  modules: [
-    '@pinia/nuxt',
-    '@nuxt/test-utils/module',
-    '@nuxt/eslint',
-  ],
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/eslint'],
 
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
 })
 ```
@@ -208,6 +206,7 @@ git commit -m "chore: add ESLint flat config with @nuxt/eslint and Prettier"
 ### Task 2: Dark/Light Theme CSS Overrides
 
 **Files:**
+
 - Modify: `app/assets/css/main.css`
 - Modify: `nuxt.config.ts`
 
@@ -226,14 +225,14 @@ Append to `app/assets/css/main.css` after the existing `@theme` block:
   .dark {
     color-scheme: dark;
 
-    --color-primary-50: oklch(0.20 0.02 260);
+    --color-primary-50: oklch(0.2 0.02 260);
     --color-primary-100: oklch(0.25 0.04 260);
-    --color-primary-200: oklch(0.30 0.06 260);
-    --color-primary-300: oklch(0.40 0.10 260);
+    --color-primary-200: oklch(0.3 0.06 260);
+    --color-primary-300: oklch(0.4 0.1 260);
     --color-primary-400: oklch(0.55 0.15 260);
     --color-primary-500: oklch(0.65 0.18 260);
     --color-primary-600: oklch(0.72 0.16 260);
-    --color-primary-700: oklch(0.80 0.12 260);
+    --color-primary-700: oklch(0.8 0.12 260);
     --color-primary-800: oklch(0.88 0.08 260);
     --color-primary-900: oklch(0.94 0.04 260);
 
@@ -244,7 +243,7 @@ Append to `app/assets/css/main.css` after the existing `@theme` block:
     --color-surface-800: oklch(0.85 0.015 260);
     --color-surface-900: oklch(0.93 0.01 260);
 
-    --color-success: oklch(0.70 0.16 145);
+    --color-success: oklch(0.7 0.16 145);
     --color-danger: oklch(0.65 0.18 25);
   }
 }
@@ -279,6 +278,7 @@ git commit -m "feat: add dark theme color overrides and reduced-motion support i
 ### Task 3: Theme Toggle Component (TDD)
 
 **Files:**
+
 - Create: `app/components/ui/ThemeToggle.vue`
 - Test: `tests/components/ThemeToggle.test.ts`
 - Modify: `app/stores/user.ts`
@@ -341,7 +341,9 @@ const theme = ref<'light' | 'dark' | 'system'>('system')
 const resolvedTheme = computed<'light' | 'dark'>(() => {
   if (theme.value !== 'system') return theme.value
   if (import.meta.client) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
   }
   return 'light'
 })
@@ -390,7 +392,11 @@ onMounted(() => {
 <template>
   <button
     type="button"
-    :aria-label="userStore.resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+    :aria-label="
+      userStore.resolvedTheme === 'dark'
+        ? 'Switch to light mode'
+        : 'Switch to dark mode'
+    "
     class="rounded-lg p-2 text-surface-700 transition-colors hover:bg-surface-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
     @click="userStore.toggleTheme()"
   >
@@ -459,6 +465,7 @@ git commit -m "feat: add dark/light theme toggle with system preference detectio
 ### Task 4: Accessibility — Skip-to-Content, ARIA Live Region & Layout Updates
 
 **Files:**
+
 - Create: `app/components/ui/SkipToContent.vue`
 - Modify: `app/layouts/default.vue`
 
@@ -495,7 +502,9 @@ onMounted(() => {
     <SkipToContent />
 
     <header class="border-b border-surface-200 bg-white dark:bg-surface-100">
-      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+      <div
+        class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"
+      >
         <NuxtLink
           to="/"
           class="text-lg font-bold text-primary-600 hover:text-primary-700"
@@ -561,6 +570,7 @@ git commit -m "feat: add skip-to-content link, ARIA live region, and theme toggl
 ### Task 5: Accessibility — Keyboard Grid Navigation (TDD)
 
 **Files:**
+
 - Create: `app/composables/useGridNavigation.ts`
 - Test: `tests/unit/useGridNavigation.test.ts`
 - Modify: `app/components/game/GameBoard.vue`
@@ -784,15 +794,21 @@ defineExpose({ announce })
     <div
       v-for="(card, index) in cards"
       :key="card.id"
-      :ref="(el) => { if (el) cardRefs[index] = el as HTMLElement }"
+      :ref="
+        (el) => {
+          if (el) cardRefs[index] = el as HTMLElement
+        }
+      "
       role="gridcell"
     >
       <GameCard
         :card="card"
         :tabindex="index === focusedIndex ? 0 : -1"
-        :aria-label="card.isFlipped || card.isMatched
-          ? `Card: ${card.content}${card.isMatched ? ', matched' : ''}`
-          : `Card ${index + 1}, face down`"
+        :aria-label="
+          card.isFlipped || card.isMatched
+            ? `Card: ${card.content}${card.isMatched ? ', matched' : ''}`
+            : `Card ${index + 1}, face down`
+        "
         @click="handleCardFlip(card.id, card)"
         @keydown="handleCardKeydown($event, card)"
       />
@@ -852,7 +868,9 @@ defineEmits<{
         stroke-width="2"
         aria-hidden="true"
       >
-        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+        <path
+          d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+        />
       </svg>
     </div>
 
@@ -869,10 +887,7 @@ defineEmits<{
         width="120"
         height="80"
       />
-      <span
-        v-else
-        class="text-center text-sm font-semibold"
-      >
+      <span v-else class="text-center text-sm font-semibold">
         {{ card.content }}
       </span>
     </div>
@@ -892,6 +907,7 @@ git commit -m "feat: add keyboard grid navigation and ARIA labels for accessibil
 ### Task 6: SSR Optimization & SEO Meta Tags
 
 **Files:**
+
 - Modify: `nuxt.config.ts`
 - Modify: `app/pages/index.vue`
 - Modify: `app/pages/topics/index.vue`
@@ -913,11 +929,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  modules: [
-    '@pinia/nuxt',
-    '@nuxt/test-utils/module',
-    '@nuxt/eslint',
-  ],
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/eslint'],
 
   routeRules: {
     '/play/**': { ssr: false },
@@ -927,9 +939,7 @@ export default defineNuxtConfig({
   },
 
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
 
   app: {
@@ -953,8 +963,10 @@ Add to the `<script setup>` section of `app/pages/index.vue`:
 useSeoMeta({
   title: 'Memojo — Train Your Brain with Cross-Modal Matching',
   ogTitle: 'Memojo — Train Your Brain with Cross-Modal Matching',
-  description: 'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
-  ogDescription: 'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
+  description:
+    'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
+  ogDescription:
+    'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
   ogImage: '/og-image.png',
   ogType: 'website',
   twitterCard: 'summary_large_image',
@@ -974,13 +986,23 @@ Add to the `<script setup>` section of `app/pages/topics/index.vue`:
 <script setup lang="ts">
 import type { TopicPack } from '~/types'
 
-const { data: manifest } = await useFetch<{ topics: { slug: string; name: string; description: string; pairCount: number; difficulty: string }[] }>('/topics/index.json')
+const { data: manifest } = await useFetch<{
+  topics: {
+    slug: string
+    name: string
+    description: string
+    pairCount: number
+    difficulty: string
+  }[]
+}>('/topics/index.json')
 
 useSeoMeta({
   title: 'Topics — Memojo',
   ogTitle: 'Topics — Memojo',
-  description: 'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
-  ogDescription: 'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
+  description:
+    'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
+  ogDescription:
+    'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
   ogImage: '/og-image.png',
   ogType: 'website',
 })
@@ -994,16 +1016,19 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: 'Memojo Topics',
-        description: 'Browse memory game topic packs for cross-modal matching practice.',
+        description:
+          'Browse memory game topic packs for cross-modal matching practice.',
         url: 'https://memojo.vercel.app/topics',
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: (manifest.value?.topics ?? []).map((topic, index) => ({
-            '@type': 'ListItem',
-            position: index + 1,
-            name: topic.name,
-            url: `https://memojo.vercel.app/topics/${topic.slug}`,
-          })),
+          itemListElement: (manifest.value?.topics ?? []).map(
+            (topic, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: topic.name,
+              url: `https://memojo.vercel.app/topics/${topic.slug}`,
+            }),
+          ),
         },
       }),
     },
@@ -1078,6 +1103,7 @@ git commit -m "feat: add SSR route rules, SEO meta tags, and JSON-LD structured 
 ### Task 7: Additional Topic Packs
 
 **Files:**
+
 - Create: `public/topics/solar-system.json`
 - Create: `public/topics/animals.json`
 - Create: `public/topics/human-body.json`
@@ -1098,16 +1124,66 @@ Create `public/topics/solar-system.json`:
   "name": "Solar System",
   "description": "Match planets and celestial objects to their names and fun facts",
   "pairs": [
-    { "id": "mercury", "image": "/img/solar-system/mercury.webp", "text": "Mercury", "hint": "Closest to the Sun" },
-    { "id": "venus", "image": "/img/solar-system/venus.webp", "text": "Venus", "hint": "Hottest planet" },
-    { "id": "earth", "image": "/img/solar-system/earth.webp", "text": "Earth", "hint": "The blue planet" },
-    { "id": "mars", "image": "/img/solar-system/mars.webp", "text": "Mars", "hint": "The red planet" },
-    { "id": "jupiter", "image": "/img/solar-system/jupiter.webp", "text": "Jupiter", "hint": "Largest planet" },
-    { "id": "saturn", "image": "/img/solar-system/saturn.webp", "text": "Saturn", "hint": "Famous for its rings" },
-    { "id": "uranus", "image": "/img/solar-system/uranus.webp", "text": "Uranus", "hint": "Rotates on its side" },
-    { "id": "neptune", "image": "/img/solar-system/neptune.webp", "text": "Neptune", "hint": "Farthest from the Sun" },
-    { "id": "pluto", "image": "/img/solar-system/pluto.webp", "text": "Pluto", "hint": "Dwarf planet" },
-    { "id": "sun", "image": "/img/solar-system/sun.webp", "text": "Sun", "hint": "Our star" }
+    {
+      "id": "mercury",
+      "image": "/img/solar-system/mercury.webp",
+      "text": "Mercury",
+      "hint": "Closest to the Sun"
+    },
+    {
+      "id": "venus",
+      "image": "/img/solar-system/venus.webp",
+      "text": "Venus",
+      "hint": "Hottest planet"
+    },
+    {
+      "id": "earth",
+      "image": "/img/solar-system/earth.webp",
+      "text": "Earth",
+      "hint": "The blue planet"
+    },
+    {
+      "id": "mars",
+      "image": "/img/solar-system/mars.webp",
+      "text": "Mars",
+      "hint": "The red planet"
+    },
+    {
+      "id": "jupiter",
+      "image": "/img/solar-system/jupiter.webp",
+      "text": "Jupiter",
+      "hint": "Largest planet"
+    },
+    {
+      "id": "saturn",
+      "image": "/img/solar-system/saturn.webp",
+      "text": "Saturn",
+      "hint": "Famous for its rings"
+    },
+    {
+      "id": "uranus",
+      "image": "/img/solar-system/uranus.webp",
+      "text": "Uranus",
+      "hint": "Rotates on its side"
+    },
+    {
+      "id": "neptune",
+      "image": "/img/solar-system/neptune.webp",
+      "text": "Neptune",
+      "hint": "Farthest from the Sun"
+    },
+    {
+      "id": "pluto",
+      "image": "/img/solar-system/pluto.webp",
+      "text": "Pluto",
+      "hint": "Dwarf planet"
+    },
+    {
+      "id": "sun",
+      "image": "/img/solar-system/sun.webp",
+      "text": "Sun",
+      "hint": "Our star"
+    }
   ]
 }
 ```
@@ -1122,16 +1198,66 @@ Create `public/topics/animals.json`:
   "name": "Animals",
   "description": "Match animal photos to their species names",
   "pairs": [
-    { "id": "lion", "image": "/img/animals/lion.webp", "text": "Lion", "hint": "King of the jungle" },
-    { "id": "elephant", "image": "/img/animals/elephant.webp", "text": "Elephant", "hint": "Largest land animal" },
-    { "id": "penguin", "image": "/img/animals/penguin.webp", "text": "Penguin", "hint": "Flightless bird" },
-    { "id": "dolphin", "image": "/img/animals/dolphin.webp", "text": "Dolphin", "hint": "Intelligent marine mammal" },
-    { "id": "eagle", "image": "/img/animals/eagle.webp", "text": "Eagle", "hint": "Bird of prey" },
-    { "id": "panda", "image": "/img/animals/panda.webp", "text": "Giant Panda", "hint": "Eats bamboo" },
-    { "id": "tiger", "image": "/img/animals/tiger.webp", "text": "Tiger", "hint": "Largest wild cat" },
-    { "id": "octopus", "image": "/img/animals/octopus.webp", "text": "Octopus", "hint": "Eight arms" },
-    { "id": "giraffe", "image": "/img/animals/giraffe.webp", "text": "Giraffe", "hint": "Tallest animal" },
-    { "id": "koala", "image": "/img/animals/koala.webp", "text": "Koala", "hint": "Australian marsupial" }
+    {
+      "id": "lion",
+      "image": "/img/animals/lion.webp",
+      "text": "Lion",
+      "hint": "King of the jungle"
+    },
+    {
+      "id": "elephant",
+      "image": "/img/animals/elephant.webp",
+      "text": "Elephant",
+      "hint": "Largest land animal"
+    },
+    {
+      "id": "penguin",
+      "image": "/img/animals/penguin.webp",
+      "text": "Penguin",
+      "hint": "Flightless bird"
+    },
+    {
+      "id": "dolphin",
+      "image": "/img/animals/dolphin.webp",
+      "text": "Dolphin",
+      "hint": "Intelligent marine mammal"
+    },
+    {
+      "id": "eagle",
+      "image": "/img/animals/eagle.webp",
+      "text": "Eagle",
+      "hint": "Bird of prey"
+    },
+    {
+      "id": "panda",
+      "image": "/img/animals/panda.webp",
+      "text": "Giant Panda",
+      "hint": "Eats bamboo"
+    },
+    {
+      "id": "tiger",
+      "image": "/img/animals/tiger.webp",
+      "text": "Tiger",
+      "hint": "Largest wild cat"
+    },
+    {
+      "id": "octopus",
+      "image": "/img/animals/octopus.webp",
+      "text": "Octopus",
+      "hint": "Eight arms"
+    },
+    {
+      "id": "giraffe",
+      "image": "/img/animals/giraffe.webp",
+      "text": "Giraffe",
+      "hint": "Tallest animal"
+    },
+    {
+      "id": "koala",
+      "image": "/img/animals/koala.webp",
+      "text": "Koala",
+      "hint": "Australian marsupial"
+    }
   ]
 }
 ```
@@ -1146,16 +1272,66 @@ Create `public/topics/human-body.json`:
   "name": "Human Body",
   "description": "Match organ and system diagrams to their names",
   "pairs": [
-    { "id": "heart", "image": "/img/human-body/heart.webp", "text": "Heart", "hint": "Pumps blood" },
-    { "id": "brain", "image": "/img/human-body/brain.webp", "text": "Brain", "hint": "Control center" },
-    { "id": "lungs", "image": "/img/human-body/lungs.webp", "text": "Lungs", "hint": "Breathing organs" },
-    { "id": "liver", "image": "/img/human-body/liver.webp", "text": "Liver", "hint": "Detoxification" },
-    { "id": "kidneys", "image": "/img/human-body/kidneys.webp", "text": "Kidneys", "hint": "Filter blood" },
-    { "id": "stomach", "image": "/img/human-body/stomach.webp", "text": "Stomach", "hint": "Digests food" },
-    { "id": "skeleton", "image": "/img/human-body/skeleton.webp", "text": "Skeletal System", "hint": "206 bones" },
-    { "id": "muscles", "image": "/img/human-body/muscles.webp", "text": "Muscular System", "hint": "Over 600 muscles" },
-    { "id": "nervous", "image": "/img/human-body/nervous.webp", "text": "Nervous System", "hint": "Brain and nerves" },
-    { "id": "circulatory", "image": "/img/human-body/circulatory.webp", "text": "Circulatory System", "hint": "Blood vessels" }
+    {
+      "id": "heart",
+      "image": "/img/human-body/heart.webp",
+      "text": "Heart",
+      "hint": "Pumps blood"
+    },
+    {
+      "id": "brain",
+      "image": "/img/human-body/brain.webp",
+      "text": "Brain",
+      "hint": "Control center"
+    },
+    {
+      "id": "lungs",
+      "image": "/img/human-body/lungs.webp",
+      "text": "Lungs",
+      "hint": "Breathing organs"
+    },
+    {
+      "id": "liver",
+      "image": "/img/human-body/liver.webp",
+      "text": "Liver",
+      "hint": "Detoxification"
+    },
+    {
+      "id": "kidneys",
+      "image": "/img/human-body/kidneys.webp",
+      "text": "Kidneys",
+      "hint": "Filter blood"
+    },
+    {
+      "id": "stomach",
+      "image": "/img/human-body/stomach.webp",
+      "text": "Stomach",
+      "hint": "Digests food"
+    },
+    {
+      "id": "skeleton",
+      "image": "/img/human-body/skeleton.webp",
+      "text": "Skeletal System",
+      "hint": "206 bones"
+    },
+    {
+      "id": "muscles",
+      "image": "/img/human-body/muscles.webp",
+      "text": "Muscular System",
+      "hint": "Over 600 muscles"
+    },
+    {
+      "id": "nervous",
+      "image": "/img/human-body/nervous.webp",
+      "text": "Nervous System",
+      "hint": "Brain and nerves"
+    },
+    {
+      "id": "circulatory",
+      "image": "/img/human-body/circulatory.webp",
+      "text": "Circulatory System",
+      "hint": "Blood vessels"
+    }
   ]
 }
 ```
@@ -1170,16 +1346,66 @@ Create `public/topics/world-landmarks.json`:
   "name": "World Landmarks",
   "description": "Match famous landmark photos to their names and locations",
   "pairs": [
-    { "id": "eiffel", "image": "/img/landmarks/eiffel.webp", "text": "Eiffel Tower", "hint": "Paris, France" },
-    { "id": "taj-mahal", "image": "/img/landmarks/taj-mahal.webp", "text": "Taj Mahal", "hint": "Agra, India" },
-    { "id": "great-wall", "image": "/img/landmarks/great-wall.webp", "text": "Great Wall of China", "hint": "China" },
-    { "id": "machu-picchu", "image": "/img/landmarks/machu-picchu.webp", "text": "Machu Picchu", "hint": "Peru" },
-    { "id": "colosseum", "image": "/img/landmarks/colosseum.webp", "text": "Colosseum", "hint": "Rome, Italy" },
-    { "id": "statue-liberty", "image": "/img/landmarks/statue-liberty.webp", "text": "Statue of Liberty", "hint": "New York, USA" },
-    { "id": "pyramids", "image": "/img/landmarks/pyramids.webp", "text": "Pyramids of Giza", "hint": "Cairo, Egypt" },
-    { "id": "sydney-opera", "image": "/img/landmarks/sydney-opera.webp", "text": "Sydney Opera House", "hint": "Sydney, Australia" },
-    { "id": "christ-redeemer", "image": "/img/landmarks/christ-redeemer.webp", "text": "Christ the Redeemer", "hint": "Rio de Janeiro, Brazil" },
-    { "id": "petra", "image": "/img/landmarks/petra.webp", "text": "Petra", "hint": "Jordan" }
+    {
+      "id": "eiffel",
+      "image": "/img/landmarks/eiffel.webp",
+      "text": "Eiffel Tower",
+      "hint": "Paris, France"
+    },
+    {
+      "id": "taj-mahal",
+      "image": "/img/landmarks/taj-mahal.webp",
+      "text": "Taj Mahal",
+      "hint": "Agra, India"
+    },
+    {
+      "id": "great-wall",
+      "image": "/img/landmarks/great-wall.webp",
+      "text": "Great Wall of China",
+      "hint": "China"
+    },
+    {
+      "id": "machu-picchu",
+      "image": "/img/landmarks/machu-picchu.webp",
+      "text": "Machu Picchu",
+      "hint": "Peru"
+    },
+    {
+      "id": "colosseum",
+      "image": "/img/landmarks/colosseum.webp",
+      "text": "Colosseum",
+      "hint": "Rome, Italy"
+    },
+    {
+      "id": "statue-liberty",
+      "image": "/img/landmarks/statue-liberty.webp",
+      "text": "Statue of Liberty",
+      "hint": "New York, USA"
+    },
+    {
+      "id": "pyramids",
+      "image": "/img/landmarks/pyramids.webp",
+      "text": "Pyramids of Giza",
+      "hint": "Cairo, Egypt"
+    },
+    {
+      "id": "sydney-opera",
+      "image": "/img/landmarks/sydney-opera.webp",
+      "text": "Sydney Opera House",
+      "hint": "Sydney, Australia"
+    },
+    {
+      "id": "christ-redeemer",
+      "image": "/img/landmarks/christ-redeemer.webp",
+      "text": "Christ the Redeemer",
+      "hint": "Rio de Janeiro, Brazil"
+    },
+    {
+      "id": "petra",
+      "image": "/img/landmarks/petra.webp",
+      "text": "Petra",
+      "hint": "Jordan"
+    }
   ]
 }
 ```
@@ -1286,6 +1512,7 @@ git commit -m "feat: add solar-system, animals, human-body, and world-landmarks 
 ### Task 8: CI/CD Pipeline (GitHub Actions)
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 
 - [ ] **Step 1: Create CI workflow**
@@ -1355,6 +1582,7 @@ git commit -m "ci: add GitHub Actions workflow for lint, typecheck, test, and bu
 ### Task 9: Vercel Deployment Config
 
 **Files:**
+
 - Create: `vercel.json`
 
 - [ ] **Step 1: Create vercel.json**
@@ -1402,6 +1630,7 @@ git commit -m "chore: add Vercel deployment config with caching headers"
 ### Task 10: Performance Audit & Final Polish
 
 **Files:**
+
 - Modify: `app/components/game/GameCard.vue`
 - Modify: `app/components/topic/TopicCard.vue`
 
@@ -1457,6 +1686,7 @@ git commit -m "chore: performance audit — verify image dimensions and remove u
 ### Task 11: Accessibility Screen Reader Announcements in Game Logic
 
 **Files:**
+
 - Modify: `app/composables/useGame.ts`
 
 - [ ] **Step 1: Add screen reader announcements to match/mismatch events**
@@ -1481,13 +1711,17 @@ Call it at the appropriate points in the existing match logic:
 
 ```typescript
 // After a successful match:
-announceToScreenReader(`Match found! ${firstCard.content} and ${secondCard.content}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`)
+announceToScreenReader(
+  `Match found! ${firstCard.content} and ${secondCard.content}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`,
+)
 
 // After a mismatch:
 announceToScreenReader(`No match. Cards hidden.`)
 
 // When game is complete:
-announceToScreenReader(`Congratulations! All ${totalPairs.value} pairs matched. Your score is ${score.value}.`)
+announceToScreenReader(
+  `Congratulations! All ${totalPairs.value} pairs matched. Your score is ${score.value}.`,
+)
 ```
 
 - [ ] **Step 2: Add focus management after match/mismatch**
@@ -1498,7 +1732,9 @@ After a mismatch, return focus to the first unmatched card. After a match, move 
 function focusNextUnmatched() {
   if (import.meta.client) {
     nextTick(() => {
-      const gridCells = document.querySelectorAll('[role="gridcell"] button:not([disabled])')
+      const gridCells = document.querySelectorAll(
+        '[role="gridcell"] button:not([disabled])',
+      )
       if (gridCells.length > 0) {
         ;(gridCells[0] as HTMLElement).focus()
       }

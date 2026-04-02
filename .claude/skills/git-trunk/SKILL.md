@@ -17,27 +17,27 @@ Do NOT use for Gitflow projects — use git-flow instead.
 
 ## Branch Model
 
-| Branch | Created from | Merges into | Lifetime |
-|---|---|---|---|
-| `main` | — | — (production + integration) | Permanent |
-| `feat/*` | `main` | `main` (PR) | Short-lived (<1-2 days) |
-| `fix/*` | `main` | `main` (PR) | Short-lived |
-| `chore/*` | `main` | `main` (PR) | Short-lived |
-| `docs/*` | `main` | `main` (PR) | Short-lived |
+| Branch    | Created from | Merges into                  | Lifetime                |
+| --------- | ------------ | ---------------------------- | ----------------------- |
+| `main`    | —            | — (production + integration) | Permanent               |
+| `feat/*`  | `main`       | `main` (PR)                  | Short-lived (<1-2 days) |
+| `fix/*`   | `main`       | `main` (PR)                  | Short-lived             |
+| `chore/*` | `main`       | `main` (PR)                  | Short-lived             |
+| `docs/*`  | `main`       | `main` (PR)                  | Short-lived             |
 
 No `develop`, no `release/*`, no `hotfix/*`. Everything goes to `main` via PR.
 
 ## Routing Logic
 
-| Condition | Action |
-|---|---|
-| On `main`, no merged branches | → git-trunk-start |
-| On `main`, merged branches exist | → git-trunk-cleanup |
+| Condition                            | Action              |
+| ------------------------------------ | ------------------- |
+| On `main`, no merged branches        | → git-trunk-start   |
+| On `main`, merged branches exist     | → git-trunk-cleanup |
 | On `main`, tagged, ready for release | → git-trunk-release |
-| On feature branch, dirty tree | → git-trunk-ship |
-| On feature branch, clean, not pushed | → git-trunk-ship |
-| On feature branch, pushed, no PR | → git-trunk-ship |
-| On feature branch, PR exists | → git-trunk-cleanup |
+| On feature branch, dirty tree        | → git-trunk-ship    |
+| On feature branch, clean, not pushed | → git-trunk-ship    |
+| On feature branch, pushed, no PR     | → git-trunk-ship    |
+| On feature branch, PR exists         | → git-trunk-cleanup |
 
 ## How to Detect State
 

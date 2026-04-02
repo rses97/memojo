@@ -21,6 +21,7 @@ Simple composables using only reactivity APIs can be tested directly. Complex co
 - [ ] Use `app.provide()` to mock injected dependencies
 
 **Simple Composable - Test Directly:**
+
 ```javascript
 // composables/useCounter.js
 import { ref, computed } from 'vue'
@@ -62,6 +63,7 @@ describe('useCounter', () => {
 ```
 
 **Complex Composable - Use Host Wrapper:**
+
 ```javascript
 // composables/useFetch.js
 import { ref, onMounted, onUnmounted, inject } from 'vue'
@@ -111,7 +113,7 @@ export function withSetup(composable, options = {}) {
       result = composable()
       // Return a render function to suppress warnings
       return () => {}
-    }
+    },
   })
 
   if (options.provide) {
@@ -136,7 +138,7 @@ import { useFetch } from './useFetch'
 describe('useFetch', () => {
   let app
   const mockApiClient = {
-    get: vi.fn()
+    get: vi.fn(),
   }
 
   afterEach(() => {
@@ -148,7 +150,7 @@ describe('useFetch', () => {
     mockApiClient.get.mockResolvedValue({ data: { id: 1, name: 'Test' } })
 
     const [result, testApp] = withSetup(() => useFetch('/api/test'), {
-      provide: { apiClient: mockApiClient }
+      provide: { apiClient: mockApiClient },
     })
     app = testApp
 
@@ -165,7 +167,7 @@ describe('useFetch', () => {
     mockApiClient.get.mockRejectedValue(testError)
 
     const [result, testApp] = withSetup(() => useFetch('/api/test'), {
-      provide: { apiClient: mockApiClient }
+      provide: { apiClient: mockApiClient },
     })
     app = testApp
 
@@ -178,6 +180,7 @@ describe('useFetch', () => {
 ```
 
 ## Enhanced withSetup Helper with Provide Support
+
 ```javascript
 // test-utils.js
 export function withSetup(composable, options = {}) {
@@ -187,7 +190,7 @@ export function withSetup(composable, options = {}) {
     setup() {
       result = composable()
       return () => {}
-    }
+    },
   })
 
   // Apply global provides before mounting
@@ -206,12 +209,13 @@ export function withSetup(composable, options = {}) {
 const [result, app] = withSetup(() => useMyComposable(), {
   provide: {
     apiClient: mockApiClient,
-    currentUser: { id: 1, name: 'Test User' }
-  }
+    currentUser: { id: 1, name: 'Test User' },
+  },
 })
 ```
 
 ## Testing with @vue/test-utils mount
+
 ```javascript
 import { mount } from '@vue/test-utils'
 import { defineComponent } from 'vue'
@@ -223,15 +227,15 @@ test('useFetch in component context', async () => {
       const { data, loading } = useFetch('/api/users')
       return { data, loading }
     },
-    template: '<div>{{ loading ? "Loading..." : data }}</div>'
+    template: '<div>{{ loading ? "Loading..." : data }}</div>',
   })
 
   const wrapper = mount(TestComponent, {
     global: {
       provide: {
-        apiClient: mockApiClient
-      }
-    }
+        apiClient: mockApiClient,
+      },
+    },
   })
 
   await flushPromises()
@@ -240,5 +244,6 @@ test('useFetch in component context', async () => {
 ```
 
 ## Reference
+
 - [Vue.js Testing Guide - Testing Composables](https://vuejs.org/guide/scaling-up/testing#testing-composables)
 - [Vue Test Utils - Mounting Components](https://test-utils.vuejs.org/guide/)
