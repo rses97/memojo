@@ -4,6 +4,8 @@ import { calculateScore } from '~/utils/scoring'
 import { LEVELS } from '~/types'
 import type { TopicPack } from '~/types'
 
+useHead({ title: 'Daily Challenge' })
+
 const game = useGame()
 const timer = useTimer()
 const { saveGameResult } = useGamePersistence()

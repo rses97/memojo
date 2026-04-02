@@ -14,6 +14,10 @@ const isLoading = ref(true)
 const isGameOver = ref(false)
 const isError = ref(false)
 const topicData = ref<TopicPack | null>(null)
+
+useHead({
+  title: computed(() => topicData.value?.name ?? ''),
+})
 const hasPreview = ref(false)
 
 let previewTimeout: ReturnType<typeof setTimeout> | null = null

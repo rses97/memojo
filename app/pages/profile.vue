@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StoredGameResult, PairPerformance } from '~/types'
 
-definePageMeta({ title: 'Profile' })
+useHead({ title: 'Profile' })
 
 const db = useIndexedDB()
 const userStore = useUserStore()

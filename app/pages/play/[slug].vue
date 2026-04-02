@@ -124,7 +124,7 @@ watch(isComplete, async (complete) => {
 })
 
 useHead({
-  title: `Play ${topicPack.value.name} — Memojo`,
+  title: `Play ${topicPack.value.name}`,
 })
 
 onMounted(() => {

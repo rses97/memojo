@@ -1,4 +1,6 @@
 <script setup lang="ts">
+useHead({ title: 'Memojo', titleTemplate: '%s' })
+
 const modes = [
   {
     title: 'Daily Challenge',

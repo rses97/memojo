@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StoredGameResult } from '~/types'
 
-definePageMeta({ title: 'Leaderboard' })
+useHead({ title: 'Leaderboard' })
 
 const db = useIndexedDB()
 
