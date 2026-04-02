@@ -10,23 +10,28 @@ A cross-modal memory game web application that combines visual↔text matching w
 ## Core Game Mechanics
 
 ### Cross-Modal Matching
+
 Players match image↔text pairs on a card grid (not identical card pairs). Each topic pack contains image/text pairs (e.g., flag image ↔ country name).
 
 ### Game Modes
+
 - **Daily Challenge** — fresh set of cards each day, deterministic based on date (seeded random using date as seed, no backend needed), same for all players, enables fair leaderboard comparison
 - **Topic Practice** — pick a topic, play through progressive levels
 - **Quick Play** — random topic, no progression, casual practice
 
 ### Difficulty Progression (within a session)
+
 - Level 1: 4 pairs (2×4 grid), generous time
 - Level 2: 6 pairs (3×4 grid), less time
 - Level 3: 9 pairs (3×6 grid), time pressure + cards briefly shown then hidden
 - Higher levels: larger grids, mixed topics, decoy cards (cards with no match)
 
 ### Scoring
+
 Based on accuracy (fewer mismatches = higher score), speed, and streak multiplier.
 
 ### Hint System (earned, not free)
+
 - **Peek** — briefly reveal all cards for 1 second (costs points)
 - **Eliminate** — remove one wrong pair from the grid (costs points)
 - Hints recharge between sessions, not buyable — keeps leaderboards fair
@@ -34,21 +39,25 @@ Based on accuracy (fewer mismatches = higher score), speed, and streak multiplie
 ## Adaptive Difficulty System
 
 ### Performance Tracking (IndexedDB)
+
 - Accuracy rate per topic and per pair
 - Average time to match
 - Streak length history
 
 ### Adaptation Rules
+
 - Accuracy > 85% for 3 consecutive sessions → increase grid size or reduce time
 - Accuracy < 60% → reduce grid size, add hints (brief card preview at start)
 - Mixed-difficulty sessions: strong pairs appear less, weak pairs resurfaced more
 
 ### Spaced Repetition
+
 Simplified SM-2 algorithm. Pairs the player got wrong are tracked and resurfaced in future sessions at optimal intervals, adapting per-user.
 
 ## Content
 
 ### Pre-built Topic Packs (shipped with app)
+
 - World Flags (flag image ↔ country name)
 - Solar System (planet/object image ↔ name + fact)
 - Animals (photo ↔ species name)
@@ -58,11 +67,17 @@ Simplified SM-2 algorithm. Pairs the player got wrong are tracked and resurfaced
 Each pack contains 30–50 pairs.
 
 ### Content Structure
+
 ```json
 {
   "topic": "world-flags",
   "pairs": [
-    { "id": "ua", "image": "/img/flags/ua.webp", "text": "Ukraine", "hint": "Eastern Europe" }
+    {
+      "id": "ua",
+      "image": "/img/flags/ua.webp",
+      "text": "Ukraine",
+      "hint": "Eastern Europe"
+    }
   ]
 }
 ```
@@ -70,6 +85,7 @@ Each pack contains 30–50 pairs.
 Static JSON files per topic, loaded on demand. JSON-based format enables future extensibility (user-generated content out of scope for v1).
 
 ### SEO
+
 Each topic gets its own SSR-rendered landing page (`/topics/world-flags`) with description, difficulty rating, and preview.
 
 ## Leaderboards
@@ -88,13 +104,13 @@ Personal bests only (no backend in v1). Stored in IndexedDB alongside all other 
 - **No Reka UI in v1**
 
 ### Custom Tailwind Theme (CSS-first, v4)
+
 ```css
 @theme {
-  --color-primary-*:   /* game accents, buttons */
-  --color-surface-*:   /* card backgrounds */
-  --radius-card:       /* card corners */
-  --ease-flip:         /* card flip animation */
-  --ease-bounce:       /* match celebration */
+  --color-primary-*:   /* game accents, buttons */ --color-surface- *:
+    /* card backgrounds */
+    --radius-card: /* card corners */ --ease-flip: /* card flip animation */
+    --ease-bounce: /* match celebration */;
 }
 ```
 
@@ -109,6 +125,7 @@ Dark/light theming via Tailwind's `dark:` variant.
 ## CI/CD (GitHub Actions)
 
 ### On PR:
+
 - Lint (ESLint + Prettier check)
 - Type check (`nuxi typecheck`)
 - Unit & component tests (Vitest)
@@ -116,6 +133,7 @@ Dark/light theming via Tailwind's `dark:` variant.
 - Build check (`nuxi build`)
 
 ### On merge to main:
+
 - Same checks as PR
 - Build production bundle
 - Deploy to Vercel
@@ -123,6 +141,7 @@ Dark/light theming via Tailwind's `dark:` variant.
 ## Accessibility & Performance
 
 ### Accessibility
+
 - Semantic HTML, ARIA labels on cards
 - Keyboard navigation for card grid (arrow keys + Enter to flip)
 - Focus management
@@ -130,6 +149,7 @@ Dark/light theming via Tailwind's `dark:` variant.
 - `prefers-reduced-motion` support to disable flip animations
 
 ### Performance
+
 - Lazy-load topic images
 - WebP format for images
 - Minimal dependencies
@@ -177,6 +197,7 @@ tests/
 ```
 
 ### Architectural Principles
+
 - Composables own business logic — components are thin, rendering only
 - Pinia for runtime state, IndexedDB for persistence
 - Content as static JSON, loaded on demand
@@ -192,6 +213,7 @@ Modern, balanced between minimal and playful. Clean whitespace with satisfying g
 Young adults and adults (13+). Sophisticated mechanics, clean design, cognitive training appeal.
 
 ## Out of Scope (v1)
+
 - Backend / API server
 - Real-time multiplayer
 - User-generated content

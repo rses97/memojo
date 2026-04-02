@@ -17,6 +17,7 @@ tags: [vue3, teleport, testing, vue-test-utils]
 - [ ] Consider using `getComponent()` instead of DOM queries for teleported components
 
 **Problem - Standard Testing Fails:**
+
 ```vue
 <!-- Modal.vue -->
 <template>
@@ -44,6 +45,7 @@ test('modal input exists', async () => {
 ```
 
 **Solution 1 - Stub Teleport:**
+
 ```ts
 import { mount } from '@vue/test-utils'
 import Modal from './Modal.vue'
@@ -53,9 +55,9 @@ test('modal input exists', async () => {
     global: {
       stubs: {
         // Stub teleport to render content inline
-        Teleport: true
-      }
-    }
+        Teleport: true,
+      },
+    },
   })
 
   await wrapper.find('button').trigger('click')
@@ -66,13 +68,14 @@ test('modal input exists', async () => {
 ```
 
 **Solution 2 - Query Document Body:**
+
 ```ts
 import { mount } from '@vue/test-utils'
 import Modal from './Modal.vue'
 
 test('modal renders to body', async () => {
   const wrapper = mount(Modal, {
-    attachTo: document.body  // Required for Teleport to work
+    attachTo: document.body, // Required for Teleport to work
   })
 
   await wrapper.find('button').trigger('click')
@@ -90,6 +93,7 @@ test('modal renders to body', async () => {
 ```
 
 **Solution 3 - Custom Teleport Stub with Content Access:**
+
 ```ts
 import { mount, config } from '@vue/test-utils'
 import { h, Teleport } from 'vue'
@@ -99,22 +103,24 @@ import Modal from './Modal.vue'
 const TeleportStub = {
   setup(props, { slots }) {
     return () => h('div', { class: 'teleport-stub' }, slots.default?.())
-  }
+  },
 }
 
 test('modal with custom stub', async () => {
   const wrapper = mount(Modal, {
     global: {
       stubs: {
-        Teleport: TeleportStub
-      }
-    }
+        Teleport: TeleportStub,
+      },
+    },
   })
 
   await wrapper.find('button').trigger('click')
 
   // Content is inside .teleport-stub
-  expect(wrapper.find('.teleport-stub [data-testid="modal-input"]').exists()).toBe(true)
+  expect(
+    wrapper.find('.teleport-stub [data-testid="modal-input"]').exists(),
+  ).toBe(true)
 })
 ```
 
@@ -131,9 +137,9 @@ test('modal content', async () => {
     global: {
       stubs: {
         // Stub the modal component to avoid teleport issues
-        VueFinalModal: true
-      }
-    }
+        VueFinalModal: true,
+      },
+    },
   })
 })
 ```
@@ -154,5 +160,6 @@ it('opens modal', () => {
 ```
 
 ## Reference
+
 - [Vue Test Utils - Teleport](https://test-utils.vuejs.org/guide/advanced/teleport)
 - [Vue Test Utils - Stubs](https://test-utils.vuejs.org/guide/advanced/stubs-shallow-mount)

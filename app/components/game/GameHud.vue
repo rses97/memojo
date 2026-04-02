@@ -11,7 +11,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3">
+  <div
+    class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3"
+  >
     <div class="flex items-center gap-6">
       <div class="text-center">
         <div class="text-sm text-surface-700">Moves</div>
@@ -19,7 +21,9 @@ defineProps<{
       </div>
       <div class="text-center">
         <div class="text-sm text-surface-700">Matched</div>
-        <div class="text-2xl font-bold">{{ matchedPairs }}/{{ totalPairs }}</div>
+        <div class="text-2xl font-bold">
+          {{ matchedPairs }}/{{ totalPairs }}
+        </div>
       </div>
       <div v-if="streak > 1" class="text-center">
         <div class="text-sm text-surface-700">Streak</div>

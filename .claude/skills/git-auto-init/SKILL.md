@@ -23,18 +23,18 @@ One-time project setup. Detect what's installed, offer to set up what's missing.
 
 Check each tool and show status:
 
-| Tool | Check | Config file |
-|---|---|---|
-| git | `.git/` exists | — |
-| GitHub remote | `git remote -v` | — |
-| TypeScript | `devDependencies` has `typescript` | — |
-| ESLint | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts` |
-| Prettier | `devDependencies` has `prettier` + config file exists | `.prettierrc` / `prettier.config.*` |
-| commitlint | `devDependencies` has `@commitlint/cli` | `commitlint.config.ts` |
-| husky | `devDependencies` has `husky` + `.husky/` exists | `.husky/` |
-| lint-staged | config in `package.json` or `.lintstagedrc` | — |
-| semantic-release | `devDependencies` has `semantic-release` | `.releaserc` |
-| CHANGELOG.md | file exists | `CHANGELOG.md` |
+| Tool             | Check                                                     | Config file                         |
+| ---------------- | --------------------------------------------------------- | ----------------------------------- |
+| git              | `.git/` exists                                            | —                                   |
+| GitHub remote    | `git remote -v`                                           | —                                   |
+| TypeScript       | `devDependencies` has `typescript`                        | —                                   |
+| ESLint           | `devDependencies` has `eslint` + `eslint.config.*` exists | `eslint.config.ts`                  |
+| Prettier         | `devDependencies` has `prettier` + config file exists     | `.prettierrc` / `prettier.config.*` |
+| commitlint       | `devDependencies` has `@commitlint/cli`                   | `commitlint.config.ts`              |
+| husky            | `devDependencies` has `husky` + `.husky/` exists          | `.husky/`                           |
+| lint-staged      | config in `package.json` or `.lintstagedrc`               | —                                   |
+| semantic-release | `devDependencies` has `semantic-release`                  | `.releaserc`                        |
+| CHANGELOG.md     | file exists                                               | `CHANGELOG.md`                      |
 
 Display status:
 
@@ -59,11 +59,11 @@ If all green: "All tools configured. Nothing to do." — stop here.
 
 Detect from lockfile:
 
-| Lockfile | Package manager |
-|---|---|
-| `pnpm-lock.yaml` | pnpm |
-| `package-lock.json` | npm |
-| `yarn.lock` | yarn |
+| Lockfile            | Package manager |
+| ------------------- | --------------- |
+| `pnpm-lock.yaml`    | pnpm            |
+| `package-lock.json` | npm             |
+| `yarn.lock`         | yarn            |
 
 Use `{pm}` for install command (`pnpm add`, `npm install`, `yarn add`).
 Use `{pm-exec}` for exec (`pnpm exec`, `npx`, `yarn`).
@@ -72,11 +72,11 @@ Use `{pm-exec}` for exec (`pnpm exec`, `npx`, `yarn`).
 
 Detect project type from `dependencies`/`devDependencies` in `package.json`:
 
-| Check | Framework |
-|---|---|
-| `nuxt` in dependencies | Nuxt |
-| `vue` in dependencies (no nuxt) | Vue |
-| Neither | Plain TypeScript |
+| Check                           | Framework        |
+| ------------------------------- | ---------------- |
+| `nuxt` in dependencies          | Nuxt             |
+| `vue` in dependencies (no nuxt) | Vue              |
+| Neither                         | Plain TypeScript |
 
 Display: `Detected framework: {Nuxt|Vue|Plain TypeScript}`
 
@@ -103,6 +103,7 @@ Ask: "Install TypeScript? [Y/n]"
 ```
 
 Add typecheck script to `package.json`:
+
 - Nuxt: `"typecheck": "nuxi typecheck"`
 - Vue / Plain TS: `"typecheck": "tsc --noEmit"`
 
@@ -154,9 +155,8 @@ Create `eslint.config.ts`:
 ```ts
 import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt(
-  // Your custom rules here
-)
+export default withNuxt()
+// Your custom rules here
 ```
 
 `@nuxt/eslint` bundles typescript-eslint, eslint-plugin-vue, and @stylistic — no separate installs needed. If user chose strict, configure via Nuxt module options in `nuxt.config.ts`:
@@ -188,11 +188,14 @@ Create `eslint.config.ts` (without stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
 
 export default defineConfigWithVueTs(
-  pluginVue.configs['flat/recommended'],   // or 'flat/strongly-recommended' for strict
-  vueTsConfigs.recommended,                // or vueTsConfigs.strict
+  pluginVue.configs['flat/recommended'], // or 'flat/strongly-recommended' for strict
+  vueTsConfigs.recommended, // or vueTsConfigs.strict
 )
 ```
 
@@ -200,7 +203,10 @@ Create `eslint.config.ts` (with stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript'
 import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfigWithVueTs(
@@ -230,7 +236,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   eslint.configs.recommended,
-  tseslint.configs.recommended,   // or .strict
+  tseslint.configs.recommended, // or .strict
 )
 ```
 
@@ -317,7 +323,7 @@ Ask: "Install commitlint + @commitlint/config-conventional? [Y/n]"
 Create `commitlint.config.ts`:
 
 ```ts
-export default { extends: ['@commitlint/config-conventional'] };
+export default { extends: ['@commitlint/config-conventional'] }
 ```
 
 **husky:**
@@ -537,15 +543,15 @@ Resolve placeholders from the project's detected package manager and `package.js
 
 **Placeholder resolution:**
 
-| Placeholder | Condition | Value |
-|---|---|---|
-| `{detected-pm}` | Always | Detected package manager name |
-| `{install-cmd}` | Always | `{pm} install --frozen-lockfile` |
-| `{lint-cmd}` | ESLint installed | `{pm} run lint` |
-| `{format-check-cmd}` | Prettier installed | `{pm} run format:check` |
-| `{typecheck-cmd}` | TypeScript installed | `{pm} run typecheck` |
-| `{test-cmd}` | test:run script exists | `{pm} run test:run` |
-| `{build-cmd}` | Always | `{pm} run build` |
+| Placeholder          | Condition              | Value                            |
+| -------------------- | ---------------------- | -------------------------------- |
+| `{detected-pm}`      | Always                 | Detected package manager name    |
+| `{install-cmd}`      | Always                 | `{pm} install --frozen-lockfile` |
+| `{lint-cmd}`         | ESLint installed       | `{pm} run lint`                  |
+| `{format-check-cmd}` | Prettier installed     | `{pm} run format:check`          |
+| `{typecheck-cmd}`    | TypeScript installed   | `{pm} run typecheck`             |
+| `{test-cmd}`         | test:run script exists | `{pm} run test:run`              |
+| `{build-cmd}`        | Always                 | `{pm} run build`                 |
 
 If a tool is not installed, omit the corresponding `- run:` step entirely.
 
@@ -569,12 +575,12 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {lint-cmd}
-      - run: {format-check-cmd}
-      - run: {typecheck-cmd}
-      - run: {test-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { lint-cmd }
+      - run: { format-check-cmd }
+      - run: { typecheck-cmd }
+      - run: { test-cmd }
+      - run: { build-cmd }
 ```
 
 **Gitflow ci.yml** (branches differ):
@@ -597,12 +603,12 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {lint-cmd}
-      - run: {format-check-cmd}
-      - run: {typecheck-cmd}
-      - run: {test-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { lint-cmd }
+      - run: { format-check-cmd }
+      - run: { typecheck-cmd }
+      - run: { test-cmd }
+      - run: { build-cmd }
 ```
 
 #### deploy.yml — auto-deploy to staging/dev on push
@@ -629,12 +635,12 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { build-cmd }
       # Platform-specific deploy step inserted here
 ```
 
-**Gitflow deploy.yml** (develop → dev, release/* → staging):
+**Gitflow deploy.yml** (develop → dev, release/\* → staging):
 
 ```yaml
 name: Deploy
@@ -654,8 +660,8 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { build-cmd }
       # Platform-specific deploy step inserted here
 ```
 
@@ -683,7 +689,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production    # No reviewers required
+    environment: production # No reviewers required
     steps:
       - uses: actions/checkout@v4
         with:
@@ -692,8 +698,8 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { build-cmd }
       # Platform-specific deploy step inserted here
 ```
 
@@ -724,8 +730,8 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { build-cmd }
       # Platform-specific deploy step inserted here
 ```
 
@@ -749,7 +755,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production    # Requires reviewer approval in GitHub settings
+    environment: production # Requires reviewer approval in GitHub settings
     steps:
       - uses: actions/checkout@v4
         with:
@@ -758,8 +764,8 @@ jobs:
         with:
           node-version: '22'
           cache: '{detected-pm}'
-      - run: {install-cmd}
-      - run: {build-cmd}
+      - run: { install-cmd }
+      - run: { build-cmd }
       # Platform-specific deploy step inserted here
 ```
 
@@ -810,13 +816,13 @@ Insert the matching step into `deploy.yml` and `release.yml`:
 
 ### Required Secrets by Platform
 
-| Platform | Required GitHub Secrets |
-|---|---|
-| Vercel | `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` |
-| AWS | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BUCKET`, `CLOUDFRONT_ID` |
-| Netlify | `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID` |
-| Docker | `REGISTRY`, `REGISTRY_USERNAME`, `REGISTRY_PASSWORD` |
-| VPS | `VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY` |
+| Platform | Required GitHub Secrets                                                    |
+| -------- | -------------------------------------------------------------------------- |
+| Vercel   | `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`                       |
+| AWS      | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BUCKET`, `CLOUDFRONT_ID` |
+| Netlify  | `NETLIFY_AUTH_TOKEN`, `NETLIFY_SITE_ID`                                    |
+| Docker   | `REGISTRY`, `REGISTRY_USERNAME`, `REGISTRY_PASSWORD`                       |
+| VPS      | `VPS_HOST`, `VPS_USER`, `SSH_PRIVATE_KEY`                                  |
 
 ### Disabling Platform Auto-Deploy
 

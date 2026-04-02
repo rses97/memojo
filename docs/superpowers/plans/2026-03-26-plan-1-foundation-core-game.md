@@ -53,6 +53,7 @@ memojo/
 ### Task 1: Project Scaffolding & Configuration
 
 **Files:**
+
 - Create: `nuxt.config.ts`, `package.json`, `vitest.config.ts`, `app/assets/css/main.css`, `app/app.vue`
 
 - [ ] **Step 1: Initialize Nuxt project**
@@ -91,15 +92,10 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  modules: [
-    '@pinia/nuxt',
-    '@nuxt/test-utils/module',
-  ],
+  modules: ['@pinia/nuxt', '@nuxt/test-utils/module'],
 
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
 })
 ```
@@ -109,29 +105,29 @@ export default defineNuxtConfig({
 Create `app/assets/css/main.css`:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-primary-50: oklch(0.97 0.01 260);
   --color-primary-100: oklch(0.93 0.03 260);
   --color-primary-200: oklch(0.87 0.06 260);
-  --color-primary-300: oklch(0.78 0.10 260);
+  --color-primary-300: oklch(0.78 0.1 260);
   --color-primary-400: oklch(0.68 0.15 260);
-  --color-primary-500: oklch(0.55 0.20 260);
-  --color-primary-600: oklch(0.48 0.20 260);
-  --color-primary-700: oklch(0.40 0.18 260);
+  --color-primary-500: oklch(0.55 0.2 260);
+  --color-primary-600: oklch(0.48 0.2 260);
+  --color-primary-700: oklch(0.4 0.18 260);
   --color-primary-800: oklch(0.33 0.14 260);
-  --color-primary-900: oklch(0.25 0.10 260);
+  --color-primary-900: oklch(0.25 0.1 260);
 
   --color-surface-50: oklch(0.98 0.005 260);
   --color-surface-100: oklch(0.95 0.01 260);
-  --color-surface-200: oklch(0.90 0.015 260);
+  --color-surface-200: oklch(0.9 0.015 260);
   --color-surface-700: oklch(0.35 0.03 260);
   --color-surface-800: oklch(0.25 0.025 260);
   --color-surface-900: oklch(0.18 0.02 260);
 
   --color-success: oklch(0.65 0.18 145);
-  --color-danger: oklch(0.60 0.20 25);
+  --color-danger: oklch(0.6 0.2 25);
 
   --radius-card: 0.75rem;
 
@@ -205,6 +201,7 @@ git commit -m "chore: scaffold Nuxt 4 project with Tailwind v4, Pinia, Vitest"
 ### Task 2: TypeScript Types
 
 **Files:**
+
 - Create: `app/types/index.ts`
 
 - [ ] **Step 1: Define all shared types**
@@ -270,6 +267,7 @@ git commit -m "feat: add shared TypeScript types for game entities"
 ### Task 3: World Flags Topic Pack
 
 **Files:**
+
 - Create: `public/topics/world-flags.json`
 
 - [ ] **Step 1: Create topic pack JSON**
@@ -282,16 +280,66 @@ Create `public/topics/world-flags.json`:
   "name": "World Flags",
   "description": "Match country flags to their names",
   "pairs": [
-    { "id": "ua", "image": "/img/flags/ua.webp", "text": "Ukraine", "hint": "Eastern Europe" },
-    { "id": "jp", "image": "/img/flags/jp.webp", "text": "Japan", "hint": "East Asia" },
-    { "id": "br", "image": "/img/flags/br.webp", "text": "Brazil", "hint": "South America" },
-    { "id": "ca", "image": "/img/flags/ca.webp", "text": "Canada", "hint": "North America" },
-    { "id": "fr", "image": "/img/flags/fr.webp", "text": "France", "hint": "Western Europe" },
-    { "id": "au", "image": "/img/flags/au.webp", "text": "Australia", "hint": "Oceania" },
-    { "id": "ke", "image": "/img/flags/ke.webp", "text": "Kenya", "hint": "East Africa" },
-    { "id": "mx", "image": "/img/flags/mx.webp", "text": "Mexico", "hint": "North America" },
-    { "id": "in", "image": "/img/flags/in.webp", "text": "India", "hint": "South Asia" },
-    { "id": "de", "image": "/img/flags/de.webp", "text": "Germany", "hint": "Central Europe" }
+    {
+      "id": "ua",
+      "image": "/img/flags/ua.webp",
+      "text": "Ukraine",
+      "hint": "Eastern Europe"
+    },
+    {
+      "id": "jp",
+      "image": "/img/flags/jp.webp",
+      "text": "Japan",
+      "hint": "East Asia"
+    },
+    {
+      "id": "br",
+      "image": "/img/flags/br.webp",
+      "text": "Brazil",
+      "hint": "South America"
+    },
+    {
+      "id": "ca",
+      "image": "/img/flags/ca.webp",
+      "text": "Canada",
+      "hint": "North America"
+    },
+    {
+      "id": "fr",
+      "image": "/img/flags/fr.webp",
+      "text": "France",
+      "hint": "Western Europe"
+    },
+    {
+      "id": "au",
+      "image": "/img/flags/au.webp",
+      "text": "Australia",
+      "hint": "Oceania"
+    },
+    {
+      "id": "ke",
+      "image": "/img/flags/ke.webp",
+      "text": "Kenya",
+      "hint": "East Africa"
+    },
+    {
+      "id": "mx",
+      "image": "/img/flags/mx.webp",
+      "text": "Mexico",
+      "hint": "North America"
+    },
+    {
+      "id": "in",
+      "image": "/img/flags/in.webp",
+      "text": "India",
+      "hint": "South Asia"
+    },
+    {
+      "id": "de",
+      "image": "/img/flags/de.webp",
+      "text": "Germany",
+      "hint": "Central Europe"
+    }
   ]
 }
 ```
@@ -335,6 +383,7 @@ git commit -m "feat: add world-flags topic pack with placeholder images"
 ### Task 4: Scoring Utility (TDD)
 
 **Files:**
+
 - Create: `app/utils/scoring.ts`
 - Test: `tests/unit/scoring.test.ts`
 
@@ -497,6 +546,7 @@ git commit -m "feat: add scoring utility with accuracy, speed, and streak scorin
 ### Task 5: useTimer Composable (TDD)
 
 **Files:**
+
 - Create: `app/composables/useTimer.ts`
 - Test: `tests/unit/useTimer.test.ts`
 
@@ -704,6 +754,7 @@ git commit -m "feat: add useTimer composable with countdown, pause, and expiry"
 ### Task 6: useGame Composable (TDD)
 
 **Files:**
+
 - Create: `app/composables/useGame.ts`
 - Test: `tests/unit/useGame.test.ts`
 
@@ -729,8 +780,8 @@ describe('useGame', () => {
 
     expect(game.cards.value).toHaveLength(8)
 
-    const imageCards = game.cards.value.filter(c => c.type === 'image')
-    const textCards = game.cards.value.filter(c => c.type === 'text')
+    const imageCards = game.cards.value.filter((c) => c.type === 'image')
+    const textCards = game.cards.value.filter((c) => c.type === 'text')
     expect(imageCards).toHaveLength(4)
     expect(textCards).toHaveLength(4)
   })
@@ -752,7 +803,7 @@ describe('useGame', () => {
     const card = game.cards.value[0]
     game.flipCard(card.id)
 
-    const updated = game.cards.value.find(c => c.id === card.id)!
+    const updated = game.cards.value.find((c) => c.id === card.id)!
     expect(updated.isFlipped).toBe(true)
   })
 
@@ -760,16 +811,20 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const imageCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const textCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+    const imageCard = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const textCard = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'text',
+    )!
 
     game.flipCard(imageCard.id)
     game.flipCard(textCard.id)
 
     await nextTick()
 
-    const updatedImage = game.cards.value.find(c => c.id === imageCard.id)!
-    const updatedText = game.cards.value.find(c => c.id === textCard.id)!
+    const updatedImage = game.cards.value.find((c) => c.id === imageCard.id)!
+    const updatedText = game.cards.value.find((c) => c.id === textCard.id)!
     expect(updatedImage.isMatched).toBe(true)
     expect(updatedText.isMatched).toBe(true)
     expect(game.matchedPairs.value).toBe(1)
@@ -781,22 +836,32 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const cardA = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const cardB = game.cards.value.find(c => c.pairId === 'b' && c.type === 'text')!
+    const cardA = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const cardB = game.cards.value.find(
+      (c) => c.pairId === 'b' && c.type === 'text',
+    )!
 
     game.flipCard(cardA.id)
     game.flipCard(cardB.id)
 
     // Cards should be flipped while showing mismatch
     await nextTick()
-    expect(game.cards.value.find(c => c.id === cardA.id)!.isFlipped).toBe(true)
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
+      true,
+    )
 
     // After delay, cards flip back
     vi.advanceTimersByTime(1000)
     await nextTick()
 
-    expect(game.cards.value.find(c => c.id === cardA.id)!.isFlipped).toBe(false)
-    expect(game.cards.value.find(c => c.id === cardB.id)!.isFlipped).toBe(false)
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
+      false,
+    )
+    expect(game.cards.value.find((c) => c.id === cardB.id)!.isFlipped).toBe(
+      false,
+    )
 
     vi.useRealTimers()
   })
@@ -820,16 +885,24 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Match pair 'a'
-    const a1 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const a2 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+    const a1 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const a2 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'text',
+    )!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
     // Match pair 'b'
-    const b1 = game.cards.value.find(c => c.pairId === 'b' && c.type === 'image')!
-    const b2 = game.cards.value.find(c => c.pairId === 'b' && c.type === 'text')!
+    const b1 = game.cards.value.find(
+      (c) => c.pairId === 'b' && c.type === 'image',
+    )!
+    const b2 = game.cards.value.find(
+      (c) => c.pairId === 'b' && c.type === 'text',
+    )!
     game.flipCard(b1.id)
     game.flipCard(b2.id)
     await nextTick()
@@ -843,16 +916,24 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Match pair 'a'
-    const a1 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const a2 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+    const a1 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const a2 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'text',
+    )!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
     // Mismatch
-    const c1 = game.cards.value.find(c => c.pairId === 'b' && c.type === 'image')!
-    const c2 = game.cards.value.find(c => c.pairId === 'c' && c.type === 'text')!
+    const c1 = game.cards.value.find(
+      (c) => c.pairId === 'b' && c.type === 'image',
+    )!
+    const c2 = game.cards.value.find(
+      (c) => c.pairId === 'c' && c.type === 'text',
+    )!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
@@ -869,8 +950,12 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const a1 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const a2 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+    const a1 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const a2 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'text',
+    )!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
@@ -889,7 +974,7 @@ describe('useGame', () => {
     game.flipCard(card.id) // same card again
 
     // Should still only have one flipped card, no move counted
-    const flipped = game.cards.value.filter(c => c.isFlipped)
+    const flipped = game.cards.value.filter((c) => c.isFlipped)
     expect(flipped).toHaveLength(1)
     expect(game.moves.value).toBe(0)
   })
@@ -901,16 +986,22 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Cause a mismatch
-    const c1 = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-    const c2 = game.cards.value.find(c => c.pairId === 'b' && c.type === 'text')!
+    const c1 = game.cards.value.find(
+      (c) => c.pairId === 'a' && c.type === 'image',
+    )!
+    const c2 = game.cards.value.find(
+      (c) => c.pairId === 'b' && c.type === 'text',
+    )!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
 
     // Try to flip another card during the mismatch delay
-    const c3 = game.cards.value.find(c => c.pairId === 'c' && c.type === 'image')!
+    const c3 = game.cards.value.find(
+      (c) => c.pairId === 'c' && c.type === 'image',
+    )!
     game.flipCard(c3.id)
-    expect(game.cards.value.find(c => c.id === c3.id)!.isFlipped).toBe(false)
+    expect(game.cards.value.find((c) => c.id === c3.id)!.isFlipped).toBe(false)
 
     vi.advanceTimersByTime(1000)
     vi.useRealTimers()
@@ -921,8 +1012,12 @@ describe('useGame', () => {
     game.init(testPairs)
 
     for (const pairId of ['a', 'b', 'c', 'd']) {
-      const img = game.cards.value.find(c => c.pairId === pairId && c.type === 'image')!
-      const txt = game.cards.value.find(c => c.pairId === pairId && c.type === 'text')!
+      const img = game.cards.value.find(
+        (c) => c.pairId === pairId && c.type === 'image',
+      )!
+      const txt = game.cards.value.find(
+        (c) => c.pairId === pairId && c.type === 'text',
+      )!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
@@ -940,8 +1035,12 @@ describe('useGame', () => {
 
     // Match two in a row (streak = 2)
     for (const pairId of ['a', 'b']) {
-      const img = game.cards.value.find(c => c.pairId === pairId && c.type === 'image')!
-      const txt = game.cards.value.find(c => c.pairId === pairId && c.type === 'text')!
+      const img = game.cards.value.find(
+        (c) => c.pairId === pairId && c.type === 'image',
+      )!
+      const txt = game.cards.value.find(
+        (c) => c.pairId === pairId && c.type === 'text',
+      )!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
@@ -949,8 +1048,12 @@ describe('useGame', () => {
     expect(game.maxStreak.value).toBe(2)
 
     // Cause a mismatch (streak resets to 0, but maxStreak stays 2)
-    const c1 = game.cards.value.find(c => c.pairId === 'c' && c.type === 'image')!
-    const c2 = game.cards.value.find(c => c.pairId === 'd' && c.type === 'text')!
+    const c1 = game.cards.value.find(
+      (c) => c.pairId === 'c' && c.type === 'image',
+    )!
+    const c2 = game.cards.value.find(
+      (c) => c.pairId === 'd' && c.type === 'text',
+    )!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
@@ -992,7 +1095,9 @@ export function useGame() {
 
   const flippedCards: string[] = []
 
-  const isComplete = computed(() => matchedPairs.value === totalPairs.value && totalPairs.value > 0)
+  const isComplete = computed(
+    () => matchedPairs.value === totalPairs.value && totalPairs.value > 0,
+  )
 
   function init(pairs: TopicPair[]) {
     const gameCards: GameCard[] = []
@@ -1029,7 +1134,7 @@ export function useGame() {
   function flipCard(cardId: string) {
     if (isProcessing.value) return
 
-    const card = cards.value.find(c => c.id === cardId)
+    const card = cards.value.find((c) => c.id === cardId)
     if (!card || card.isFlipped || card.isMatched) return
 
     card.isFlipped = true
@@ -1043,8 +1148,8 @@ export function useGame() {
 
   function checkMatch() {
     const [firstId, secondId] = flippedCards
-    const first = cards.value.find(c => c.id === firstId)!
-    const second = cards.value.find(c => c.id === secondId)!
+    const first = cards.value.find((c) => c.id === firstId)!
+    const second = cards.value.find((c) => c.id === secondId)!
 
     if (first.pairId === second.pairId && first.type !== second.type) {
       // Match
@@ -1126,6 +1231,7 @@ git commit -m "feat: add useGame composable with card flip, match, and streak lo
 ### Task 7: GameCard Component
 
 **Files:**
+
 - Create: `app/components/game/GameCard.vue`
 - Test: `tests/components/GameCard.test.ts`
 
@@ -1343,8 +1449,13 @@ const ariaLabel = computed(() => {
 }
 
 @keyframes matchBounce {
-  0%, 100% { transform: rotateY(180deg) scale(1); }
-  50% { transform: rotateY(180deg) scale(1.05); }
+  0%,
+  100% {
+    transform: rotateY(180deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.05);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1378,6 +1489,7 @@ git commit -m "feat: add GameCard component with flip animation and a11y"
 ### Task 8: GameBoard Component
 
 **Files:**
+
 - Create: `app/components/game/GameBoard.vue`
 
 - [ ] **Step 1: Create the component**
@@ -1431,6 +1543,7 @@ git commit -m "feat: add GameBoard grid component"
 ### Task 9: GameHud Component
 
 **Files:**
+
 - Create: `app/components/game/GameHud.vue`
 
 - [ ] **Step 1: Create the component**
@@ -1449,7 +1562,9 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3">
+  <div
+    class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3"
+  >
     <div class="flex items-center gap-6">
       <div class="text-center">
         <div class="text-sm text-surface-700">Moves</div>
@@ -1457,7 +1572,9 @@ defineProps<{
       </div>
       <div class="text-center">
         <div class="text-sm text-surface-700">Matched</div>
-        <div class="text-2xl font-bold">{{ matchedPairs }}/{{ totalPairs }}</div>
+        <div class="text-2xl font-bold">
+          {{ matchedPairs }}/{{ totalPairs }}
+        </div>
       </div>
       <div v-if="streak > 1" class="text-center">
         <div class="text-sm text-surface-700">Streak</div>
@@ -1470,7 +1587,9 @@ defineProps<{
         class="text-2xl font-bold tabular-nums"
         :class="{ 'text-danger': timeRemaining <= 10 }"
       >
-        {{ Math.floor(timeRemaining / 60) }}:{{ String(timeRemaining % 60).padStart(2, '0') }}
+        {{ Math.floor(timeRemaining / 60) }}:{{
+          String(timeRemaining % 60).padStart(2, '0')
+        }}
       </div>
     </div>
   </div>
@@ -1489,6 +1608,7 @@ git commit -m "feat: add GameHud component with moves, matches, streak, and time
 ### Task 10: Default Layout
 
 **Files:**
+
 - Create: `app/layouts/default.vue`
 
 - [ ] **Step 1: Create the layout**
@@ -1502,7 +1622,7 @@ Create `app/layouts/default.vue`:
       <div class="mx-auto flex max-w-4xl items-center justify-between">
         <NuxtLink to="/" class="text-xl font-bold text-primary-600">
           Memojo
-</NuxtLink>
+        </NuxtLink>
       </div>
     </header>
     <main class="mx-auto max-w-4xl px-6 py-8">
@@ -1524,6 +1644,7 @@ git commit -m "feat: add default layout with header and main content area"
 ### Task 11: Play Page
 
 **Files:**
+
 - Create: `app/pages/play/[slug].vue`
 
 - [ ] **Step 1: Create the play page**
@@ -1539,7 +1660,9 @@ import { calculateScore } from '~/utils/scoring'
 const route = useRoute()
 const slug = route.params.slug as string
 
-const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`)
+const { data: topicPack, error } = await useFetch<TopicPack>(
+  `/topics/${slug}.json`,
+)
 
 if (error.value || !topicPack.value) {
   throw createError({
@@ -1625,18 +1748,34 @@ startGame()
       v-if="finalScore !== null"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
     >
-      <div class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
+      <div
+        class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl"
+      >
         <h2 class="mb-2 text-3xl font-bold">
-          {{ game.isComplete ? 'Well Done!' : 'Time\'s Up!' }}
+          {{ game.isComplete ? 'Well Done!' : "Time's Up!" }}
         </h2>
         <p class="mb-6 text-surface-700">
-          {{ game.isComplete ? 'You matched all pairs!' : 'Better luck next time.' }}
+          {{
+            game.isComplete
+              ? 'You matched all pairs!'
+              : 'Better luck next time.'
+          }}
         </p>
         <div class="mb-6 space-y-2 text-lg">
-          <div>Score: <span class="font-bold text-primary-600">{{ finalScore }}</span></div>
-          <div>Moves: <span class="font-bold">{{ game.moves.value }}</span></div>
-          <div>Best Streak: <span class="font-bold">{{ game.maxStreak.value }}x</span></div>
-          <div>Time: <span class="font-bold">{{ timer.elapsed.value }}s</span></div>
+          <div>
+            Score:
+            <span class="font-bold text-primary-600">{{ finalScore }}</span>
+          </div>
+          <div>
+            Moves: <span class="font-bold">{{ game.moves.value }}</span>
+          </div>
+          <div>
+            Best Streak:
+            <span class="font-bold">{{ game.maxStreak.value }}x</span>
+          </div>
+          <div>
+            Time: <span class="font-bold">{{ timer.elapsed.value }}s</span>
+          </div>
         </div>
         <div class="flex gap-3 justify-center">
           <button
@@ -1685,6 +1824,7 @@ git commit -m "feat: add play page with game session, timer, scoring, and result
 ### Task 12: Landing Page
 
 **Files:**
+
 - Create: `app/pages/index.vue`
 
 - [ ] **Step 1: Create the landing page**
@@ -1700,9 +1840,7 @@ useHead({
 
 <template>
   <div class="flex flex-col items-center gap-8 py-12 text-center">
-    <h1 class="text-5xl font-bold tracking-tight">
-      Memojo
-    </h1>
+    <h1 class="text-5xl font-bold tracking-tight">Memojo</h1>
     <p class="max-w-md text-lg text-surface-700">
       Match images to words. Train your memory with cross-modal matching across
       diverse topics.
@@ -1723,6 +1861,7 @@ useHead({
 - [ ] **Step 2: Verify in browser**
 
 Navigate to `http://localhost:3000`. Expected:
+
 - Title "Memojo"
 - Description text
 - "Quick Play" button that navigates to `/play/world-flags`
@@ -1769,6 +1908,7 @@ pnpm dev
 ```
 
 Walk through the full flow:
+
 1. Landing page loads at `/`
 2. Click "Quick Play" → navigates to `/play/world-flags`
 3. Cards render in 4-column grid

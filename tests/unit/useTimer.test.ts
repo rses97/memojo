@@ -5,12 +5,14 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 // Mounts useTimer inside a real component so onMounted/onUnmounted fire correctly
 function withTimer(clockFn: () => number) {
   let result: ReturnType<typeof useTimer>
-  const wrapper = mount(defineComponent({
-    setup() {
-      result = useTimer(clockFn)
-      return () => h('div')
-    },
-  }))
+  const wrapper = mount(
+    defineComponent({
+      setup() {
+        result = useTimer(clockFn)
+        return () => h('div')
+      },
+    }),
+  )
   return { timer: result!, wrapper }
 }
 
@@ -25,7 +27,11 @@ describe('useTimer', () => {
 
   afterEach(() => {
     vi.useRealTimers()
-    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
+    Object.defineProperty(document, 'hidden', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
   })
 
   it('initializes with the given time limit', () => {
@@ -124,7 +130,11 @@ describe('useTimer', () => {
     expect(timer.remaining.value).toBe(55)
 
     // tab hidden
-    Object.defineProperty(document, 'hidden', { value: true, writable: true, configurable: true })
+    Object.defineProperty(document, 'hidden', {
+      value: true,
+      writable: true,
+      configurable: true,
+    })
     document.dispatchEvent(new Event('visibilitychange'))
     expect(timer.isRunning.value).toBe(false)
 
@@ -134,7 +144,11 @@ describe('useTimer', () => {
     expect(timer.remaining.value).toBe(55)
 
     // tab visible again
-    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
+    Object.defineProperty(document, 'hidden', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
     document.dispatchEvent(new Event('visibilitychange'))
     expect(timer.isRunning.value).toBe(true)
 
@@ -158,9 +172,17 @@ describe('useTimer', () => {
     expect(timer.isRunning.value).toBe(false)
 
     // tab hides then shows — should not restart a manually-paused timer
-    Object.defineProperty(document, 'hidden', { value: true, writable: true, configurable: true })
+    Object.defineProperty(document, 'hidden', {
+      value: true,
+      writable: true,
+      configurable: true,
+    })
     document.dispatchEvent(new Event('visibilitychange'))
-    Object.defineProperty(document, 'hidden', { value: false, writable: true, configurable: true })
+    Object.defineProperty(document, 'hidden', {
+      value: false,
+      writable: true,
+      configurable: true,
+    })
     document.dispatchEvent(new Event('visibilitychange'))
 
     expect(timer.isRunning.value).toBe(false)

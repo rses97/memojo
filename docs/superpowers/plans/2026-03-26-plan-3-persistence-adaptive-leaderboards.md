@@ -40,6 +40,7 @@ memojo/
 ### Task 1: Add Persistence Types
 
 **Files:**
+
 - Modify: `app/types/index.ts`
 
 - [ ] **Step 1: Add persistence-related types**
@@ -122,6 +123,7 @@ git commit -m "feat: add persistence and adaptive difficulty types"
 ### Task 2: IndexedDB Composable
 
 **Files:**
+
 - Create: `app/composables/useIndexedDB.ts`
 - Create: `tests/unit/useIndexedDB.test.ts`
 
@@ -133,7 +135,13 @@ Create `tests/unit/useIndexedDB.test.ts`:
 import { describe, it, expect, beforeEach } from 'vitest'
 import 'fake-indexeddb/auto'
 import { useIndexedDB } from '../../app/composables/useIndexedDB'
-import type { StoredGameResult, UserPreferences, SpacedRepetitionCard, PairPerformance, SessionPerformance } from '../../app/types'
+import type {
+  StoredGameResult,
+  UserPreferences,
+  SpacedRepetitionCard,
+  PairPerformance,
+  SessionPerformance,
+} from '../../app/types'
 
 describe('useIndexedDB', () => {
   beforeEach(() => {
@@ -217,7 +225,10 @@ describe('useIndexedDB', () => {
 
   it('stores and retrieves user preferences', async () => {
     const db = useIndexedDB()
-    const prefs: UserPreferences = { theme: 'dark', preferredTopics: ['world-flags'] }
+    const prefs: UserPreferences = {
+      theme: 'dark',
+      preferredTopics: ['world-flags'],
+    }
 
     await db.putUserPreferences(prefs)
     const fetched = await db.getUserPreferences()
@@ -405,7 +416,9 @@ function getDB() {
     upgrade(db) {
       // Game results store
       if (!db.objectStoreNames.contains('gameResults')) {
-        const resultsStore = db.createObjectStore('gameResults', { keyPath: 'id' })
+        const resultsStore = db.createObjectStore('gameResults', {
+          keyPath: 'id',
+        })
         resultsStore.createIndex('by-topic', 'topic')
         resultsStore.createIndex('by-mode', 'mode')
         resultsStore.createIndex('by-date', 'date')
@@ -425,13 +438,17 @@ function getDB() {
 
       // Pair performance store
       if (!db.objectStoreNames.contains('pairPerformance')) {
-        const pairStore = db.createObjectStore('pairPerformance', { keyPath: 'pairId' })
+        const pairStore = db.createObjectStore('pairPerformance', {
+          keyPath: 'pairId',
+        })
         pairStore.createIndex('by-topic', 'topic')
       }
 
       // Session performance store
       if (!db.objectStoreNames.contains('sessionPerformance')) {
-        const sessionStore = db.createObjectStore('sessionPerformance', { keyPath: 'id' })
+        const sessionStore = db.createObjectStore('sessionPerformance', {
+          keyPath: 'id',
+        })
         sessionStore.createIndex('by-topic', 'topic')
         sessionStore.createIndex('by-date', 'date')
       }
@@ -576,6 +593,7 @@ git commit -m "feat: add useIndexedDB composable with full CRUD for all stores"
 ### Task 3: SM-2 Algorithm Utility
 
 **Files:**
+
 - Create: `app/utils/sm2.ts`
 - Create: `tests/unit/sm2.test.ts`
 
@@ -585,7 +603,11 @@ Create `tests/unit/sm2.test.ts`:
 
 ```typescript
 import { describe, it, expect } from 'vitest'
-import { calculateSM2, type SM2Input, type SM2Output } from '../../app/utils/sm2'
+import {
+  calculateSM2,
+  type SM2Input,
+  type SM2Output,
+} from '../../app/utils/sm2'
 
 describe('calculateSM2', () => {
   const defaultInput: SM2Input = {
@@ -770,6 +792,7 @@ git commit -m "feat: add SM-2 spaced repetition algorithm utility"
 ### Task 4: Spaced Repetition Composable
 
 **Files:**
+
 - Create: `app/composables/useSpacedRepetition.ts`
 - Create: `tests/unit/useSpacedRepetition.test.ts`
 
@@ -864,7 +887,11 @@ describe('useSpacedRepetition', () => {
     vi.setSystemTime(new Date('2026-03-28T12:00:00Z'))
 
     const allPairIds = ['p1', 'p2', 'p3', 'p4', 'p5']
-    const selected = await sr.selectPairsForSession('world-flags', allPairIds, 4)
+    const selected = await sr.selectPairsForSession(
+      'world-flags',
+      allPairIds,
+      4,
+    )
 
     expect(selected).toHaveLength(4)
     // p1 should be included because it's due
@@ -890,7 +917,10 @@ import type { SpacedRepetitionCard } from '~/types'
 export function useSpacedRepetition() {
   const db = useIndexedDB()
 
-  async function getOrCreateCard(pairId: string, topic: string): Promise<SpacedRepetitionCard> {
+  async function getOrCreateCard(
+    pairId: string,
+    topic: string,
+  ): Promise<SpacedRepetitionCard> {
     const existing = await db.getSRCard(pairId)
     if (existing) return existing
 
@@ -1000,6 +1030,7 @@ git commit -m "feat: add useSpacedRepetition composable with SM-2 scheduling"
 ### Task 5: Adaptive Difficulty Composable
 
 **Files:**
+
 - Create: `app/composables/useAdaptive.ts`
 - Create: `tests/unit/useAdaptive.test.ts`
 
@@ -1015,7 +1046,9 @@ import { useIndexedDB } from '../../app/composables/useIndexedDB'
 import { LEVELS } from '../../app/types'
 import type { SessionPerformance } from '../../app/types'
 
-function makeSession(overrides: Partial<SessionPerformance> = {}): SessionPerformance {
+function makeSession(
+  overrides: Partial<SessionPerformance> = {},
+): SessionPerformance {
   return {
     id: crypto.randomUUID(),
     topic: 'world-flags',
@@ -1058,17 +1091,14 @@ describe('useAdaptive', () => {
     // Should increase pairs or reduce time
     const base = LEVELS[0]
     const isHarder =
-      adjustment.pairs > base.pairs ||
-      adjustment.timeLimit < base.timeLimit
+      adjustment.pairs > base.pairs || adjustment.timeLimit < base.timeLimit
     expect(isHarder).toBe(true)
   })
 
   it('decreases difficulty after low-accuracy sessions', async () => {
     const db = useIndexedDB()
 
-    await db.putSessionPerformance(
-      makeSession({ accuracy: 0.5, level: 0 }),
-    )
+    await db.putSessionPerformance(makeSession({ accuracy: 0.5, level: 0 }))
 
     const adaptive = useAdaptive()
     const adjustment = await adaptive.getAdjustedLevel('world-flags', 0)
@@ -1085,9 +1115,7 @@ describe('useAdaptive', () => {
   it('does not go below minimum difficulty', async () => {
     const db = useIndexedDB()
 
-    await db.putSessionPerformance(
-      makeSession({ accuracy: 0.3, level: 0 }),
-    )
+    await db.putSessionPerformance(makeSession({ accuracy: 0.3, level: 0 }))
 
     const adaptive = useAdaptive()
     const adjustment = await adaptive.getAdjustedLevel('world-flags', 0)
@@ -1201,7 +1229,10 @@ export function useAdaptive() {
     }
 
     // Check for consecutive high accuracy (increase difficulty)
-    const recentSessions = levelSessions.slice(0, CONSECUTIVE_SESSIONS_FOR_INCREASE)
+    const recentSessions = levelSessions.slice(
+      0,
+      CONSECUTIVE_SESSIONS_FOR_INCREASE,
+    )
     const allHighAccuracy =
       recentSessions.length >= CONSECUTIVE_SESSIONS_FOR_INCREASE &&
       recentSessions.every((s) => s.accuracy > HIGH_ACCURACY_THRESHOLD)
@@ -1235,14 +1266,17 @@ export function useAdaptive() {
     }
   }
 
-  async function categorizePairs(topic: string): Promise<{ weak: string[]; strong: string[] }> {
+  async function categorizePairs(
+    topic: string,
+  ): Promise<{ weak: string[]; strong: string[] }> {
     const performances = await db.getPairPerformanceByTopic(topic)
 
     const weak: string[] = []
     const strong: string[] = []
 
     for (const perf of performances) {
-      const accuracy = perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
+      const accuracy =
+        perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
       if (accuracy < WEAK_PAIR_ACCURACY_THRESHOLD) {
         weak.push(perf.pairId)
       } else if (accuracy >= STRONG_PAIR_ACCURACY_THRESHOLD) {
@@ -1315,6 +1349,7 @@ git commit -m "feat: add useAdaptive composable for dynamic difficulty adjustmen
 ### Task 6: Pinia User Store
 
 **Files:**
+
 - Create: `app/stores/user.ts`
 
 - [ ] **Step 1: Write the store**
@@ -1395,6 +1430,7 @@ git commit -m "feat: add Pinia user store with IndexedDB persistence"
 ### Task 7: Game Result Persistence Integration
 
 **Files:**
+
 - Modify: `app/pages/play/[slug].vue`
 - Modify: `app/pages/daily.vue`
 
@@ -1422,7 +1458,10 @@ interface SaveGameOptions {
   mode: GameMode
   level: number
   hintsUsed: number
-  pairAttempts: Map<string, { attempts: number; timeMs: number; matched: boolean }>
+  pairAttempts: Map<
+    string,
+    { attempts: number; timeMs: number; matched: boolean }
+  >
 }
 
 export function useGamePersistence() {
@@ -1434,9 +1473,8 @@ export function useGamePersistence() {
     const now = new Date().toISOString()
     const id = `${topic}-${mode}-${Date.now()}`
 
-    const accuracy = result.totalPairs > 0
-      ? result.score / (result.totalPairs * 100)
-      : 0
+    const accuracy =
+      result.totalPairs > 0 ? result.score / (result.totalPairs * 100) : 0
 
     // 1. Store game result
     const storedResult: StoredGameResult = {
@@ -1457,13 +1495,15 @@ export function useGamePersistence() {
     await db.putGameResult(storedResult)
 
     // 2. Store session performance
-    const totalTimeMs = Array.from(pairAttempts.values())
-      .reduce((sum, p) => sum + p.timeMs, 0)
-    const matchedPairs = Array.from(pairAttempts.values())
-      .filter((p) => p.matched)
-    const avgMatchTime = matchedPairs.length > 0
-      ? totalTimeMs / matchedPairs.length
-      : 0
+    const totalTimeMs = Array.from(pairAttempts.values()).reduce(
+      (sum, p) => sum + p.timeMs,
+      0,
+    )
+    const matchedPairs = Array.from(pairAttempts.values()).filter(
+      (p) => p.matched,
+    )
+    const avgMatchTime =
+      matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
 
     const session: SessionPerformance = {
       id: `session-${id}`,
@@ -1485,7 +1525,8 @@ export function useGamePersistence() {
         pairId,
         topic,
         attempts: (existing?.attempts ?? 0) + data.attempts,
-        correctMatches: (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
+        correctMatches:
+          (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
         totalTimeMs: (existing?.totalTimeMs ?? 0) + data.timeMs,
         lastPlayed: now,
       }
@@ -1549,6 +1590,7 @@ git commit -m "feat: persist game results, pair performance, and SR data after e
 ### Task 8: Leaderboard Page
 
 **Files:**
+
 - Create: `app/pages/leaderboard.vue`
 
 - [ ] **Step 1: Write the leaderboard page**
@@ -1656,13 +1698,18 @@ function formatTime(seconds: number): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Personal Bests</h2>
 
-      <div v-if="personalBests.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="personalBests.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         No games played yet. Start playing to see your scores!
       </div>
 
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-          <thead class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700">
+          <thead
+            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+          >
             <tr>
               <th class="px-4 py-3">Rank</th>
               <th class="px-4 py-3">Topic</th>
@@ -1698,13 +1745,18 @@ function formatTime(seconds: number): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Recent High Scores</h2>
 
-      <div v-if="filteredResults.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="filteredResults.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         No matching results.
       </div>
 
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-          <thead class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700">
+          <thead
+            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+          >
             <tr>
               <th class="px-4 py-3">#</th>
               <th class="px-4 py-3">Topic</th>
@@ -1723,7 +1775,9 @@ function formatTime(seconds: number): string {
               <td class="px-4 py-3">{{ index + 1 }}</td>
               <td class="px-4 py-3">{{ result.topic }}</td>
               <td class="px-4 py-3 font-semibold">{{ result.score }}</td>
-              <td class="px-4 py-3">{{ Math.round(result.accuracy * 100) }}%</td>
+              <td class="px-4 py-3">
+                {{ Math.round(result.accuracy * 100) }}%
+              </td>
               <td class="px-4 py-3">{{ result.maxStreak }}</td>
               <td class="px-4 py-3">{{ formatDate(result.date) }}</td>
             </tr>
@@ -1736,7 +1790,10 @@ function formatTime(seconds: number): string {
     <section>
       <h2 class="mb-4 text-xl font-semibold">Daily Challenge History</h2>
 
-      <div v-if="dailyHistory.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="dailyHistory.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         No daily challenges completed yet.
       </div>
 
@@ -1749,12 +1806,15 @@ function formatTime(seconds: number): string {
           <div>
             <p class="font-medium">{{ formatDate(result.date) }}</p>
             <p class="text-sm text-gray-500">
-              {{ result.moves }} moves &middot; {{ formatTime(result.timeElapsed) }}
+              {{ result.moves }} moves &middot;
+              {{ formatTime(result.timeElapsed) }}
             </p>
           </div>
           <div class="text-right">
             <p class="text-2xl font-bold">{{ result.score }}</p>
-            <p class="text-sm text-gray-500">{{ Math.round(result.accuracy * 100) }}% accuracy</p>
+            <p class="text-sm text-gray-500">
+              {{ Math.round(result.accuracy * 100) }}% accuracy
+            </p>
           </div>
         </div>
       </div>
@@ -1788,6 +1848,7 @@ git commit -m "feat: add personal leaderboard page with filters and daily histor
 ### Task 9: Profile / Stats Page
 
 **Files:**
+
 - Create: `app/pages/profile.vue`
 
 - [ ] **Step 1: Write the profile page**
@@ -1836,7 +1897,12 @@ const bestStreak = computed(() => {
 const topicStats = computed(() => {
   const map = new Map<
     string,
-    { games: number; totalScore: number; bestScore: number; totalAccuracy: number }
+    {
+      games: number
+      totalScore: number
+      bestScore: number
+      totalAccuracy: number
+    }
   >()
 
   for (const result of allResults.value) {
@@ -1918,7 +1984,10 @@ function formatDate(iso: string): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Overall</h2>
 
-      <div v-if="totalGamesPlayed === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="totalGamesPlayed === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         No games played yet. Start playing to track your progress!
       </div>
 
@@ -1950,13 +2019,18 @@ function formatDate(iso: string): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Topics</h2>
 
-      <div v-if="topicStats.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="topicStats.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         No topic data yet.
       </div>
 
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-          <thead class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700">
+          <thead
+            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+          >
             <tr>
               <th class="px-4 py-3">Topic</th>
               <th class="px-4 py-3">Games</th>
@@ -1986,7 +2060,10 @@ function formatDate(iso: string): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Accuracy Trend (Last 20 Games)</h2>
 
-      <div v-if="accuracyTrend.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="accuracyTrend.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         Play more games to see your trend.
       </div>
 
@@ -2004,8 +2081,12 @@ function formatDate(iso: string): string {
         </div>
       </div>
       <div class="mt-1 flex justify-between text-xs text-gray-400">
-        <span v-if="accuracyTrend.length > 0">{{ formatDate(accuracyTrend[0].date) }}</span>
-        <span v-if="accuracyTrend.length > 1">{{ formatDate(accuracyTrend[accuracyTrend.length - 1].date) }}</span>
+        <span v-if="accuracyTrend.length > 0">{{
+          formatDate(accuracyTrend[0].date)
+        }}</span>
+        <span v-if="accuracyTrend.length > 1">{{
+          formatDate(accuracyTrend[accuracyTrend.length - 1].date)
+        }}</span>
       </div>
     </section>
 
@@ -2013,7 +2094,10 @@ function formatDate(iso: string): string {
     <section class="mb-10">
       <h2 class="mb-4 text-xl font-semibold">Pairs to Practice</h2>
 
-      <div v-if="weakestPairs.length === 0" class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800">
+      <div
+        v-if="weakestPairs.length === 0"
+        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+      >
         Not enough data yet. Keep playing!
       </div>
 
@@ -2028,7 +2112,10 @@ function formatDate(iso: string): string {
             <p class="text-sm text-gray-500">{{ pair.topic }}</p>
           </div>
           <div class="text-right">
-            <p class="font-semibold" :class="pair.accuracy < 50 ? 'text-red-500' : 'text-yellow-500'">
+            <p
+              class="font-semibold"
+              :class="pair.accuracy < 50 ? 'text-red-500' : 'text-yellow-500'"
+            >
               {{ pair.accuracy }}%
             </p>
             <p class="text-xs text-gray-500">{{ pair.attempts }} attempts</p>
@@ -2080,6 +2167,7 @@ git commit -m "feat: add profile page with stats, accuracy trend, and weakest pa
 ### Task 10: Wire Adaptive Difficulty into Game Flow
 
 **Files:**
+
 - Modify: `app/pages/play/[slug].vue`
 - Modify: `app/pages/topics/[slug].vue`
 
@@ -2145,6 +2233,7 @@ git commit -m "feat: wire adaptive difficulty and spaced repetition into game fl
 ### Task 11: Hydrate User Store on App Start
 
 **Files:**
+
 - Create: `app/plugins/user-store.client.ts`
 
 - [ ] **Step 1: Create client plugin for store hydration**
@@ -2170,6 +2259,7 @@ git commit -m "feat: hydrate user store from IndexedDB on client startup"
 ### Task 12: Final Integration Test
 
 **Files:**
+
 - Create: `tests/unit/integration-persistence.test.ts`
 
 - [ ] **Step 1: Write integration test for the full persistence flow**
@@ -2271,7 +2361,11 @@ describe('persistence integration', () => {
       lastPlayed: new Date().toISOString(),
     })
 
-    const selected = await adaptive.buildMixedSession('world-flags', allPairIds, 4)
+    const selected = await adaptive.buildMixedSession(
+      'world-flags',
+      allPairIds,
+      4,
+    )
     expect(selected).toContain('flag-jp') // weak pair prioritized
   })
 

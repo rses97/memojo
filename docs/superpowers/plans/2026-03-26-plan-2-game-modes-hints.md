@@ -51,6 +51,7 @@ memojo/
 ### Task 1: Seeded Random Utility (TDD)
 
 **Files:**
+
 - Create: `app/utils/seededRandom.ts`
 - Test: `tests/unit/seededRandom.test.ts`
 
@@ -182,6 +183,7 @@ git commit -m "feat: add seeded random utility for deterministic shuffles"
 ### Task 2: Extend Types for Game Modes and Hints
 
 **Files:**
+
 - Modify: `app/types/index.ts`
 
 - [ ] **Step 1: Add new types**
@@ -230,6 +232,7 @@ git commit -m "feat: add GameMode, HintState, and TopicManifestEntry types"
 ### Task 3: Hint System in useGame (TDD)
 
 **Files:**
+
 - Modify: `app/composables/useGame.ts`
 - Create: `tests/unit/useGame.hints.test.ts`
 
@@ -276,13 +279,13 @@ describe('useGame hints', () => {
 
       game.peekAll()
 
-      const unmatchedCards = game.cards.value.filter(c => !c.isMatched)
-      expect(unmatchedCards.every(c => c.isFlipped)).toBe(true)
+      const unmatchedCards = game.cards.value.filter((c) => !c.isMatched)
+      expect(unmatchedCards.every((c) => c.isFlipped)).toBe(true)
 
       vi.advanceTimersByTime(1000)
 
-      const cardsAfter = game.cards.value.filter(c => !c.isMatched)
-      expect(cardsAfter.every(c => !c.isFlipped)).toBe(true)
+      const cardsAfter = game.cards.value.filter((c) => !c.isMatched)
+      expect(cardsAfter.every((c) => !c.isFlipped)).toBe(true)
     })
 
     it('decrements peekAvailable and increments peekUsed', () => {
@@ -305,8 +308,8 @@ describe('useGame hints', () => {
 
       game.peekAll()
 
-      const unmatchedCards = game.cards.value.filter(c => !c.isMatched)
-      expect(unmatchedCards.every(c => !c.isFlipped)).toBe(true)
+      const unmatchedCards = game.cards.value.filter((c) => !c.isMatched)
+      expect(unmatchedCards.every((c) => !c.isFlipped)).toBe(true)
       expect(game.hints.value.peekUsed).toBe(1)
     })
 
@@ -315,22 +318,26 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-      const textCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+      const imageCard = game.cards.value.find(
+        (c) => c.pairId === 'a' && c.type === 'image',
+      )!
+      const textCard = game.cards.value.find(
+        (c) => c.pairId === 'a' && c.type === 'text',
+      )!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)
 
       game.peekAll()
 
-      const matchedCards = game.cards.value.filter(c => c.isMatched)
-      expect(matchedCards.every(c => c.isFlipped)).toBe(true)
+      const matchedCards = game.cards.value.filter((c) => c.isMatched)
+      expect(matchedCards.every((c) => c.isFlipped)).toBe(true)
 
       vi.advanceTimersByTime(1000)
 
       // Matched cards should stay flipped
-      const matchedAfter = game.cards.value.filter(c => c.isMatched)
-      expect(matchedAfter.every(c => c.isFlipped)).toBe(true)
+      const matchedAfter = game.cards.value.filter((c) => c.isMatched)
+      expect(matchedAfter.every((c) => c.isFlipped)).toBe(true)
     })
 
     it('blocks card interaction during peek', () => {
@@ -356,7 +363,7 @@ describe('useGame hints', () => {
       const initialCount = game.cards.value.length
       game.eliminatePair()
 
-      const visibleCards = game.cards.value.filter(c => !c.isEliminated)
+      const visibleCards = game.cards.value.filter((c) => !c.isEliminated)
       expect(visibleCards.length).toBe(initialCount - 2)
     })
 
@@ -384,10 +391,14 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       game.eliminatePair()
-      const countAfterFirst = game.cards.value.filter(c => !c.isEliminated).length
+      const countAfterFirst = game.cards.value.filter(
+        (c) => !c.isEliminated,
+      ).length
 
       game.eliminatePair()
-      const countAfterSecond = game.cards.value.filter(c => !c.isEliminated).length
+      const countAfterSecond = game.cards.value.filter(
+        (c) => !c.isEliminated,
+      ).length
 
       expect(countAfterSecond).toBe(countAfterFirst)
       expect(game.hints.value.eliminateUsed).toBe(1)
@@ -398,8 +409,12 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'image')!
-      const textCard = game.cards.value.find(c => c.pairId === 'a' && c.type === 'text')!
+      const imageCard = game.cards.value.find(
+        (c) => c.pairId === 'a' && c.type === 'image',
+      )!
+      const textCard = game.cards.value.find(
+        (c) => c.pairId === 'a' && c.type === 'text',
+      )!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)
@@ -407,9 +422,9 @@ describe('useGame hints', () => {
       game.eliminatePair()
 
       // The matched pair should still be there
-      const matchedCards = game.cards.value.filter(c => c.pairId === 'a')
-      expect(matchedCards.every(c => c.isMatched)).toBe(true)
-      expect(matchedCards.every(c => !c.isEliminated)).toBe(true)
+      const matchedCards = game.cards.value.filter((c) => c.pairId === 'a')
+      expect(matchedCards.every((c) => c.isMatched)).toBe(true)
+      expect(matchedCards.every((c) => !c.isEliminated)).toBe(true)
     })
   })
 
@@ -520,11 +535,13 @@ function peekAll() {
 function eliminatePair() {
   if (hints.value.eliminateAvailable <= 0) return
 
-  const unmatchedPairIds = [...new Set(
-    cards.value
-      .filter(c => !c.isMatched && !c.isEliminated)
-      .map(c => c.pairId),
-  )]
+  const unmatchedPairIds = [
+    ...new Set(
+      cards.value
+        .filter((c) => !c.isMatched && !c.isEliminated)
+        .map((c) => c.pairId),
+    ),
+  ]
 
   if (unmatchedPairIds.length === 0) return
 
@@ -574,6 +591,7 @@ git commit -m "feat: add peek and eliminate hint system to useGame composable"
 ### Task 4: Scoring with Hint Penalties (TDD)
 
 **Files:**
+
 - Modify: `app/utils/scoring.ts`
 - Modify: `tests/unit/scoring.test.ts`
 
@@ -692,7 +710,8 @@ interface ScoreInput {
 }
 
 export function calculateScore(input: ScoreInput): number {
-  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } = input
+  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } =
+    input
 
   const accuracy = Math.max(0, Math.min(1, totalPairs / moves))
   const accuracyScore = accuracy * 1000
@@ -730,6 +749,7 @@ git commit -m "feat: add hint penalty deductions to scoring utility"
 ### Task 5: Topic Manifest
 
 **Files:**
+
 - Create: `public/topics/index.json`
 
 - [ ] **Step 1: Create topics manifest**
@@ -761,6 +781,7 @@ git commit -m "feat: add topics manifest for topic listing page"
 ### Task 6: useTopicPractice Composable (TDD)
 
 **Files:**
+
 - Create: `app/composables/useTopicPractice.ts`
 - Create: `tests/unit/useTopicPractice.test.ts`
 
@@ -986,6 +1007,7 @@ git commit -m "feat: add useTopicPractice composable for level progression"
 ### Task 7: GameHints Component
 
 **Files:**
+
 - Create: `app/components/game/GameHints.vue`
 
 - [ ] **Step 1: Create the hints UI component**
@@ -1007,8 +1029,13 @@ const emit = defineEmits<{
   eliminate: []
 }>()
 
-const canPeek = computed(() => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled)
-const canEliminate = computed(() => props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled)
+const canPeek = computed(
+  () => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled,
+)
+const canEliminate = computed(
+  () =>
+    props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled,
+)
 </script>
 
 <template>
@@ -1020,7 +1047,9 @@ const canEliminate = computed(() => props.hints.eliminateAvailable > 0 && !props
     >
       <span class="text-base" aria-hidden="true">👁</span>
       <span>Peek</span>
-      <span class="ml-1 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-700 dark:bg-primary-900 dark:text-primary-300">
+      <span
+        class="ml-1 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-700 dark:bg-primary-900 dark:text-primary-300"
+      >
         {{ hints.peekAvailable }}
       </span>
     </button>
@@ -1032,7 +1061,9 @@ const canEliminate = computed(() => props.hints.eliminateAvailable > 0 && !props
     >
       <span class="text-base" aria-hidden="true">✂</span>
       <span>Eliminate</span>
-      <span class="ml-1 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-700 dark:bg-primary-900 dark:text-primary-300">
+      <span
+        class="ml-1 rounded-full bg-primary-100 px-2 py-0.5 text-xs font-bold text-primary-700 dark:bg-primary-900 dark:text-primary-300"
+      >
         {{ hints.eliminateAvailable }}
       </span>
     </button>
@@ -1052,6 +1083,7 @@ git commit -m "feat: add GameHints component with peek and eliminate buttons"
 ### Task 8: GameLevelComplete Component
 
 **Files:**
+
 - Create: `app/components/game/GameLevelComplete.vue`
 
 - [ ] **Step 1: Create level-complete transition screen**
@@ -1073,13 +1105,18 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-6 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
+  <div
+    class="flex flex-col items-center gap-6 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
+  >
     <div class="text-4xl font-bold text-primary-500">
       Level {{ levelIndex + 1 }} Complete!
     </div>
 
     <div class="text-lg text-surface-700 dark:text-surface-200">
-      Score: <span class="font-bold text-primary-600 dark:text-primary-400">{{ score }}</span>
+      Score:
+      <span class="font-bold text-primary-600 dark:text-primary-400">{{
+        score
+      }}</span>
     </div>
 
     <div class="text-sm text-surface-500 dark:text-surface-400">
@@ -1108,6 +1145,7 @@ git commit -m "feat: add GameLevelComplete transition screen component"
 ### Task 9: GameModeCard Component
 
 **Files:**
+
 - Create: `app/components/game/GameModeCard.vue`
 
 - [ ] **Step 1: Create mode selection card**
@@ -1136,7 +1174,9 @@ defineProps<{
     <p class="text-sm text-surface-600 dark:text-surface-400">
       {{ description }}
     </p>
-    <span class="mt-auto inline-flex items-center gap-1 text-sm font-medium text-primary-500 transition-colors group-hover:text-primary-600">
+    <span
+      class="mt-auto inline-flex items-center gap-1 text-sm font-medium text-primary-500 transition-colors group-hover:text-primary-600"
+    >
       Play
       <span aria-hidden="true">&rarr;</span>
     </span>
@@ -1156,6 +1196,7 @@ git commit -m "feat: add GameModeCard component for landing page"
 ### Task 10: Update Landing Page with Mode Selection
 
 **Files:**
+
 - Modify: `app/pages/index.vue`
 
 - [ ] **Step 1: Rewrite landing page as mode-selection hub**
@@ -1167,13 +1208,15 @@ Replace `app/pages/index.vue`:
 const modes = [
   {
     title: 'Daily Challenge',
-    description: 'A new puzzle every day. Same cards for everyone — compare your score!',
+    description:
+      'A new puzzle every day. Same cards for everyone — compare your score!',
     icon: '📅',
     to: '/daily',
   },
   {
     title: 'Topic Practice',
-    description: 'Pick a topic and master it through three progressively harder levels.',
+    description:
+      'Pick a topic and master it through three progressively harder levels.',
     icon: '📚',
     to: '/topics',
   },
@@ -1223,6 +1266,7 @@ git commit -m "feat: update landing page with game mode selection cards"
 ### Task 11: Daily Challenge Page
 
 **Files:**
+
 - Create: `app/pages/daily.vue`
 
 - [ ] **Step 1: Create daily challenge page**
@@ -1269,18 +1313,24 @@ function handleFlip(cardId: string) {
   game.flipCard(cardId)
 }
 
-watch(() => timer.isExpired.value, (expired) => {
-  if (expired) {
-    endGame()
-  }
-})
+watch(
+  () => timer.isExpired.value,
+  (expired) => {
+    if (expired) {
+      endGame()
+    }
+  },
+)
 
-watch(() => game.isComplete.value, (complete) => {
-  if (complete) {
-    timer.pause()
-    endGame()
-  }
-})
+watch(
+  () => game.isComplete.value,
+  (complete) => {
+    if (complete) {
+      timer.pause()
+      endGame()
+    }
+  },
+)
 
 function endGame() {
   isGameOver.value = true
@@ -1338,7 +1388,9 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="level.gridCols"
-        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver"
+        :disabled="
+          game.isProcessing.value || game.isPeeking.value || isGameOver
+        "
         @flip="handleFlip"
       />
 
@@ -1347,13 +1399,14 @@ onMounted(() => {
         class="mt-8 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
       >
         <h2 class="mb-2 text-3xl font-bold text-primary-500">
-          {{ game.isComplete.value ? 'Challenge Complete!' : 'Time\'s Up!' }}
+          {{ game.isComplete.value ? 'Challenge Complete!' : "Time's Up!" }}
         </h2>
         <p class="mb-4 text-lg text-surface-700 dark:text-surface-200">
           Score: <span class="font-bold">{{ finalScore }}</span>
         </p>
         <p class="text-sm text-surface-500">
-          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs matched in {{ game.moves.value }} moves
+          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs
+          matched in {{ game.moves.value }} moves
         </p>
         <NuxtLink
           to="/"
@@ -1454,6 +1507,7 @@ git commit -m "feat: add daily challenge page with seeded random shuffle"
 ### Task 12: Topics Listing Page
 
 **Files:**
+
 - Create: `app/pages/topics/index.vue`
 
 - [ ] **Step 1: Create topics listing page**
@@ -1464,7 +1518,9 @@ Create `app/pages/topics/index.vue`:
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
 
-const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
+const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>(
+  '/topics/index.json',
+)
 
 const topics = computed(() => manifest.value?.topics ?? [])
 </script>
@@ -1479,7 +1535,8 @@ const topics = computed(() => manifest.value?.topics ?? [])
         Topic Practice
       </h1>
       <p class="mt-1 text-surface-600 dark:text-surface-400">
-        Choose a topic and master it through three levels of increasing difficulty.
+        Choose a topic and master it through three levels of increasing
+        difficulty.
       </p>
     </div>
 
@@ -1490,7 +1547,9 @@ const topics = computed(() => manifest.value?.topics ?? [])
         :to="`/topics/${topic.slug}`"
         class="group rounded-xl bg-surface-50 p-5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg dark:bg-surface-800"
       >
-        <h2 class="mb-1 text-lg font-bold text-surface-900 group-hover:text-primary-500 dark:text-surface-50">
+        <h2
+          class="mb-1 text-lg font-bold text-surface-900 group-hover:text-primary-500 dark:text-surface-50"
+        >
           {{ topic.name }}
         </h2>
         <p class="mb-3 text-sm text-surface-600 dark:text-surface-400">
@@ -1521,6 +1580,7 @@ git commit -m "feat: add topics listing page"
 ### Task 13: Topic Practice Play Page
 
 **Files:**
+
 - Create: `app/pages/topics/[slug].vue`
 
 - [ ] **Step 1: Create topic practice page with level progression**
@@ -1586,18 +1646,24 @@ function handleFlip(cardId: string) {
   game.flipCard(cardId)
 }
 
-watch(() => timer.isExpired.value, (expired) => {
-  if (expired) {
-    handleLevelEnd()
-  }
-})
+watch(
+  () => timer.isExpired.value,
+  (expired) => {
+    if (expired) {
+      handleLevelEnd()
+    }
+  },
+)
 
-watch(() => game.isComplete.value, (complete) => {
-  if (complete) {
-    timer.pause()
-    handleLevelEnd()
-  }
-})
+watch(
+  () => game.isComplete.value,
+  (complete) => {
+    if (complete) {
+      timer.pause()
+      handleLevelEnd()
+    }
+  },
+)
 
 function handleLevelEnd() {
   isGameOver.value = true
@@ -1638,10 +1704,16 @@ onMounted(() => {
 <template>
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="mb-6">
-      <NuxtLink to="/topics" class="text-sm text-primary-500 hover:text-primary-600">
+      <NuxtLink
+        to="/topics"
+        class="text-sm text-primary-500 hover:text-primary-600"
+      >
         &larr; Back to topics
       </NuxtLink>
-      <h1 v-if="topicData" class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
+      <h1
+        v-if="topicData"
+        class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50"
+      >
         {{ topicData.name }}
       </h1>
     </div>
@@ -1651,12 +1723,15 @@ onMounted(() => {
     </div>
 
     <template v-else-if="practice.isAllComplete.value">
-      <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
+      <div
+        class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
+      >
         <h2 class="mb-4 text-3xl font-bold text-primary-500">
           All Levels Complete!
         </h2>
         <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
-          Total Score: <span class="font-bold">{{ practice.totalScore.value }}</span>
+          Total Score:
+          <span class="font-bold">{{ practice.totalScore.value }}</span>
         </p>
         <p class="mb-6 text-sm text-surface-500">
           You completed all {{ practice.totalLevels.value }} levels.
@@ -1683,17 +1758,25 @@ onMounted(() => {
         :level-index="practice.currentLevelIndex.value"
         :total-levels="practice.totalLevels.value"
         :score="practice.lastLevelScore.value"
-        :is-last-level="practice.currentLevelIndex.value >= practice.totalLevels.value - 1"
+        :is-last-level="
+          practice.currentLevelIndex.value >= practice.totalLevels.value - 1
+        "
         @next="handleNext"
       />
     </template>
 
     <template v-else>
-      <div class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400">
-        Level {{ practice.currentLevelIndex.value + 1 }} / {{ practice.totalLevels.value }}
+      <div
+        class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400"
+      >
+        Level {{ practice.currentLevelIndex.value + 1 }} /
+        {{ practice.totalLevels.value }}
       </div>
 
-      <div v-if="hasPreview" class="mb-4 text-center text-sm font-medium text-primary-500">
+      <div
+        v-if="hasPreview"
+        class="mb-4 text-center text-sm font-medium text-primary-500"
+      >
         Memorize the cards...
       </div>
 
@@ -1717,7 +1800,12 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="practice.currentLevel.value.gridCols"
-        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver || hasPreview"
+        :disabled="
+          game.isProcessing.value ||
+          game.isPeeking.value ||
+          isGameOver ||
+          hasPreview
+        "
         @flip="handleFlip"
       />
     </template>
@@ -1737,6 +1825,7 @@ git commit -m "feat: add topic practice page with level progression and preview"
 ### Task 14: Update Quick Play Page with Hints
 
 **Files:**
+
 - Modify: `app/pages/play/[slug].vue`
 
 - [ ] **Step 1: Add hint support to quick play page**
@@ -1820,18 +1909,24 @@ function handleFlip(cardId: string) {
   game.flipCard(cardId)
 }
 
-watch(() => timer.isExpired.value, (expired) => {
-  if (expired) {
-    endGame()
-  }
-})
+watch(
+  () => timer.isExpired.value,
+  (expired) => {
+    if (expired) {
+      endGame()
+    }
+  },
+)
 
-watch(() => game.isComplete.value, (complete) => {
-  if (complete) {
-    timer.pause()
-    endGame()
-  }
-})
+watch(
+  () => game.isComplete.value,
+  (complete) => {
+    if (complete) {
+      timer.pause()
+      endGame()
+    }
+  },
+)
 
 function endGame() {
   isGameOver.value = true
@@ -1889,7 +1984,9 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="level.gridCols"
-        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver"
+        :disabled="
+          game.isProcessing.value || game.isPeeking.value || isGameOver
+        "
         @flip="handleFlip"
       />
 
@@ -1898,13 +1995,14 @@ onMounted(() => {
         class="mt-8 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
       >
         <h2 class="mb-2 text-3xl font-bold text-primary-500">
-          {{ game.isComplete.value ? 'Well Done!' : 'Time\'s Up!' }}
+          {{ game.isComplete.value ? 'Well Done!' : "Time's Up!" }}
         </h2>
         <p class="mb-4 text-lg text-surface-700 dark:text-surface-200">
           Score: <span class="font-bold">{{ finalScore }}</span>
         </p>
         <p class="text-sm text-surface-500">
-          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs in {{ game.moves.value }} moves
+          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs in
+          {{ game.moves.value }} moves
         </p>
         <div class="mt-6 flex justify-center gap-4">
           <button
@@ -1938,6 +2036,7 @@ git commit -m "feat: add hint support and scoring penalties to quick play page"
 ### Task 15: Update GameBoard to Handle Eliminated Cards
 
 **Files:**
+
 - Modify: `app/components/game/GameBoard.vue`
 
 - [ ] **Step 1: Filter out eliminated cards in the board**
@@ -1958,10 +2057,11 @@ const emit = defineEmits<{
   flip: [cardId: string]
 }>()
 
-const visibleCards = computed(() =>
-  // Keep all cards to preserve grid layout, but mark eliminated ones
-  // so GameCard can render them as invisible placeholders
-  props.cards
+const visibleCards = computed(
+  () =>
+    // Keep all cards to preserve grid layout, but mark eliminated ones
+    // so GameCard can render them as invisible placeholders
+    props.cards,
 )
 </script>
 
@@ -2010,6 +2110,7 @@ Expected: All tests pass (existing + new)
 Run: `pnpm dev`
 
 Manually verify:
+
 - Landing page shows three mode cards (Daily Challenge, Topic Practice, Quick Play)
 - `/daily` loads and starts a game with hints available
 - `/topics` shows the world-flags topic

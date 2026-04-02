@@ -70,8 +70,7 @@ export function useTimer(clock: () => number = () => performance.now()) {
         pause()
         pausedByVisibility = true
       }
-    }
-    else if (pausedByVisibility) {
+    } else if (pausedByVisibility) {
       pausedByVisibility = false
       start()
     }
