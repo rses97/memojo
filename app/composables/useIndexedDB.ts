@@ -23,7 +23,7 @@ interface MemoryGameDB extends DBSchema {
     value: UserPreferences
   }
   srCards: {
-    key: string
+    key: [string, string]
     value: SpacedRepetitionCard
     indexes: {
       'by-topic': string
@@ -31,7 +31,7 @@ interface MemoryGameDB extends DBSchema {
     }
   }
   pairPerformance: {
-    key: string
+    key: [string, string]
     value: PairPerformance
     indexes: {
       'by-topic': string
@@ -48,43 +48,47 @@ interface MemoryGameDB extends DBSchema {
 }
 
 const DB_NAME = 'memojo'
-const DB_VERSION = 1
+const DB_VERSION = 2
 
 function getDB() {
   return openDB<MemoryGameDB>(DB_NAME, DB_VERSION, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains('gameResults')) {
+    upgrade(db, oldVersion) {
+      if (oldVersion < 1) {
         const resultsStore = db.createObjectStore('gameResults', {
           keyPath: 'id',
         })
         resultsStore.createIndex('by-topic', 'topic')
         resultsStore.createIndex('by-mode', 'mode')
         resultsStore.createIndex('by-date', 'date')
-      }
 
-      if (!db.objectStoreNames.contains('userPreferences')) {
         db.createObjectStore('userPreferences')
-      }
 
-      if (!db.objectStoreNames.contains('srCards')) {
-        const srStore = db.createObjectStore('srCards', { keyPath: 'pairId' })
-        srStore.createIndex('by-topic', 'topic')
-        srStore.createIndex('by-nextReview', 'nextReview')
-      }
-
-      if (!db.objectStoreNames.contains('pairPerformance')) {
-        const pairStore = db.createObjectStore('pairPerformance', {
-          keyPath: 'pairId',
-        })
-        pairStore.createIndex('by-topic', 'topic')
-      }
-
-      if (!db.objectStoreNames.contains('sessionPerformance')) {
         const sessionStore = db.createObjectStore('sessionPerformance', {
           keyPath: 'id',
         })
         sessionStore.createIndex('by-topic', 'topic')
         sessionStore.createIndex('by-date', 'date')
+      }
+
+      if (oldVersion < 2) {
+        // Recreate srCards and pairPerformance with compound ['pairId', 'topic'] key
+        // to prevent collisions when the same pairId appears in different topics
+        if (db.objectStoreNames.contains('srCards')) {
+          db.deleteObjectStore('srCards')
+        }
+        const srStore = db.createObjectStore('srCards', {
+          keyPath: ['pairId', 'topic'],
+        })
+        srStore.createIndex('by-topic', 'topic')
+        srStore.createIndex('by-nextReview', 'nextReview')
+
+        if (db.objectStoreNames.contains('pairPerformance')) {
+          db.deleteObjectStore('pairPerformance')
+        }
+        const pairStore = db.createObjectStore('pairPerformance', {
+          keyPath: ['pairId', 'topic'],
+        })
+        pairStore.createIndex('by-topic', 'topic')
       }
     },
   })
@@ -131,9 +135,9 @@ export function useIndexedDB() {
     await db.put('srCards', card)
   }
 
-  async function getSRCard(pairId: string) {
+  async function getSRCard(pairId: string, topic: string) {
     const db = await getDB()
-    return db.get('srCards', pairId)
+    return db.get('srCards', [pairId, topic])
   }
 
   async function getAllSRCards() {
@@ -157,9 +161,9 @@ export function useIndexedDB() {
     await db.put('pairPerformance', perf)
   }
 
-  async function getPairPerformance(pairId: string) {
+  async function getPairPerformance(pairId: string, topic: string) {
     const db = await getDB()
-    return db.get('pairPerformance', pairId)
+    return db.get('pairPerformance', [pairId, topic])
   }
 
   async function getPairPerformanceByTopic(topic: string) {

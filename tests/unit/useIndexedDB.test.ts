@@ -114,7 +114,7 @@ describe('useIndexedDB', () => {
     }
 
     await db.putSRCard(card)
-    const fetched = await db.getSRCard('p1')
+    const fetched = await db.getSRCard('p1', 'world-flags')
     expect(fetched).toEqual(card)
   })
 
@@ -159,7 +159,7 @@ describe('useIndexedDB', () => {
     }
 
     await db.putPairPerformance(perf)
-    const fetched = await db.getPairPerformance('p1')
+    const fetched = await db.getPairPerformance('p1', 'world-flags')
     expect(fetched).toEqual(perf)
   })
 

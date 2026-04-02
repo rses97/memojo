@@ -55,6 +55,30 @@ const pairAttempts = new Map<
   string,
   { attempts: number; timeMs: number; matched: boolean }
 >()
+const gameStartMs = ref(0)
+const prevMatchedPairIds = new Set<string>()
+
+watch(moves, () => {
+  const now = Date.now()
+  const nowMatchedIds = new Set(
+    cards.value.filter((c) => c.isMatched).map((c) => c.pairId),
+  )
+  const flippedPairIds = new Set(
+    cards.value
+      .filter((c) => c.isFlipped && !c.isEliminated)
+      .map((c) => c.pairId),
+  )
+  for (const pairId of flippedPairIds) {
+    const entry = pairAttempts.get(pairId)
+    if (!entry) continue
+    entry.attempts++
+    if (nowMatchedIds.has(pairId) && !prevMatchedPairIds.has(pairId)) {
+      entry.matched = true
+      entry.timeMs = now - gameStartMs.value
+      prevMatchedPairIds.add(pairId)
+    }
+  }
+})
 
 const finalScore = ref<number | null>(null)
 
@@ -82,6 +106,11 @@ async function startGame() {
   }
 
   initGame(selectedPairs.value)
+  gameStartMs.value = Date.now()
+  prevMatchedPairIds.clear()
+  for (const pair of selectedPairs.value) {
+    pairAttempts.set(pair.id, { attempts: 0, timeMs: 0, matched: false })
+  }
   initTimer(currentLevel.value.timeLimit, {
     onExpire: () => endGame(),
   })

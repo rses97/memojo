@@ -18,7 +18,7 @@ export function useSpacedRepetition(clock?: () => number) {
     pairId: string,
     topic: string,
   ): Promise<SpacedRepetitionCard> {
-    const existing = await db.getSRCard(pairId)
+    const existing = await db.getSRCard(pairId, topic)
     if (existing) return existing
 
     const now = getNow().toISOString()

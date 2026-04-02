@@ -30,8 +30,11 @@ export function useGamePersistence() {
     const now = new Date().toISOString()
     const id = `${topic}-${mode}-${Date.now()}`
 
+    const perfectMoves = result.totalPairs
     const accuracy =
-      result.totalPairs > 0 ? result.score / (result.totalPairs * 100) : 0
+      result.totalPairs > 0
+        ? Math.max(0, 1 - (result.moves - perfectMoves) / (perfectMoves * 2))
+        : 0
 
     // 1. Store game result
     const storedResult: StoredGameResult = {
@@ -77,7 +80,7 @@ export function useGamePersistence() {
     // 3. Update pair performance and spaced repetition
     for (const [pairId, data] of pairAttempts) {
       // Update pair performance
-      const existing = await db.getPairPerformance(pairId)
+      const existing = await db.getPairPerformance(pairId, topic)
       const updated: PairPerformance = {
         pairId,
         topic,
