@@ -31,13 +31,7 @@ my-nuxt-module/
 
 ```ts
 // src/module.ts
-import {
-  defineNuxtModule,
-  createResolver,
-  addPlugin,
-  addComponent,
-  addImports,
-} from '@nuxt/kit'
+import { defineNuxtModule, createResolver, addPlugin, addComponent, addImports } from '@nuxt/kit'
 
 export interface ModuleOptions {
   prefix?: string
@@ -203,11 +197,7 @@ export default defineNuxtModule({
 ### Server Composables
 
 ```ts
-import {
-  addServerImports,
-  addServerImportsDir,
-  createResolver,
-} from '@nuxt/kit'
+import { addServerImports, addServerImportsDir, createResolver } from '@nuxt/kit'
 
 export default defineNuxtModule({
   setup() {
@@ -254,12 +244,7 @@ export default defineNitroPlugin((nitroApp) => {
 ### Generate Virtual Files
 
 ```ts
-import {
-  addTemplate,
-  addTypeTemplate,
-  addServerTemplate,
-  createResolver,
-} from '@nuxt/kit'
+import { addTemplate, addTypeTemplate, addServerTemplate, createResolver } from '@nuxt/kit'
 
 export default defineNuxtModule({
   setup(options, nuxt) {
@@ -305,12 +290,7 @@ import { config } from '#my-module/config.js'
 ## Extending Pages and Routes
 
 ```ts
-import {
-  extendPages,
-  extendRouteRules,
-  addRouteMiddleware,
-  createResolver,
-} from '@nuxt/kit'
+import { extendPages, extendRouteRules, addRouteMiddleware, createResolver } from '@nuxt/kit'
 
 export default defineNuxtModule({
   setup() {
@@ -486,10 +466,7 @@ export default defineNuxtModule({
     const entrypoint = await resolvePath('@some/package')
 
     // Find first existing file
-    const configPath = await findPath([
-      resolve('./config.ts'),
-      resolve('./config.js'),
-    ])
+    const configPath = await findPath([resolve('./config.ts'), resolve('./config.js')])
   },
 })
 ```

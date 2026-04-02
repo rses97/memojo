@@ -196,17 +196,14 @@ const { data } = await useFetch('/api/posts', {
 
 ```vue
 <script setup lang="ts">
-const { data } = await useAsyncData(
-  'dashboard',
-  async (_nuxtApp, { signal }) => {
-    const [user, posts, stats] = await Promise.all([
-      $fetch('/api/user', { signal }),
-      $fetch('/api/posts', { signal }),
-      $fetch('/api/stats', { signal }),
-    ])
-    return { user, posts, stats }
-  },
-)
+const { data } = await useAsyncData('dashboard', async (_nuxtApp, { signal }) => {
+  const [user, posts, stats] = await Promise.all([
+    $fetch('/api/user', { signal }),
+    $fetch('/api/posts', { signal }),
+    $fetch('/api/stats', { signal }),
+  ])
+  return { user, posts, stats }
+})
 </script>
 ```
 

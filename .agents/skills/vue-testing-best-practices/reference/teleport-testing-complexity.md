@@ -118,9 +118,7 @@ test('modal with custom stub', async () => {
   await wrapper.find('button').trigger('click')
 
   // Content is inside .teleport-stub
-  expect(
-    wrapper.find('.teleport-stub [data-testid="modal-input"]').exists(),
-  ).toBe(true)
+  expect(wrapper.find('.teleport-stub [data-testid="modal-input"]').exists()).toBe(true)
 })
 ```
 

@@ -811,12 +811,8 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const imageCard = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const textCard = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
 
     game.flipCard(imageCard.id)
     game.flipCard(textCard.id)
@@ -836,32 +832,22 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const cardA = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const cardB = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const cardA = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const cardB = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
 
     game.flipCard(cardA.id)
     game.flipCard(cardB.id)
 
     // Cards should be flipped while showing mismatch
     await nextTick()
-    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
-      true,
-    )
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(true)
 
     // After delay, cards flip back
     vi.advanceTimersByTime(1000)
     await nextTick()
 
-    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
-      false,
-    )
-    expect(game.cards.value.find((c) => c.id === cardB.id)!.isFlipped).toBe(
-      false,
-    )
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(false)
+    expect(game.cards.value.find((c) => c.id === cardB.id)!.isFlipped).toBe(false)
 
     vi.useRealTimers()
   })
@@ -885,24 +871,16 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Match pair 'a'
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
     // Match pair 'b'
-    const b1 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'image',
-    )!
-    const b2 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const b1 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'image')!
+    const b2 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
     game.flipCard(b1.id)
     game.flipCard(b2.id)
     await nextTick()
@@ -916,24 +894,16 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Match pair 'a'
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
     // Mismatch
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
@@ -950,12 +920,8 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
@@ -986,20 +952,14 @@ describe('useGame', () => {
     game.init(testPairs)
 
     // Cause a mismatch
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
 
     // Try to flip another card during the mismatch delay
-    const c3 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'image',
-    )!
+    const c3 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'image')!
     game.flipCard(c3.id)
     expect(game.cards.value.find((c) => c.id === c3.id)!.isFlipped).toBe(false)
 
@@ -1012,12 +972,8 @@ describe('useGame', () => {
     game.init(testPairs)
 
     for (const pairId of ['a', 'b', 'c', 'd']) {
-      const img = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'image',
-      )!
-      const txt = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'text',
-      )!
+      const img = game.cards.value.find((c) => c.pairId === pairId && c.type === 'image')!
+      const txt = game.cards.value.find((c) => c.pairId === pairId && c.type === 'text')!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
@@ -1035,12 +991,8 @@ describe('useGame', () => {
 
     // Match two in a row (streak = 2)
     for (const pairId of ['a', 'b']) {
-      const img = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'image',
-      )!
-      const txt = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'text',
-      )!
+      const img = game.cards.value.find((c) => c.pairId === pairId && c.type === 'image')!
+      const txt = game.cards.value.find((c) => c.pairId === pairId && c.type === 'text')!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
@@ -1048,12 +1000,8 @@ describe('useGame', () => {
     expect(game.maxStreak.value).toBe(2)
 
     // Cause a mismatch (streak resets to 0, but maxStreak stays 2)
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'd' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'd' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
@@ -1095,9 +1043,7 @@ export function useGame() {
 
   const flippedCards: string[] = []
 
-  const isComplete = computed(
-    () => matchedPairs.value === totalPairs.value && totalPairs.value > 0,
-  )
+  const isComplete = computed(() => matchedPairs.value === totalPairs.value && totalPairs.value > 0)
 
   function init(pairs: TopicPair[]) {
     const gameCards: GameCard[] = []
@@ -1352,9 +1298,7 @@ const ariaLabel = computed(() => {
   if (!props.card.isFlipped && !props.card.isMatched) {
     return 'Hidden card — click to reveal'
   }
-  return props.card.type === 'text'
-    ? `Card: ${props.card.content}`
-    : 'Image card'
+  return props.card.type === 'text' ? `Card: ${props.card.content}` : 'Image card'
 })
 </script>
 
@@ -1373,16 +1317,10 @@ const ariaLabel = computed(() => {
     @keydown.space.prevent="handleClick"
   >
     <div class="game-card__inner">
-      <div
-        data-testid="card-back"
-        class="game-card__face game-card__face--back"
-      >
+      <div data-testid="card-back" class="game-card__face game-card__face--back">
         <span class="text-2xl">?</span>
       </div>
-      <div
-        data-testid="card-front"
-        class="game-card__face game-card__face--front"
-      >
+      <div data-testid="card-front" class="game-card__face game-card__face--front">
         <img
           v-if="card.type === 'image'"
           :src="card.content"
@@ -1517,12 +1455,7 @@ const emit = defineEmits<{
     role="grid"
     aria-label="Game board"
   >
-    <GameCard
-      v-for="card in cards"
-      :key="card.id"
-      :card="card"
-      @flip="emit('flip', $event)"
-    />
+    <GameCard v-for="card in cards" :key="card.id" :card="card" @flip="emit('flip', $event)" />
   </div>
 </template>
 ```
@@ -1562,9 +1495,7 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3"
-  >
+  <div class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3">
     <div class="flex items-center gap-6">
       <div class="text-center">
         <div class="text-sm text-surface-700">Moves</div>
@@ -1572,9 +1503,7 @@ defineProps<{
       </div>
       <div class="text-center">
         <div class="text-sm text-surface-700">Matched</div>
-        <div class="text-2xl font-bold">
-          {{ matchedPairs }}/{{ totalPairs }}
-        </div>
+        <div class="text-2xl font-bold">{{ matchedPairs }}/{{ totalPairs }}</div>
       </div>
       <div v-if="streak > 1" class="text-center">
         <div class="text-sm text-surface-700">Streak</div>
@@ -1583,13 +1512,8 @@ defineProps<{
     </div>
     <div class="text-center">
       <div class="text-sm text-surface-700">Time</div>
-      <div
-        class="text-2xl font-bold tabular-nums"
-        :class="{ 'text-danger': timeRemaining <= 10 }"
-      >
-        {{ Math.floor(timeRemaining / 60) }}:{{
-          String(timeRemaining % 60).padStart(2, '0')
-        }}
+      <div class="text-2xl font-bold tabular-nums" :class="{ 'text-danger': timeRemaining <= 10 }">
+        {{ Math.floor(timeRemaining / 60) }}:{{ String(timeRemaining % 60).padStart(2, '0') }}
       </div>
     </div>
   </div>
@@ -1620,9 +1544,7 @@ Create `app/layouts/default.vue`:
   <div class="min-h-screen bg-surface-50 text-surface-900">
     <header class="border-b border-surface-200 px-6 py-4">
       <div class="mx-auto flex max-w-4xl items-center justify-between">
-        <NuxtLink to="/" class="text-xl font-bold text-primary-600">
-          Memojo
-        </NuxtLink>
+        <NuxtLink to="/" class="text-xl font-bold text-primary-600"> Memojo </NuxtLink>
       </div>
     </header>
     <main class="mx-auto max-w-4xl px-6 py-8">
@@ -1660,9 +1582,7 @@ import { calculateScore } from '~/utils/scoring'
 const route = useRoute()
 const slug = route.params.slug as string
 
-const { data: topicPack, error } = await useFetch<TopicPack>(
-  `/topics/${slug}.json`,
-)
+const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`)
 
 if (error.value || !topicPack.value) {
   throw createError({
@@ -1737,29 +1657,19 @@ startGame()
       :time-remaining="timer.remaining.value"
     />
 
-    <GameBoard
-      :cards="game.cards.value"
-      :grid-cols="level.gridCols"
-      @flip="handleFlip"
-    />
+    <GameBoard :cards="game.cards.value" :grid-cols="level.gridCols" @flip="handleFlip" />
 
     <!-- Game Complete Overlay -->
     <div
       v-if="finalScore !== null"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
     >
-      <div
-        class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl"
-      >
+      <div class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
         <h2 class="mb-2 text-3xl font-bold">
           {{ game.isComplete ? 'Well Done!' : "Time's Up!" }}
         </h2>
         <p class="mb-6 text-surface-700">
-          {{
-            game.isComplete
-              ? 'You matched all pairs!'
-              : 'Better luck next time.'
-          }}
+          {{ game.isComplete ? 'You matched all pairs!' : 'Better luck next time.' }}
         </p>
         <div class="mb-6 space-y-2 text-lg">
           <div>
@@ -1842,8 +1752,7 @@ useHead({
   <div class="flex flex-col items-center gap-8 py-12 text-center">
     <h1 class="text-5xl font-bold tracking-tight">Memojo</h1>
     <p class="max-w-md text-lg text-surface-700">
-      Match images to words. Train your memory with cross-modal matching across
-      diverse topics.
+      Match images to words. Train your memory with cross-modal matching across diverse topics.
     </p>
 
     <div class="flex flex-col gap-4">

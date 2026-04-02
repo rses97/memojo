@@ -616,17 +616,13 @@ Replace the entire contents of `app/layouts/default.vue`:
   <div class="min-h-screen bg-surface-50 text-surface-900 flex flex-col">
     <header class="border-b border-surface-200 px-6 py-4">
       <div class="mx-auto flex max-w-4xl items-center justify-between">
-        <NuxtLink to="/" class="text-xl font-bold text-primary-600">
-          Memojo
-        </NuxtLink>
+        <NuxtLink to="/" class="text-xl font-bold text-primary-600"> Memojo </NuxtLink>
       </div>
     </header>
     <main class="mx-auto max-w-4xl w-full px-6 py-8 flex-1">
       <slot />
     </main>
-    <footer
-      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500"
-    >
+    <footer class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500">
       Emoji graphics by
       <a
         href="https://openmoji.org/"

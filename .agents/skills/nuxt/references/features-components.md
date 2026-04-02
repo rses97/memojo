@@ -29,11 +29,7 @@ Optimized link component with prefetching:
   <NuxtLink to="/page" replace>Replace</NuxtLink>
 
   <!-- Custom active class -->
-  <NuxtLink
-    to="/dashboard"
-    active-class="text-primary"
-    exact-active-class="font-bold"
-  >
+  <NuxtLink to="/dashboard" active-class="text-primary" exact-active-class="font-bold">
     Dashboard
   </NuxtLink>
 </template>
