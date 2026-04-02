@@ -44,7 +44,7 @@ export const LEVELS: GameLevel[] = [
   { pairs: 9, gridCols: 6, timeLimit: 75, previewTime: 3 },
 ]
 
-export type GameMode = 'quick-play' | 'daily' | 'topic-practice'
+export type GameMode = 'quick-play' | 'daily-challenge' | 'topic-practice'
 
 export interface HintState {
   peekAvailable: number
