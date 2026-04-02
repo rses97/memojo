@@ -48,10 +48,17 @@ const {
   pause: pauseTimer,
 } = useTimer()
 
+const { saveGameResult } = useGamePersistence()
+const pairAttempts = new Map<
+  string,
+  { attempts: number; timeMs: number; matched: boolean }
+>()
+
 const finalScore = ref<number | null>(null)
 
 function startGame() {
   finalScore.value = null
+  pairAttempts.clear()
   initGame(selectedPairs)
   initTimer(level.timeLimit, {
     onExpire: () => endGame(),
@@ -59,7 +66,7 @@ function startGame() {
   startTimer()
 }
 
-function endGame() {
+async function endGame() {
   if (finalScore.value !== null) return
   pauseTimer()
   finalScore.value = calculateScore({
@@ -73,10 +80,25 @@ function endGame() {
       eliminate: hints.value.eliminateUsed,
     },
   })
+  await saveGameResult({
+    result: {
+      score: finalScore.value,
+      moves: moves.value,
+      totalPairs: totalPairs.value,
+      timeElapsed: elapsed.value,
+      timeLimit: level.timeLimit,
+      maxStreak: maxStreak.value,
+    },
+    topic: slug,
+    mode: 'quick-play',
+    level: 0,
+    hintsUsed: hints.value.peekUsed + hints.value.eliminateUsed,
+    pairAttempts,
+  })
 }
 
-watch(isComplete, (complete) => {
-  if (complete) endGame()
+watch(isComplete, async (complete) => {
+  if (complete) await endGame()
 })
 
 useHead({
