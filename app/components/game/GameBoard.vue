@@ -72,6 +72,11 @@ defineExpose({ announce })
         :card="card"
         :disabled="disabled"
         :tabindex="focusedIndex === index ? 0 : -1"
+        :aria-label="
+          card.isFlipped || card.isMatched
+            ? `Card: ${card.content}${card.isMatched ? ', matched' : ''}`
+            : `Card ${index + 1}, face down`
+        "
         @flip="handleCardFlip(card.id)"
         @keydown="handleCardKeydown(index, $event)"
       />

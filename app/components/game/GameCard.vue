@@ -26,14 +26,14 @@ const computedAriaLabel = computed(() => {
 </script>
 
 <template>
-  <div
+  <button
+    type="button"
     class="game-card"
     :class="{
       'is-flipped': card.isFlipped || card.isMatched,
       'is-matched': card.isMatched,
     }"
     :aria-label="computedAriaLabel"
-    role="button"
     :tabindex="tabindex ?? 0"
     @click="handleClick"
     @keydown.enter="handleClick"
@@ -57,7 +57,7 @@ const computedAriaLabel = computed(() => {
         </span>
       </div>
     </div>
-  </div>
+  </button>
 </template>
 
 <style scoped>
