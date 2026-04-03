@@ -32,14 +32,14 @@ export const useUserStore = defineStore('user', () => {
         document.documentElement.classList.remove('dark')
       }
     }
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    prefersDark.value = mq.matches
-    mq.addEventListener('change', (e) => {
-      prefersDark.value = e.matches
-    })
     applyTheme()
     if (!themeInitialized) {
       themeInitialized = true
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      prefersDark.value = mq.matches
+      mq.addEventListener('change', (e) => {
+        prefersDark.value = e.matches
+      })
       watch(resolvedTheme, applyTheme)
     }
   }
