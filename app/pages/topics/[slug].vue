@@ -15,8 +15,53 @@ const isGameOver = ref(false)
 const isError = ref(false)
 const topicData = ref<TopicPack | null>(null)
 
+useSeoMeta({
+  title: computed(() => (topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo')),
+  ogTitle: computed(() =>
+    topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo',
+  ),
+  description: computed(() =>
+    topicData.value
+      ? `Practice matching ${topicData.value.name.toLowerCase()} in this cross-modal memory game. ${topicData.value.description}`
+      : '',
+  ),
+  ogDescription: computed(() =>
+    topicData.value
+      ? `Practice matching ${topicData.value.name.toLowerCase()} in this cross-modal memory game. ${topicData.value.description}`
+      : '',
+  ),
+  ogImage: '/og-image.png',
+  ogType: 'website',
+})
+
 useHead({
-  title: computed(() => topicData.value?.name ?? ''),
+  title: computed(() => (topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo')),
+  script: computed(() =>
+    topicData.value
+      ? [
+          {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebPage',
+              name: `${topicData.value.name} — Memojo`,
+              description: topicData.value.description,
+              url: `https://memojo.vercel.app/topics/${slug}`,
+              mainEntity: {
+                '@type': 'Game',
+                name: topicData.value.name,
+                description: topicData.value.description,
+                numberOfPlayers: { '@type': 'QuantitativeValue', value: 1 },
+                gameItem: {
+                  '@type': 'Thing',
+                  name: `${topicData.value.pairs.length} image-text pairs`,
+                },
+              },
+            }),
+          },
+        ]
+      : [],
+  ),
 })
 const hasPreview = ref(false)
 

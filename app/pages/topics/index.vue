@@ -1,11 +1,45 @@
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
 
-useHead({ title: 'Topic Practice' })
-
 const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
 
 const topics = computed(() => manifest.value?.topics ?? [])
+
+useSeoMeta({
+  title: 'Topics — Memojo',
+  ogTitle: 'Topics — Memojo',
+  description:
+    'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
+  ogDescription:
+    'Browse memory game topics: World Flags, Solar System, Animals, Human Body, and World Landmarks. Pick a topic and start training your memory.',
+  ogImage: '/og-image.png',
+  ogType: 'website',
+})
+
+useHead({
+  title: 'Topics — Memojo',
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: 'Memojo Topics',
+        description: 'Browse memory game topic packs for cross-modal matching practice.',
+        url: 'https://memojo.vercel.app/topics',
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: (manifest.value?.topics ?? []).map((topic, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: topic.name,
+            url: `https://memojo.vercel.app/topics/${topic.slug}`,
+          })),
+        },
+      }),
+    },
+  ],
+})
 </script>
 
 <template>

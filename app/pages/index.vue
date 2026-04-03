@@ -1,5 +1,19 @@
 <script setup lang="ts">
-useHead({ title: 'Memojo', titleTemplate: '%s' })
+useSeoMeta({
+  title: 'Memojo — Train Your Brain with Cross-Modal Matching',
+  ogTitle: 'Memojo — Train Your Brain with Cross-Modal Matching',
+  description:
+    'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
+  ogDescription:
+    'A cross-modal memory game that pairs images with text. Daily challenges, topic practice, adaptive difficulty, and spaced repetition for genuine cognitive training.',
+  ogImage: '/og-image.png',
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+})
+
+useHead({
+  title: 'Memojo — Train Your Brain',
+})
 
 const modes = [
   {
