@@ -3,6 +3,7 @@ import type { GameCard } from '~/types'
 
 const props = defineProps<{
   card: GameCard
+  disabled?: boolean
   tabindex?: number
   ariaLabel?: string
 }>()
@@ -34,10 +35,9 @@ const computedAriaLabel = computed(() => {
       'is-matched': card.isMatched,
     }"
     :aria-label="computedAriaLabel"
+    :disabled="disabled"
     :tabindex="tabindex ?? 0"
     @click="handleClick"
-    @keydown.enter="handleClick"
-    @keydown.space.prevent="handleClick"
     @keydown="$emit('keydown', $event)"
   >
     <div class="game-card__inner">
