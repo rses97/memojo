@@ -70,6 +70,8 @@ export interface TopicManifestEntry {
   name: string
   description: string
   pairCount: number
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  icon: string
 }
 
 // --- Persistence types (Plan 3) ---

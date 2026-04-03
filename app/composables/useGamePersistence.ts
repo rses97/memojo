@@ -52,9 +52,9 @@ export function useGamePersistence() {
     await db.putGameResult(storedResult)
 
     // 2. Store session performance
-    const totalTimeMs = Array.from(pairAttempts.values()).reduce((sum, p) => sum + p.timeMs, 0)
     const matchedPairs = Array.from(pairAttempts.values()).filter((p) => p.matched)
-    const avgMatchTime = matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
+    const totalMatchedTimeMs = matchedPairs.reduce((sum, p) => sum + p.timeMs, 0)
+    const avgMatchTime = matchedPairs.length > 0 ? totalMatchedTimeMs / matchedPairs.length : 0
 
     const session: SessionPerformance = {
       id: `session-${id}`,

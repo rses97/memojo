@@ -17,6 +17,11 @@ function handleClick() {
   emit('flip', props.card.id)
 }
 
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') return
+  emit('keydown', event)
+}
+
 const computedAriaLabel = computed(() => {
   if (props.ariaLabel) return props.ariaLabel
   if (!props.card.isFlipped && !props.card.isMatched) {
@@ -38,7 +43,7 @@ const computedAriaLabel = computed(() => {
     :disabled="disabled"
     :tabindex="tabindex ?? 0"
     @click="handleClick"
-    @keydown="$emit('keydown', $event)"
+    @keydown="handleKeydown"
   >
     <div class="game-card__inner">
       <div data-testid="card-back" class="game-card__face game-card__face--back">

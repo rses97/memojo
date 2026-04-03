@@ -28,7 +28,7 @@
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
@@ -48,13 +48,6 @@
     --color-primary-700: oklch(0.8 0.12 260);
     --color-primary-800: oklch(0.88 0.08 260);
     --color-primary-900: oklch(0.94 0.04 260);
-
-    --color-surface-50: oklch(0.15 0.01 260);
-    --color-surface-100: oklch(0.18 0.015 260);
-    --color-surface-200: oklch(0.22 0.02 260);
-    --color-surface-700: oklch(0.75 0.02 260);
-    --color-surface-800: oklch(0.85 0.015 260);
-    --color-surface-900: oklch(0.93 0.01 260);
 
     --color-success: oklch(0.7 0.16 145);
     --color-danger: oklch(0.65 0.18 25);

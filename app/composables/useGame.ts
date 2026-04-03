@@ -118,8 +118,9 @@ export function useGame() {
       if (matchedPairs.value === totalPairs.value) {
         announceToScreenReader(`Congratulations! All ${totalPairs.value} pairs matched.`)
       } else {
+        const label = first.type === 'text' ? first.content : second.content
         announceToScreenReader(
-          `Match found! ${first.content} and ${second.content}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`,
+          `Match found! ${label}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`,
         )
       }
       focusNextUnmatched()
@@ -154,10 +155,10 @@ export function useGame() {
   function focusNextUnmatched() {
     if (import.meta.client) {
       nextTick(() => {
-        const gridCells = document.querySelectorAll('[role="gridcell"] button:not([disabled])')
-        if (gridCells.length > 0) {
-          ;(gridCells[0] as HTMLElement).focus()
-        }
+        const candidates = Array.from(
+          document.querySelectorAll<HTMLButtonElement>('[role="gridcell"] button'),
+        ).filter((el) => !el.disabled && el.offsetParent !== null)
+        candidates[0]?.focus()
       })
     }
   }

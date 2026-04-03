@@ -16,11 +16,7 @@ export const useUserStore = defineStore('user', () => {
   })
 
   function toggleTheme() {
-    if (resolvedTheme.value === 'dark') {
-      theme.value = 'light'
-    } else {
-      theme.value = 'dark'
-    }
+    setTheme(resolvedTheme.value === 'dark' ? 'light' : 'dark')
   }
 
   function initTheme() {
@@ -32,7 +28,6 @@ export const useUserStore = defineStore('user', () => {
         document.documentElement.classList.remove('dark')
       }
     }
-    applyTheme()
     if (!themeInitialized) {
       themeInitialized = true
       const mq = window.matchMedia('(prefers-color-scheme: dark)')
@@ -42,6 +37,7 @@ export const useUserStore = defineStore('user', () => {
       })
       watch(resolvedTheme, applyTheme)
     }
+    applyTheme()
   }
 
   async function hydrate() {
@@ -66,7 +62,7 @@ export const useUserStore = defineStore('user', () => {
     const db = useIndexedDB()
     await db.putUserPreferences({
       theme: theme.value,
-      preferredTopics: preferredTopics.value,
+      preferredTopics: [...preferredTopics.value],
     })
   }
 
