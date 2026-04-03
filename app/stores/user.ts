@@ -6,13 +6,13 @@ export const useUserStore = defineStore('user', () => {
   const theme = ref<'light' | 'dark' | 'system'>('system')
   const preferredTopics = ref<string[]>([])
   const isHydrated = ref(false)
+  const prefersDark = ref(false)
+
+  let themeInitialized = false
 
   const resolvedTheme = computed<'light' | 'dark'>(() => {
     if (theme.value !== 'system') return theme.value
-    if (import.meta.client) {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    }
-    return 'light'
+    return prefersDark.value ? 'dark' : 'light'
   })
 
   function toggleTheme() {
@@ -24,15 +24,22 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function initTheme() {
-    if (import.meta.client) {
-      const applyTheme = () => {
-        if (resolvedTheme.value === 'dark') {
-          document.documentElement.classList.add('dark')
-        } else {
-          document.documentElement.classList.remove('dark')
-        }
+    if (!import.meta.client) return
+    const applyTheme = () => {
+      if (resolvedTheme.value === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
       }
-      applyTheme()
+    }
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    prefersDark.value = mq.matches
+    mq.addEventListener('change', (e) => {
+      prefersDark.value = e.matches
+    })
+    applyTheme()
+    if (!themeInitialized) {
+      themeInitialized = true
       watch(resolvedTheme, applyTheme)
     }
   }
