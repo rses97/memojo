@@ -121,7 +121,7 @@ export interface SpacedRepetitionCard {
 }
 
 export interface UserPreferences {
-  theme: 'light' | 'dark'
+  theme: 'light' | 'dark' | 'system'
   preferredTopics: string[]
 }
 
