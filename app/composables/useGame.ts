@@ -220,6 +220,16 @@ export function useGame() {
     hints.value.eliminateUsed++
   }
 
+  function setPreviewState(revealed: boolean) {
+    cards.value.forEach((card) => {
+      if (revealed) {
+        card.isFlipped = true
+      } else if (!card.isMatched) {
+        card.isFlipped = false
+      }
+    })
+  }
+
   function reset() {
     resetState()
     cards.value = []
@@ -241,5 +251,6 @@ export function useGame() {
     reset,
     peekAll,
     eliminatePair,
+    setPreviewState,
   }
 }

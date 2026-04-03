@@ -3,7 +3,7 @@ import type { GameCard } from '~/types'
 import { useGridNavigation } from '~/composables/useGridNavigation'
 
 const props = defineProps<{
-  cards: GameCard[]
+  cards: readonly GameCard[]
   gridCols: number
   disabled: boolean
 }>()

@@ -49,7 +49,7 @@ export function useAdaptive() {
     }
 
     // Check for low accuracy (decrease difficulty)
-    const lastSession = levelSessions[0]
+    const lastSession = levelSessions[0]!
     if (lastSession.accuracy < LOW_ACCURACY_THRESHOLD) {
       return {
         pairs: Math.max(MIN_PAIRS, base.pairs - 2),

@@ -71,6 +71,7 @@ async function startCurrentLevel() {
   if (practice.isAllComplete.value) return
 
   const level = practice.currentLevel.value
+  if (!level) return
 
   // Use adaptive pair selection
   let pairs = practice.selectedPairs.value
@@ -87,15 +88,9 @@ async function startCurrentLevel() {
 
   if (level.previewTime) {
     hasPreview.value = true
-    game.cards.value.forEach((card) => {
-      card.isFlipped = true
-    })
+    game.setPreviewState(true)
     previewTimeout = setTimeout(() => {
-      game.cards.value.forEach((card) => {
-        if (!card.isMatched) {
-          card.isFlipped = false
-        }
-      })
+      game.setPreviewState(false)
       hasPreview.value = false
       timer.start()
       previewTimeout = null
@@ -134,6 +129,7 @@ function handleLevelEnd() {
   if (isGameOver.value) return
   isGameOver.value = true
   const level = practice.currentLevel.value
+  if (!level) return
   const score = calculateScore({
     moves: game.moves.value,
     totalPairs: game.totalPairs.value,
@@ -168,7 +164,7 @@ async function handleRestart() {
         &larr; Back to topics
       </NuxtLink>
       <h1 class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
-        {{ topic.name }}
+        {{ topic?.name }}
       </h1>
     </div>
 
@@ -238,7 +234,7 @@ async function handleRestart() {
 
       <GameBoard
         :cards="game.cards.value"
-        :grid-cols="practice.currentLevel.value.gridCols"
+        :grid-cols="practice.currentLevel.value?.gridCols ?? 4"
         :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver || hasPreview"
         @flip="handleFlip"
       />

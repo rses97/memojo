@@ -38,7 +38,7 @@ export interface GameResult {
   maxStreak: number
 }
 
-export const LEVELS: GameLevel[] = [
+export const LEVELS: readonly [GameLevel, GameLevel, GameLevel] = [
   { pairs: 4, gridCols: 4, timeLimit: 120 },
   { pairs: 6, gridCols: 4, timeLimit: 90 },
   { pairs: 9, gridCols: 6, timeLimit: 75, previewTime: 3 },
