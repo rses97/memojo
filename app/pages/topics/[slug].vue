@@ -10,59 +10,49 @@ const timer = useTimer()
 const practice = useTopicPractice()
 const adaptive = useAdaptive()
 
-const isLoading = ref(true)
-const isGameOver = ref(false)
-const isError = ref(false)
-const topicData = ref<TopicPack | null>(null)
+const { data: topic } = await useFetch<TopicPack>(`/topics/${slug}.json`)
+
+if (!topic.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Topic not found' })
+}
 
 useSeoMeta({
-  title: computed(() => (topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo')),
-  ogTitle: computed(() =>
-    topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo',
-  ),
-  description: computed(() =>
-    topicData.value
-      ? `Practice matching ${topicData.value.name.toLowerCase()} in this cross-modal memory game. ${topicData.value.description}`
-      : '',
-  ),
-  ogDescription: computed(() =>
-    topicData.value
-      ? `Practice matching ${topicData.value.name.toLowerCase()} in this cross-modal memory game. ${topicData.value.description}`
-      : '',
-  ),
+  title: `${topic.value.name} — Memojo`,
+  ogTitle: `${topic.value.name} — Memojo`,
+  description: `Practice matching ${topic.value.name.toLowerCase()} in this cross-modal memory game. ${topic.value.description}`,
+  ogDescription: `Practice matching ${topic.value.name.toLowerCase()} in this cross-modal memory game. ${topic.value.description}`,
   ogImage: '/og-image.png',
   ogType: 'website',
 })
 
 useHead({
-  title: computed(() => (topicData.value ? `${topicData.value.name} — Memojo` : 'Topic — Memojo')),
-  script: computed(() =>
-    topicData.value
-      ? [
-          {
-            type: 'application/ld+json',
-            innerHTML: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'WebPage',
-              name: `${topicData.value.name} — Memojo`,
-              description: topicData.value.description,
-              url: `https://memojo.vercel.app/topics/${slug}`,
-              mainEntity: {
-                '@type': 'Game',
-                name: topicData.value.name,
-                description: topicData.value.description,
-                numberOfPlayers: { '@type': 'QuantitativeValue', value: 1 },
-                gameItem: {
-                  '@type': 'Thing',
-                  name: `${topicData.value.pairs.length} image-text pairs`,
-                },
-              },
-            }),
+  title: `${topic.value.name} — Memojo`,
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        name: `${topic.value.name} — Memojo`,
+        description: topic.value.description,
+        url: `https://memojo.vercel.app/topics/${slug}`,
+        mainEntity: {
+          '@type': 'Game',
+          name: topic.value.name,
+          description: topic.value.description,
+          numberOfPlayers: { '@type': 'QuantitativeValue', value: 1 },
+          gameItem: {
+            '@type': 'Thing',
+            name: `${topic.value.pairs.length} image-text pairs`,
           },
-        ]
-      : [],
-  ),
+        },
+      }),
+    },
+  ],
 })
+
+const isGameOver = ref(false)
+
 const hasPreview = ref(false)
 
 let previewTimeout: ReturnType<typeof setTimeout> | null = null
@@ -74,32 +64,21 @@ onScopeDispose(() => {
   }
 })
 
-async function loadTopic() {
-  try {
-    topicData.value = await $fetch<TopicPack>(`/topics/${slug}.json`)
-    practice.start(topicData.value.pairs)
-    await startCurrentLevel()
-    isLoading.value = false
-  } catch {
-    isError.value = true
-    isLoading.value = false
-  }
-}
+practice.start(topic.value.pairs)
+await startCurrentLevel()
 
 async function startCurrentLevel() {
   if (practice.isAllComplete.value) return
 
   const level = practice.currentLevel.value
 
-  // Use adaptive pair selection if topic data is loaded
+  // Use adaptive pair selection
   let pairs = practice.selectedPairs.value
-  if (topicData.value) {
-    const allIds = topicData.value.pairs.map((p) => p.id)
-    const selectedIds = await adaptive.buildMixedSession(slug, allIds, level.pairs)
-    const adaptivePairs = topicData.value.pairs.filter((p) => selectedIds.includes(p.id))
-    if (adaptivePairs.length > 0) {
-      pairs = adaptivePairs
-    }
+  const allIds = topic.value!.pairs.map((p) => p.id)
+  const selectedIds = await adaptive.buildMixedSession(slug, allIds, level.pairs)
+  const adaptivePairs = topic.value!.pairs.filter((p) => selectedIds.includes(p.id))
+  if (adaptivePairs.length > 0) {
+    pairs = adaptivePairs
   }
 
   game.init(pairs)
@@ -177,15 +156,9 @@ async function handleNext() {
 }
 
 async function handleRestart() {
-  if (topicData.value) {
-    practice.start(topicData.value.pairs)
-    await startCurrentLevel()
-  }
+  practice.start(topic.value!.pairs)
+  await startCurrentLevel()
 }
-
-onMounted(() => {
-  loadTopic()
-})
 </script>
 
 <template>
@@ -194,21 +167,12 @@ onMounted(() => {
       <NuxtLink to="/topics" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to topics
       </NuxtLink>
-      <h1 v-if="topicData" class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
-        {{ topicData.name }}
+      <h1 class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
+        {{ topic.name }}
       </h1>
     </div>
 
-    <div v-if="isLoading" class="py-20 text-center text-surface-500">Loading topic...</div>
-
-    <div v-else-if="isError" class="py-20 text-center text-surface-500">
-      <p class="mb-4">Failed to load topic.</p>
-      <NuxtLink to="/topics" class="text-primary-500 hover:text-primary-600">
-        Back to topics
-      </NuxtLink>
-    </div>
-
-    <template v-else-if="practice.isAllComplete.value">
+    <template v-if="practice.isAllComplete.value">
       <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
         <h2 class="mb-4 text-3xl font-bold text-primary-500">All Levels Complete!</h2>
         <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
