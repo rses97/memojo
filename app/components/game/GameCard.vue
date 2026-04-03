@@ -3,17 +3,21 @@ import type { GameCard } from '~/types'
 
 const props = defineProps<{
   card: GameCard
+  tabindex?: number
+  ariaLabel?: string
 }>()
 
 const emit = defineEmits<{
   flip: [cardId: string]
+  keydown: [event: KeyboardEvent]
 }>()
 
 function handleClick() {
   emit('flip', props.card.id)
 }
 
-const ariaLabel = computed(() => {
+const computedAriaLabel = computed(() => {
+  if (props.ariaLabel) return props.ariaLabel
   if (!props.card.isFlipped && !props.card.isMatched) {
     return 'Hidden card — click to reveal'
   }
@@ -28,12 +32,13 @@ const ariaLabel = computed(() => {
       'is-flipped': card.isFlipped || card.isMatched,
       'is-matched': card.isMatched,
     }"
-    :aria-label="ariaLabel"
+    :aria-label="computedAriaLabel"
     role="button"
-    tabindex="0"
+    :tabindex="tabindex ?? 0"
     @click="handleClick"
     @keydown.enter="handleClick"
     @keydown.space.prevent="handleClick"
+    @keydown="$emit('keydown', $event)"
   >
     <div class="game-card__inner">
       <div data-testid="card-back" class="game-card__face game-card__face--back">
