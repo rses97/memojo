@@ -114,6 +114,15 @@ export function useGame() {
       streak.value++
       maxStreak.value = Math.max(maxStreak.value, streak.value)
       flippedCards.value = []
+
+      if (matchedPairs.value === totalPairs.value) {
+        announceToScreenReader(`Congratulations! All ${totalPairs.value} pairs matched.`)
+      } else {
+        announceToScreenReader(
+          `Match found! ${first.content} and ${second.content}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`,
+        )
+      }
+      focusNextUnmatched()
     } else {
       isProcessing.value = true
       streak.value = 0
@@ -124,7 +133,32 @@ export function useGame() {
         flippedCards.value = []
         isProcessing.value = false
         mismatchTimeout = null
+        announceToScreenReader('No match. Cards hidden.')
+        focusNextUnmatched()
       }, 1000)
+    }
+  }
+
+  function announceToScreenReader(message: string) {
+    if (import.meta.client) {
+      const el = document.getElementById('sr-announcements')
+      if (el) {
+        el.textContent = ''
+        nextTick(() => {
+          el!.textContent = message
+        })
+      }
+    }
+  }
+
+  function focusNextUnmatched() {
+    if (import.meta.client) {
+      nextTick(() => {
+        const gridCells = document.querySelectorAll('[role="gridcell"] button:not([disabled])')
+        if (gridCells.length > 0) {
+          ;(gridCells[0] as HTMLElement).focus()
+        }
+      })
     }
   }
 
