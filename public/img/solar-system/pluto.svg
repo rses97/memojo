@@ -1,0 +1,9 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <g id="color">
+    <circle cx="36" cy="36" r="24" fill="#D3D3D3"/>
+    <circle cx="36" cy="36" r="23" fill="#E8E8E8" stroke="#D3D3D3" stroke-width="1"/>
+  </g>
+  <g id="line">
+    <circle cx="36" cy="36" r="24" fill="none" stroke="#000" stroke-width="1" opacity="0.1"/>
+  </g>
+</svg>

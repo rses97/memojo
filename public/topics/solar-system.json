@@ -1,0 +1,17 @@
+{
+  "topic": "solar-system",
+  "name": "Solar System",
+  "description": "Match planets and celestial objects to their names and fun facts",
+  "pairs": [
+    { "id": "mercury", "image": "/img/solar-system/mercury.svg", "text": "Mercury", "hint": "Closest to the Sun" },
+    { "id": "venus", "image": "/img/solar-system/venus.svg", "text": "Venus", "hint": "Hottest planet" },
+    { "id": "earth", "image": "/img/solar-system/earth.svg", "text": "Earth", "hint": "The blue planet" },
+    { "id": "mars", "image": "/img/solar-system/mars.svg", "text": "Mars", "hint": "The red planet" },
+    { "id": "jupiter", "image": "/img/solar-system/jupiter.svg", "text": "Jupiter", "hint": "Largest planet" },
+    { "id": "saturn", "image": "/img/solar-system/saturn.svg", "text": "Saturn", "hint": "Famous for its rings" },
+    { "id": "uranus", "image": "/img/solar-system/uranus.svg", "text": "Uranus", "hint": "Rotates on its side" },
+    { "id": "neptune", "image": "/img/solar-system/neptune.svg", "text": "Neptune", "hint": "Farthest from the Sun" },
+    { "id": "pluto", "image": "/img/solar-system/pluto.svg", "text": "Pluto", "hint": "Dwarf planet" },
+    { "id": "sun", "image": "/img/solar-system/sun.svg", "text": "Sun", "hint": "Our star" }
+  ]
+}
