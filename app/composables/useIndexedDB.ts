@@ -51,6 +51,9 @@ const DB_NAME = 'memojo'
 const DB_VERSION = 2
 
 function getDB() {
+  if (import.meta.server) {
+    throw new Error('IndexedDB is not available on the server')
+  }
   return openDB<MemoryGameDB>(DB_NAME, DB_VERSION, {
     upgrade(db, oldVersion) {
       if (oldVersion < 1) {

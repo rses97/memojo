@@ -27,6 +27,7 @@ export function useTimer(clock: () => number = () => performance.now()) {
   }
 
   function start() {
+    if (import.meta.server) return
     if (isRunning.value || isExpired.value) return
 
     isRunning.value = true

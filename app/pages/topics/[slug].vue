@@ -52,8 +52,8 @@ useHead({
 })
 
 const isGameOver = ref(false)
-
 const hasPreview = ref(false)
+const isInitialized = ref(false)
 
 let previewTimeout: ReturnType<typeof setTimeout> | null = null
 
@@ -64,8 +64,11 @@ onScopeDispose(() => {
   }
 })
 
-practice.start(topic.value.pairs)
-await startCurrentLevel()
+onMounted(async () => {
+  practice.start(topic.value!.pairs)
+  await startCurrentLevel()
+  isInitialized.value = true
+})
 
 async function startCurrentLevel() {
   if (practice.isAllComplete.value) return
@@ -168,7 +171,9 @@ async function handleRestart() {
       </h1>
     </div>
 
-    <template v-if="practice.isAllComplete.value">
+    <div v-if="!isInitialized" class="py-20 text-center text-surface-500">Loading...</div>
+
+    <template v-else-if="practice.isAllComplete.value">
       <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
         <h2 class="mb-4 text-3xl font-bold text-primary-500">All Levels Complete!</h2>
         <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
