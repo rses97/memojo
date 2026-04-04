@@ -1,4 +1,3 @@
-import { openDB } from 'idb'
 import type { DBSchema } from 'idb'
 import type {
   StoredGameResult,
@@ -50,10 +49,11 @@ interface MemoryGameDB extends DBSchema {
 const DB_NAME = 'memojo'
 const DB_VERSION = 2
 
-function getDB() {
+async function getDB() {
   if (import.meta.server) {
     throw new Error('IndexedDB is not available on the server')
   }
+  const { openDB } = await import('idb')
   return openDB<MemoryGameDB>(DB_NAME, DB_VERSION, {
     upgrade(db, oldVersion) {
       if (oldVersion < 1) {

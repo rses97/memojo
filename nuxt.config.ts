@@ -14,6 +14,15 @@ export default defineNuxtConfig({
     '/leaderboard': { ssr: false },
   },
 
+  // In dev, Vite transforms modules on-demand and the SSR worker runs out of heap
+  // on memory-constrained machines. Disable SSR for topic pages in dev only.
+  // Production build uses pre-bundled chunks and SSR works fine there (verified).
+  $development: {
+    routeRules: {
+      '/topics/**': { ssr: false },
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
