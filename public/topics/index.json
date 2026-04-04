@@ -4,7 +4,41 @@
       "slug": "world-flags",
       "name": "World Flags",
       "description": "Match country flags to their names",
-      "pairCount": 10
+      "pairCount": 10,
+      "difficulty": "beginner",
+      "icon": "flag"
+    },
+    {
+      "slug": "solar-system",
+      "name": "Solar System",
+      "description": "Match planets and celestial objects to their names and fun facts",
+      "pairCount": 10,
+      "difficulty": "beginner",
+      "icon": "planet"
+    },
+    {
+      "slug": "animals",
+      "name": "Animals",
+      "description": "Match animals to their names",
+      "pairCount": 10,
+      "difficulty": "beginner",
+      "icon": "paw"
+    },
+    {
+      "slug": "human-body",
+      "name": "Human Body",
+      "description": "Match organ and system diagrams to their names",
+      "pairCount": 10,
+      "difficulty": "intermediate",
+      "icon": "anatomy"
+    },
+    {
+      "slug": "world-landmarks",
+      "name": "World Landmarks",
+      "description": "Match famous landmark photos to their names and locations",
+      "pairCount": 10,
+      "difficulty": "intermediate",
+      "icon": "landmark"
     }
   ]
 }

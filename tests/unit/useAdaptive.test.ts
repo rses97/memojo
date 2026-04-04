@@ -5,9 +5,7 @@ import { useIndexedDB } from '../../app/composables/useIndexedDB'
 import { LEVELS } from '../../app/types'
 import type { SessionPerformance } from '../../app/types'
 
-function makeSession(
-  overrides: Partial<SessionPerformance> = {},
-): SessionPerformance {
+function makeSession(overrides: Partial<SessionPerformance> = {}): SessionPerformance {
   return {
     id: crypto.randomUUID(),
     topic: 'world-flags',
@@ -39,9 +37,7 @@ describe('useAdaptive', () => {
 
     // Store 3 high-accuracy sessions for level 0
     for (let i = 0; i < 3; i++) {
-      await db.putSessionPerformance(
-        makeSession({ id: `s${i}`, accuracy: 0.9, level: 0 }),
-      )
+      await db.putSessionPerformance(makeSession({ id: `s${i}`, accuracy: 0.9, level: 0 }))
     }
 
     const adaptive = useAdaptive()
@@ -49,8 +45,7 @@ describe('useAdaptive', () => {
 
     // Should increase pairs or reduce time
     const base = LEVELS[0]
-    const isHarder =
-      adjustment.pairs > base.pairs || adjustment.timeLimit < base.timeLimit
+    const isHarder = adjustment.pairs > base.pairs || adjustment.timeLimit < base.timeLimit
     expect(isHarder).toBe(true)
   })
 

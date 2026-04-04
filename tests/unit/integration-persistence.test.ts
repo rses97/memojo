@@ -92,11 +92,7 @@ describe('persistence integration', () => {
       lastPlayed: new Date().toISOString(),
     })
 
-    const selected = await adaptive.buildMixedSession(
-      'world-flags',
-      allPairIds,
-      4,
-    )
+    const selected = await adaptive.buildMixedSession('world-flags', allPairIds, 4)
     expect(selected).toContain('flag-jp') // weak pair prioritized
   })
 

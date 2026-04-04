@@ -1,18 +1,60 @@
+<script setup lang="ts">
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.initTheme()
+})
+</script>
+
 <template>
-  <div class="flex min-h-screen flex-col bg-surface-50 text-surface-900">
-    <header class="border-b border-surface-200 px-6 py-4">
-      <div class="mx-auto flex max-w-4xl items-center justify-between">
-        <NuxtLink to="/" class="text-xl font-bold text-primary-600">
+  <div class="min-h-screen bg-surface-50 text-surface-900">
+    <SkipToContent />
+
+    <header class="border-b border-surface-200 bg-white dark:bg-surface-100">
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+        <NuxtLink
+          to="/"
+          class="text-lg font-bold text-primary-600 hover:text-primary-700"
+          aria-label="Memojo — Home"
+        >
           Memojo
         </NuxtLink>
+
+        <nav class="flex items-center gap-4" aria-label="Main navigation">
+          <NuxtLink
+            to="/topics"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+          >
+            Topics
+          </NuxtLink>
+          <NuxtLink to="/daily" class="text-sm font-medium text-surface-700 hover:text-primary-600">
+            Daily
+          </NuxtLink>
+          <NuxtLink
+            to="/leaderboard"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+          >
+            Leaderboard
+          </NuxtLink>
+          <NuxtLink
+            to="/profile"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+          >
+            Profile
+          </NuxtLink>
+          <ThemeToggle />
+        </nav>
       </div>
     </header>
-    <main class="mx-auto w-full max-w-4xl flex-1 px-6 py-8">
+
+    <main id="main-content" class="mx-auto max-w-5xl px-4 py-8" tabindex="-1">
       <slot />
     </main>
-    <footer
-      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500"
-    >
+
+    <!-- Screen reader announcements -->
+    <div id="sr-announcements" aria-live="assertive" aria-atomic="true" class="sr-only" />
+
+    <footer class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500">
       All emojis designed by
       <a
         href="https://openmoji.org/"

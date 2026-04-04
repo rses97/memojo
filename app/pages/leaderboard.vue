@@ -175,9 +175,7 @@ function formatTime(seconds: number): string {
               <td class="px-4 py-3">{{ index + 1 }}</td>
               <td class="px-4 py-3">{{ result.topic }}</td>
               <td class="px-4 py-3 font-semibold">{{ result.score }}</td>
-              <td class="px-4 py-3">
-                {{ Math.round(result.accuracy * 100) }}%
-              </td>
+              <td class="px-4 py-3">{{ Math.round(result.accuracy * 100) }}%</td>
               <td class="px-4 py-3">{{ result.maxStreak }}</td>
               <td class="px-4 py-3">{{ formatDate(result.date) }}</td>
             </tr>
@@ -212,9 +210,7 @@ function formatTime(seconds: number): string {
           </div>
           <div class="text-right">
             <p class="text-2xl font-bold">{{ result.score }}</p>
-            <p class="text-sm text-gray-500">
-              {{ Math.round(result.accuracy * 100) }}% accuracy
-            </p>
+            <p class="text-sm text-gray-500">{{ Math.round(result.accuracy * 100) }}% accuracy</p>
           </div>
         </div>
       </div>

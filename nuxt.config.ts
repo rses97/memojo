@@ -7,13 +7,26 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  routeRules: {
+    '/play/**': { ssr: false },
+    '/daily': { ssr: false },
+    '/profile': { ssr: false },
+    '/leaderboard': { ssr: false },
+  },
+
   app: {
     head: {
-      titleTemplate: '%s — Memojo',
+      htmlAttrs: { lang: 'en' },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
     },
   },
 
   css: ['~/assets/css/main.css'],
+
+  components: [{ path: '~/components', pathPrefix: false }],
 
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/eslint'],
 

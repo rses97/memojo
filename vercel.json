@@ -1,3 +1,26 @@
 {
-  "git": { "deploymentEnabled": false }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nuxt",
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "headers": [
+    {
+      "source": "/img/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/topics/(.*).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400"
+        }
+      ]
+    }
+  ]
 }

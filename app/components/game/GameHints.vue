@@ -12,12 +12,9 @@ const emit = defineEmits<{
   eliminate: []
 }>()
 
-const canPeek = computed(
-  () => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled,
-)
+const canPeek = computed(() => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled)
 const canEliminate = computed(
-  () =>
-    props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled,
+  () => props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled,
 )
 </script>
 

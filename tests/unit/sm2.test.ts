@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  calculateSM2,
-  type SM2Input,
-  type SM2Output,
-} from '../../app/utils/sm2'
+import { calculateSM2, type SM2Input, type SM2Output } from '../../app/utils/sm2'
 
 describe('calculateSM2', () => {
   const defaultInput: SM2Input = {

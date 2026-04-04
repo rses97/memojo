@@ -1,0 +1,10 @@
+<svg id="emoji" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+  <g id="color">
+    <circle cx="36" cy="36" r="24" fill="#1976D2"/>
+    <circle cx="36" cy="36" r="23" fill="#42A5F5" stroke="#1976D2" stroke-width="1"/>
+    <path d="M 25 30 Q 20 35 25 40 Q 30 38 28 33 Z" fill="#4CAF50"/>
+  </g>
+  <g id="line">
+    <circle cx="36" cy="36" r="24" fill="none" stroke="#000" stroke-width="1" opacity="0.1"/>
+  </g>
+</svg>

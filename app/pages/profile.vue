@@ -223,11 +223,9 @@ function formatDate(iso: string): string {
         </div>
       </div>
       <div class="mt-1 flex justify-between text-xs text-gray-400">
-        <span v-if="accuracyTrend.length > 0">{{
-          formatDate(accuracyTrend[0].date)
-        }}</span>
+        <span v-if="accuracyTrend.length > 0">{{ formatDate(accuracyTrend[0]!.date) }}</span>
         <span v-if="accuracyTrend.length > 1">{{
-          formatDate(accuracyTrend[accuracyTrend.length - 1].date)
+          formatDate(accuracyTrend[accuracyTrend.length - 1]!.date)
         }}</span>
       </div>
     </section>

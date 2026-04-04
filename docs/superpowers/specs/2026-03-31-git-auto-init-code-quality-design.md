@@ -153,10 +153,7 @@ Create `eslint.config.ts` (without stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import {
-  defineConfigWithVueTs,
-  vueTsConfigs,
-} from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 
 export default defineConfigWithVueTs(
   pluginVue.configs['flat/recommended'], // or 'flat/strongly-recommended' for strict
@@ -168,10 +165,7 @@ Create `eslint.config.ts` (with stylistic):
 
 ```ts
 import pluginVue from 'eslint-plugin-vue'
-import {
-  defineConfigWithVueTs,
-  vueTsConfigs,
-} from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfigWithVueTs(
