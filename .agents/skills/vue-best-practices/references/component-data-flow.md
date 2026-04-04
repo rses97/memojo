@@ -236,10 +236,19 @@ inject('theme') // Mutating shared state from any depth becomes hard to track th
 
 **GOOD:**
 
+<!-- prettier-ignore -->
 ```vue
-// Provider.vue const theme = reactive({ dark: false }) const toggleTheme = () => { theme.dark =
-!theme.dark } provide(themeKey, readonly(theme)) provide(themeActionsKey, { toggleTheme }) //
-Consumer.vue const theme = inject(themeKey) const { toggleTheme } = inject(themeActionsKey)
+// Provider.vue
+const theme = reactive({ dark: false })
+const toggleTheme = () => {
+  theme.dark = !theme.dark
+}
+provide(themeKey, readonly(theme))
+provide(themeActionsKey, { toggleTheme })
+
+// Consumer.vue
+const theme = inject(themeKey)
+const { toggleTheme } = inject(themeActionsKey)
 ```
 
 Use symbols for keys to avoid collisions in large apps:
