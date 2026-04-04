@@ -1,11 +1,12 @@
 import 'fake-indexeddb/auto'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { setActivePinia, createPinia } from 'pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ThemeToggle from '~/components/ui/ThemeToggle.vue'
-import { useUserStore } from '~/stores/user'
 
 describe('ThemeToggle', () => {
   beforeEach(() => {
+    setActivePinia(createPinia())
     document.documentElement.classList.remove('dark')
     vi.stubGlobal('matchMedia', (query: string) => ({
       matches: false,
@@ -13,8 +14,6 @@ describe('ThemeToggle', () => {
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
     }))
-    const store = useUserStore()
-    store.theme = 'system'
   })
 
   it('renders a button with accessible label', async () => {

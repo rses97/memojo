@@ -8,7 +8,6 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/play/**': { ssr: false },
     '/daily': { ssr: false },
     '/profile': { ssr: false },
     '/leaderboard': { ssr: false },
