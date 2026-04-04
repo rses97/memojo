@@ -67,6 +67,8 @@ const computedAriaLabel = computed(() => {
 
 <style scoped>
 .game-card {
+  display: block;
+  width: 100%;
   perspective: 600px;
   cursor: pointer;
   aspect-ratio: 3 / 4;

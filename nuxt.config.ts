@@ -26,6 +26,8 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  components: [{ path: '~/components', pathPrefix: false }],
+
   modules: ['@pinia/nuxt', '@nuxt/test-utils/module', '@nuxt/eslint'],
 
   vite: {
