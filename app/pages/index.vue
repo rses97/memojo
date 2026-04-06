@@ -40,7 +40,7 @@ const modes = [
   <div class="mx-auto max-w-3xl px-4 py-12">
     <div class="mb-12 text-center">
       <h1 class="mb-3 text-4xl font-bold text-surface-900 dark:text-surface-50">Memojo</h1>
-      <p class="text-lg text-surface-600 dark:text-surface-400">
+      <p class="text-lg text-surface-700 dark:text-surface-300">
         Match images to text. Train your memory. Beat your best.
       </p>
     </div>
@@ -59,13 +59,13 @@ const modes = [
     <div class="mt-6 flex justify-center gap-4">
       <NuxtLink
         to="/leaderboard"
-        class="rounded-lg border border-gray-300 px-6 py-3 text-center font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+        class="rounded-lg border border-surface-200 px-6 py-3 text-center font-medium transition hover:bg-surface-100 dark:border-surface-700 dark:hover:bg-surface-800"
       >
         Leaderboard
       </NuxtLink>
       <NuxtLink
         to="/profile"
-        class="rounded-lg border border-gray-300 px-6 py-3 text-center font-medium transition hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
+        class="rounded-lg border border-surface-200 px-6 py-3 text-center font-medium transition hover:bg-surface-100 dark:border-surface-700 dark:hover:bg-surface-800"
       >
         Profile
       </NuxtLink>
