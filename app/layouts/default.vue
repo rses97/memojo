@@ -7,10 +7,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface-50 text-surface-900">
+  <div class="min-h-screen bg-surface-50 text-surface-900 dark:bg-surface-900">
     <SkipToContent />
 
-    <header class="border-b border-surface-200 bg-white dark:bg-surface-100">
+    <header class="border-b border-surface-200 bg-white dark:bg-surface-800">
       <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <NuxtLink
           to="/"
