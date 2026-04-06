@@ -112,6 +112,11 @@ const computedAriaLabel = computed(() => {
   transform: rotateY(180deg);
 }
 
+:global(.dark) .game-card__face--front {
+  background-color: var(--color-surface-800);
+  border-color: var(--color-surface-700);
+}
+
 .is-matched .game-card__face--front {
   border-color: var(--color-success);
   box-shadow: 0 0 12px oklch(0.65 0.18 145 / 0.3);
