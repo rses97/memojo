@@ -49,7 +49,7 @@ useHead({
         &larr; Back to menu
       </NuxtLink>
       <h1 class="mt-2 text-3xl font-bold text-surface-900 dark:text-surface-50">Topic Practice</h1>
-      <p class="mt-1 text-surface-600 dark:text-surface-400">
+      <p class="mt-1 text-surface-700 dark:text-surface-300">
         Choose a topic and master it through three levels of increasing difficulty.
       </p>
     </div>
@@ -66,16 +66,19 @@ useHead({
         >
           {{ topic.name }}
         </h2>
-        <p class="mb-3 text-sm text-surface-600 dark:text-surface-400">
+        <p class="mb-3 text-sm text-surface-700 dark:text-surface-300">
           {{ topic.description }}
         </p>
-        <span class="text-xs text-surface-500 dark:text-surface-400">
+        <span class="text-xs text-surface-700 dark:text-surface-300">
           {{ topic.pairCount }} pairs &middot; 3 levels
         </span>
       </NuxtLink>
     </div>
 
-    <div v-if="topics.length === 0" class="py-20 text-center text-surface-500">
+    <div
+      v-if="topics.length === 0"
+      class="py-20 text-center text-surface-700 dark:text-surface-300"
+    >
       No topics available yet.
     </div>
   </div>

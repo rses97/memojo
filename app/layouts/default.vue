@@ -7,7 +7,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface-50 text-surface-900 dark:bg-surface-900">
+  <div
+    class="grid grid-rows-[auto_1fr_auto] min-h-screen bg-surface-50 text-surface-900 dark:bg-surface-900"
+  >
     <SkipToContent />
 
     <header class="border-b border-surface-200 bg-white dark:bg-surface-800">
@@ -47,14 +49,16 @@ onMounted(() => {
       </div>
     </header>
 
-    <main id="main-content" class="mx-auto max-w-5xl px-4 py-8" tabindex="-1">
+    <main id="main-content" class="w-full mx-auto max-w-5xl px-4 py-8" tabindex="-1">
       <slot />
     </main>
 
     <!-- Screen reader announcements -->
     <div id="sr-announcements" aria-live="assertive" aria-atomic="true" class="sr-only" />
 
-    <footer class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500">
+    <footer
+      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500 dark:text-surface-400"
+    >
       All emojis designed by
       <a
         href="https://openmoji.org/"
