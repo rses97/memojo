@@ -15,6 +15,15 @@ const emit = defineEmits<{
 const totalCards = computed(() => props.cards.length)
 const gridColsRef = computed(() => props.gridCols)
 
+const { containerRef, effectiveCols } = useResponsiveGrid({
+  maxCols: gridColsRef.value,
+  colsMap: {
+    xs: 2,
+    sm: 3,
+    md: 4,
+  },
+})
+
 const { focusedIndex, handleKeydown, resetFocus } = useGridNavigation(totalCards, gridColsRef)
 
 const cardRefs = ref<HTMLElement[]>([])
@@ -52,8 +61,9 @@ defineExpose({ announce })
 
 <template>
   <div
+    ref="containerRef"
     class="grid gap-3"
-    :style="{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }"
+    :style="{ gridTemplateColumns: `repeat(${effectiveCols}, minmax(0, 1fr))` }"
     role="grid"
     aria-label="Game board"
   >
