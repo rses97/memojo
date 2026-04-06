@@ -195,11 +195,13 @@ onMounted(() => {
       v-if="finalScore !== null"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
     >
-      <div class="mx-4 w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-xl">
-        <h2 class="mb-2 text-3xl font-bold">
+      <div
+        class="mx-4 w-full max-w-md rounded-2xl bg-white dark:bg-surface-800 p-8 text-center shadow-xl"
+      >
+        <h2 class="mb-2 text-3xl font-bold dark:text-surface-50">
           {{ isComplete ? 'Well Done!' : "Time's Up!" }}
         </h2>
-        <p class="mb-6 text-surface-700">
+        <p class="mb-6 text-surface-700 dark:text-surface-300">
           {{ isComplete ? 'You matched all pairs!' : 'Better luck next time.' }}
         </p>
         <div class="mb-6 space-y-2 text-lg">
