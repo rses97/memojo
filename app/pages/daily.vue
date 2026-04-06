@@ -143,27 +143,22 @@ onMounted(() => {
         @flip="handleFlip"
       />
 
-      <div
+      <GameResultModal
         v-if="isGameOver"
-        class="mt-8 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
+        :title="game.isComplete.value ? 'Challenge Complete!' : 'Time\'s Up!'"
+        :emoji="game.isComplete.value ? '🎉' : '⏰'"
+        :score="finalScore"
+        :stats="`${game.matchedPairs.value} / ${game.totalPairs.value} pairs matched in ${game.moves.value} moves`"
       >
-        <h2 class="mb-2 text-3xl font-bold text-primary-500">
-          {{ game.isComplete.value ? 'Challenge Complete!' : "Time's Up!" }}
-        </h2>
-        <p class="mb-4 text-lg text-surface-700 dark:text-surface-200">
-          Score: <span class="font-bold">{{ finalScore }}</span>
-        </p>
-        <p class="text-sm text-surface-700 dark:text-surface-300">
-          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs matched in
-          {{ game.moves.value }} moves
-        </p>
-        <NuxtLink
-          to="/"
-          class="mt-6 inline-block rounded-xl bg-primary-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
-        >
-          Back to Menu
-        </NuxtLink>
-      </div>
+        <template #actions>
+          <NuxtLink
+            to="/"
+            class="rounded-xl bg-primary-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
+          >
+            Back to Menu
+          </NuxtLink>
+        </template>
+      </GameResultModal>
     </template>
   </div>
 </template>
