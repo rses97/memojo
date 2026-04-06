@@ -40,6 +40,7 @@ const emit = defineEmits<{
       </div>
       <button
         type="button"
+        autofocus
         class="rounded-xl bg-blue-600 px-8 py-3 text-lg font-semibold text-white transition-colors hover:bg-blue-700"
         @click="emit('next')"
       >
@@ -52,7 +53,7 @@ const emit = defineEmits<{
 <style scoped>
 .game-level-complete {
   background: linear-gradient(160deg, #1a2035, #1e2d4a);
-  animation: fadeScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation: fadeScale 0.5s var(--ease-bounce) both;
 }
 
 @keyframes fadeScale {
