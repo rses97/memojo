@@ -171,7 +171,9 @@ async function handleRestart() {
       </h1>
     </div>
 
-    <div v-if="!isInitialized" class="py-20 text-center text-surface-500">Loading...</div>
+    <div v-if="!isInitialized" class="py-20 text-center text-surface-700 dark:text-surface-300">
+      Loading...
+    </div>
 
     <template v-else-if="practice.isAllComplete.value">
       <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
@@ -180,7 +182,7 @@ async function handleRestart() {
           Total Score:
           <span class="font-bold">{{ practice.totalScore.value }}</span>
         </p>
-        <p class="mb-6 text-sm text-surface-500">
+        <p class="mb-6 text-sm text-surface-700 dark:text-surface-300">
           You completed all {{ practice.totalLevels.value }} levels.
         </p>
         <div class="flex justify-center gap-4">
@@ -211,7 +213,7 @@ async function handleRestart() {
     </template>
 
     <template v-else>
-      <div class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400">
+      <div class="mb-4 text-center text-sm font-medium text-surface-700 dark:text-surface-300">
         Level {{ practice.currentLevelIndex.value + 1 }} /
         {{ practice.totalLevels.value }}
       </div>
