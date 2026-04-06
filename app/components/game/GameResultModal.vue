@@ -8,10 +8,15 @@ defineProps<{
 </script>
 
 <template>
-  <div class="game-result-modal fixed inset-0 z-50 flex items-center justify-center text-center">
+  <div
+    class="game-result-modal fixed inset-0 z-50 flex items-center justify-center text-center"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="result-modal-title"
+  >
     <div class="px-8">
-      <div class="mb-4 text-5xl">{{ emoji }}</div>
-      <h2 class="mb-3 text-3xl font-bold text-primary-400">{{ title }}</h2>
+      <div class="mb-4 text-5xl" aria-hidden="true">{{ emoji }}</div>
+      <h2 id="result-modal-title" class="mb-3 text-3xl font-bold text-primary-400">{{ title }}</h2>
       <p class="mb-2 text-lg text-surface-200">
         Score: <span class="font-bold">{{ score }}</span>
       </p>
