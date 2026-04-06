@@ -15,6 +15,10 @@
   --color-surface-50: oklch(0.98 0.005 260);
   --color-surface-100: oklch(0.95 0.01 260);
   --color-surface-200: oklch(0.9 0.015 260);
+  --color-surface-300: oklch(0.83 0.02 260);
+  --color-surface-400: oklch(0.76 0.02 260);
+  --color-surface-500: oklch(0.68 0.025 260);
+  --color-surface-600: oklch(0.55 0.025 260);
   --color-surface-700: oklch(0.35 0.03 260);
   --color-surface-800: oklch(0.25 0.025 260);
   --color-surface-900: oklch(0.18 0.02 260);
@@ -52,6 +56,10 @@
     --color-surface-50: oklch(0.93 0.01 260);
     --color-surface-100: oklch(0.78 0.015 260);
     --color-surface-200: oklch(0.65 0.02 260);
+    --color-surface-300: oklch(0.55 0.02 260);
+    --color-surface-400: oklch(0.45 0.02 260);
+    --color-surface-500: oklch(0.38 0.02 260);
+    --color-surface-600: oklch(0.32 0.02 260);
     --color-surface-700: oklch(0.27 0.02 260);
     --color-surface-800: oklch(0.2 0.015 260);
     --color-surface-900: oklch(0.15 0.01 260);
