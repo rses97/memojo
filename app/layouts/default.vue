@@ -8,7 +8,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="grid grid-rows-[auto_1fr_auto] min-h-screen bg-surface-50 text-surface-900 dark:bg-surface-900"
+    class="grid grid-rows-[auto_1fr_auto] min-h-screen bg-surface-50 text-surface-900 dark:bg-surface-900 dark:text-surface-50"
   >
     <SkipToContent />
 
@@ -25,22 +25,25 @@ onMounted(() => {
         <nav class="flex items-center gap-4" aria-label="Main navigation">
           <NuxtLink
             to="/topics"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
           >
             Topics
           </NuxtLink>
-          <NuxtLink to="/daily" class="text-sm font-medium text-surface-700 hover:text-primary-600">
+          <NuxtLink
+            to="/daily"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
+          >
             Daily
           </NuxtLink>
           <NuxtLink
             to="/leaderboard"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
           >
             Leaderboard
           </NuxtLink>
           <NuxtLink
             to="/profile"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600"
+            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
           >
             Profile
           </NuxtLink>

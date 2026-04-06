@@ -12,7 +12,7 @@ onMounted(() => {
     :aria-label="
       userStore.resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
     "
-    class="rounded-lg p-2 text-surface-700 transition-colors hover:bg-surface-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+    class="rounded-lg p-2 text-surface-700 dark:text-surface-200 transition-colors hover:bg-surface-200 dark:hover:text-surface-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
     @click="userStore.toggleTheme()"
   >
     <!-- Sun icon (shown in dark mode) -->
