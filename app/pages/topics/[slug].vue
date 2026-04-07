@@ -176,16 +176,13 @@ async function handleRestart() {
     </div>
 
     <template v-else-if="practice.isAllComplete.value">
-      <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
-        <h2 class="mb-4 text-3xl font-bold text-primary-500">All Levels Complete!</h2>
-        <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
-          Total Score:
-          <span class="font-bold">{{ practice.totalScore.value }}</span>
-        </p>
-        <p class="mb-6 text-sm text-surface-700 dark:text-surface-300">
-          You completed all {{ practice.totalLevels.value }} levels.
-        </p>
-        <div class="flex justify-center gap-4">
+      <GameResultModal
+        title="All Levels Complete!"
+        emoji="🏆"
+        :score="practice.totalScore.value"
+        :stats="`You completed all ${practice.totalLevels.value} levels`"
+      >
+        <template #actions>
           <button
             class="rounded-xl bg-primary-500 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-600"
             @click="handleRestart"
@@ -194,12 +191,12 @@ async function handleRestart() {
           </button>
           <NuxtLink
             to="/topics"
-            class="rounded-xl bg-surface-200 px-6 py-3 font-semibold text-surface-700 transition-colors hover:bg-surface-300 dark:bg-surface-700 dark:text-surface-200 dark:hover:bg-surface-600"
+            class="rounded-xl bg-surface-700 px-6 py-3 font-semibold text-surface-200 transition-colors hover:bg-surface-600"
           >
             Other Topics
           </NuxtLink>
-        </div>
-      </div>
+        </template>
+      </GameResultModal>
     </template>
 
     <template v-else-if="practice.showLevelComplete.value">
