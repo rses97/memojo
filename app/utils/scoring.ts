@@ -10,8 +10,7 @@ export interface ScoreParams {
 }
 
 export function calculateScore(params: ScoreParams): number {
-  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } =
-    params
+  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } = params
 
   const perfectMoves = totalPairs
   const accuracy = Math.max(0, 1 - (moves - perfectMoves) / (perfectMoves * 2))

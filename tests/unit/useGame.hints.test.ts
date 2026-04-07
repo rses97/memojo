@@ -75,12 +75,8 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'image',
-      )!
-      const textCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'text',
-      )!
+      const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+      const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)
@@ -146,14 +142,10 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       game.eliminatePair()
-      const countAfterFirst = game.cards.value.filter(
-        (c) => !c.isEliminated,
-      ).length
+      const countAfterFirst = game.cards.value.filter((c) => !c.isEliminated).length
 
       game.eliminatePair()
-      const countAfterSecond = game.cards.value.filter(
-        (c) => !c.isEliminated,
-      ).length
+      const countAfterSecond = game.cards.value.filter((c) => !c.isEliminated).length
 
       expect(countAfterSecond).toBe(countAfterFirst)
       expect(game.hints.value.eliminateUsed).toBe(1)
@@ -164,12 +156,8 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'image',
-      )!
-      const textCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'text',
-      )!
+      const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+      const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)

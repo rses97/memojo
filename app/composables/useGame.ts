@@ -34,9 +34,7 @@ export function useGame() {
     const eliminated = cards.value.filter((c) => c.isEliminated).length / 2
     return cards.value.length / 2 - eliminated
   })
-  const isComplete = computed(
-    () => matchedPairs.value === totalPairs.value && totalPairs.value > 0,
-  )
+  const isComplete = computed(() => matchedPairs.value === totalPairs.value && totalPairs.value > 0)
 
   function resetState() {
     matchedPairs.value = 0
@@ -116,6 +114,16 @@ export function useGame() {
       streak.value++
       maxStreak.value = Math.max(maxStreak.value, streak.value)
       flippedCards.value = []
+
+      if (matchedPairs.value === totalPairs.value) {
+        announceToScreenReader(`Congratulations! All ${totalPairs.value} pairs matched.`)
+      } else {
+        const label = first.type === 'text' ? first.content : second.content
+        announceToScreenReader(
+          `Match found! ${label}. ${matchedPairs.value} of ${totalPairs.value} pairs matched.`,
+        )
+      }
+      focusNextUnmatched()
     } else {
       isProcessing.value = true
       streak.value = 0
@@ -126,13 +134,37 @@ export function useGame() {
         flippedCards.value = []
         isProcessing.value = false
         mismatchTimeout = null
+        announceToScreenReader('No match. Cards hidden.')
+        focusNextUnmatched()
       }, 1000)
     }
   }
 
+  function announceToScreenReader(message: string) {
+    if (import.meta.client) {
+      const el = document.getElementById('sr-announcements')
+      if (el) {
+        el.textContent = ''
+        nextTick(() => {
+          el!.textContent = message
+        })
+      }
+    }
+  }
+
+  function focusNextUnmatched() {
+    if (import.meta.client) {
+      nextTick(() => {
+        const candidates = Array.from(
+          document.querySelectorAll<HTMLButtonElement>('[role="gridcell"] button'),
+        ).filter((el) => !el.disabled && el.offsetParent !== null)
+        candidates[0]?.focus()
+      })
+    }
+  }
+
   function peekAll() {
-    if (hints.value.peekAvailable <= 0 || isPeeking.value || isProcessing.value)
-      return
+    if (hints.value.peekAvailable <= 0 || isPeeking.value || isProcessing.value) return
 
     isPeeking.value = true
     hints.value.peekAvailable--
@@ -140,9 +172,7 @@ export function useGame() {
 
     // Remember which unmatched cards were already face-up before peek
     const alreadyFlipped = new Set(
-      cards.value
-        .filter((c) => !c.isMatched && !c.isEliminated && c.isFlipped)
-        .map((c) => c.id),
+      cards.value.filter((c) => !c.isMatched && !c.isEliminated && c.isFlipped).map((c) => c.id),
     )
 
     cards.value.forEach((card) => {
@@ -153,11 +183,7 @@ export function useGame() {
 
     peekTimeout = setTimeout(() => {
       cards.value.forEach((card) => {
-        if (
-          !card.isMatched &&
-          !card.isEliminated &&
-          !alreadyFlipped.has(card.id)
-        ) {
+        if (!card.isMatched && !card.isEliminated && !alreadyFlipped.has(card.id)) {
           card.isFlipped = false
         }
       })
@@ -173,10 +199,7 @@ export function useGame() {
     const unmatchedPairIds = [
       ...new Set(
         cards.value
-          .filter(
-            (c) =>
-              !c.isMatched && !c.isEliminated && !activePairIds.has(c.pairId),
-          )
+          .filter((c) => !c.isMatched && !c.isEliminated && !activePairIds.has(c.pairId))
           .map((c) => c.pairId),
       ),
     ]
@@ -196,6 +219,16 @@ export function useGame() {
 
     hints.value.eliminateAvailable--
     hints.value.eliminateUsed++
+  }
+
+  function setPreviewState(revealed: boolean) {
+    cards.value.forEach((card) => {
+      if (revealed) {
+        card.isFlipped = true
+      } else if (!card.isMatched) {
+        card.isFlipped = false
+      }
+    })
   }
 
   function reset() {
@@ -219,5 +252,6 @@ export function useGame() {
     reset,
     peekAll,
     eliminatePair,
+    setPreviewState,
   }
 }

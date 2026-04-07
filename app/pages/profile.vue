@@ -128,31 +128,31 @@ function formatDate(iso: string): string {
 
       <div
         v-if="totalGamesPlayed === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         No games played yet. Start playing to track your progress!
       </div>
 
       <div v-else class="grid grid-cols-2 gap-4 sm:grid-cols-5">
-        <div class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-800">
+        <div class="rounded-lg bg-surface-100 dark:bg-surface-800 p-4 text-center">
           <p class="text-2xl font-bold">{{ totalGamesPlayed }}</p>
-          <p class="text-sm text-gray-500">Games</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Games</p>
         </div>
-        <div class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-800">
+        <div class="rounded-lg bg-surface-100 dark:bg-surface-800 p-4 text-center">
           <p class="text-2xl font-bold">{{ averageScore }}</p>
-          <p class="text-sm text-gray-500">Avg Score</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Avg Score</p>
         </div>
-        <div class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-800">
+        <div class="rounded-lg bg-surface-100 dark:bg-surface-800 p-4 text-center">
           <p class="text-2xl font-bold">{{ bestScore }}</p>
-          <p class="text-sm text-gray-500">Best Score</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Best Score</p>
         </div>
-        <div class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-800">
+        <div class="rounded-lg bg-surface-100 dark:bg-surface-800 p-4 text-center">
           <p class="text-2xl font-bold">{{ averageAccuracy }}%</p>
-          <p class="text-sm text-gray-500">Avg Accuracy</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Avg Accuracy</p>
         </div>
-        <div class="rounded-lg bg-gray-100 p-4 text-center dark:bg-gray-800">
+        <div class="rounded-lg bg-surface-100 dark:bg-surface-800 p-4 text-center">
           <p class="text-2xl font-bold">{{ bestStreak }}</p>
-          <p class="text-sm text-gray-500">Best Streak</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Best Streak</p>
         </div>
       </div>
     </section>
@@ -163,7 +163,7 @@ function formatDate(iso: string): string {
 
       <div
         v-if="topicStats.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         No topic data yet.
       </div>
@@ -171,7 +171,7 @@ function formatDate(iso: string): string {
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead
-            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+            class="border-b border-surface-200 text-xs uppercase text-surface-500 dark:text-surface-400 dark:border-surface-700"
           >
             <tr>
               <th class="px-4 py-3">Topic</th>
@@ -185,7 +185,7 @@ function formatDate(iso: string): string {
             <tr
               v-for="topic in topicStats"
               :key="topic.topic"
-              class="border-b border-gray-100 dark:border-gray-800"
+              class="border-b border-surface-100 dark:border-surface-800"
             >
               <td class="px-4 py-3 font-medium">{{ topic.topic }}</td>
               <td class="px-4 py-3">{{ topic.games }}</td>
@@ -204,7 +204,7 @@ function formatDate(iso: string): string {
 
       <div
         v-if="accuracyTrend.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         Play more games to see your trend.
       </div>
@@ -222,12 +222,10 @@ function formatDate(iso: string): string {
           />
         </div>
       </div>
-      <div class="mt-1 flex justify-between text-xs text-gray-400">
-        <span v-if="accuracyTrend.length > 0">{{
-          formatDate(accuracyTrend[0].date)
-        }}</span>
+      <div class="mt-1 flex justify-between text-xs text-surface-500 dark:text-surface-400">
+        <span v-if="accuracyTrend.length > 0">{{ formatDate(accuracyTrend[0]!.date) }}</span>
         <span v-if="accuracyTrend.length > 1">{{
-          formatDate(accuracyTrend[accuracyTrend.length - 1].date)
+          formatDate(accuracyTrend[accuracyTrend.length - 1]!.date)
         }}</span>
       </div>
     </section>
@@ -238,7 +236,7 @@ function formatDate(iso: string): string {
 
       <div
         v-if="weakestPairs.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         Not enough data yet. Keep playing!
       </div>
@@ -247,11 +245,11 @@ function formatDate(iso: string): string {
         <div
           v-for="pair in weakestPairs"
           :key="pair.pairId"
-          class="flex items-center justify-between rounded-lg border border-gray-200 px-4 py-3 dark:border-gray-700"
+          class="flex items-center justify-between rounded-lg border border-surface-200 px-4 py-3 dark:border-surface-700"
         >
           <div>
             <p class="font-medium">{{ pair.pairId }}</p>
-            <p class="text-sm text-gray-500">{{ pair.topic }}</p>
+            <p class="text-sm text-surface-500 dark:text-surface-400">{{ pair.topic }}</p>
           </div>
           <div class="text-right">
             <p
@@ -260,7 +258,9 @@ function formatDate(iso: string): string {
             >
               {{ pair.accuracy }}%
             </p>
-            <p class="text-xs text-gray-500">{{ pair.attempts }} attempts</p>
+            <p class="text-xs text-surface-500 dark:text-surface-400">
+              {{ pair.attempts }} attempts
+            </p>
           </div>
         </div>
       </div>
@@ -270,13 +270,13 @@ function formatDate(iso: string): string {
     <section>
       <h2 class="mb-4 text-xl font-semibold">Settings</h2>
 
-      <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-700">
+      <div class="rounded-lg border border-surface-200 p-4 dark:border-surface-700">
         <div class="flex items-center justify-between">
           <div>
             <p class="font-medium">Theme</p>
-            <p class="text-sm text-gray-500">Current: {{ theme }}</p>
+            <p class="text-sm text-surface-500 dark:text-surface-400">Current: {{ theme }}</p>
           </div>
-          <p class="text-sm text-gray-400">Toggle coming in next update</p>
+          <p class="text-sm text-surface-500 dark:text-surface-400">Toggle coming in next update</p>
         </div>
       </div>
     </section>

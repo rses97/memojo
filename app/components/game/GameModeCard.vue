@@ -16,7 +16,7 @@ defineProps<{
     <h2 class="text-xl font-bold text-surface-900 dark:text-surface-50">
       {{ title }}
     </h2>
-    <p class="text-sm text-surface-600 dark:text-surface-400">
+    <p class="text-sm text-surface-700 dark:text-surface-300">
       {{ description }}
     </p>
     <span

@@ -105,12 +105,14 @@ Personal bests only (no backend in v1). Stored in IndexedDB alongside all other 
 
 ### Custom Tailwind Theme (CSS-first, v4)
 
+<!-- prettier-ignore -->
 ```css
 @theme {
-  --color-primary-*:   /* game accents, buttons */ --color-surface- *:
-    /* card backgrounds */
-    --radius-card: /* card corners */ --ease-flip: /* card flip animation */
-    --ease-bounce: /* match celebration */;
+  --color-primary-*: /* game accents, buttons */
+  --color-surface-*: /* card backgrounds */
+  --radius-card: /* card corners */
+  --ease-flip: /* card flip animation */
+  --ease-bounce: /* match celebration */
 }
 ```
 

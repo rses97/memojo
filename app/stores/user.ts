@@ -1,11 +1,44 @@
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { UserPreferences } from '~/types'
 
 export const useUserStore = defineStore('user', () => {
-  const theme = ref<'light' | 'dark'>('light')
+  const theme = ref<'light' | 'dark' | 'system'>('system')
   const preferredTopics = ref<string[]>([])
   const isHydrated = ref(false)
+  const prefersDark = ref(false)
+
+  let themeInitialized = false
+
+  const resolvedTheme = computed<'light' | 'dark'>(() => {
+    if (theme.value !== 'system') return theme.value
+    return prefersDark.value ? 'dark' : 'light'
+  })
+
+  function toggleTheme() {
+    setTheme(resolvedTheme.value === 'dark' ? 'light' : 'dark')
+  }
+
+  function initTheme() {
+    if (!import.meta.client) return
+    const applyTheme = () => {
+      if (resolvedTheme.value === 'dark') {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    }
+    if (!themeInitialized) {
+      themeInitialized = true
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      prefersDark.value = mq.matches
+      mq.addEventListener('change', (e) => {
+        prefersDark.value = e.matches
+      })
+      watch(resolvedTheme, applyTheme)
+    }
+    applyTheme()
+  }
 
   async function hydrate() {
     if (import.meta.server) return
@@ -29,11 +62,11 @@ export const useUserStore = defineStore('user', () => {
     const db = useIndexedDB()
     await db.putUserPreferences({
       theme: theme.value,
-      preferredTopics: preferredTopics.value,
+      preferredTopics: [...preferredTopics.value],
     })
   }
 
-  function setTheme(newTheme: 'light' | 'dark') {
+  function setTheme(newTheme: 'light' | 'dark' | 'system') {
     theme.value = newTheme
     persist()
   }
@@ -50,10 +83,14 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     theme,
+    resolvedTheme,
     preferredTopics,
     isHydrated,
     hydrate,
+    persist,
     setTheme,
+    toggleTheme,
+    initTheme,
     toggleTopic,
   }
 })

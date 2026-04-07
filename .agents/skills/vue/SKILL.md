@@ -74,16 +74,7 @@ onMounted(() => {
 
 ```ts
 // Reactivity
-import {
-  ref,
-  shallowRef,
-  computed,
-  reactive,
-  readonly,
-  toRef,
-  toRefs,
-  toValue,
-} from 'vue'
+import { ref, shallowRef, computed, reactive, readonly, toRef, toRefs, toValue } from 'vue'
 
 // Watchers
 import { watch, watchEffect, watchPostEffect, onWatcherCleanup } from 'vue'

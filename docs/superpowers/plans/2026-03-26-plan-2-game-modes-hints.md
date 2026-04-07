@@ -318,12 +318,8 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'image',
-      )!
-      const textCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'text',
-      )!
+      const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+      const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)
@@ -391,14 +387,10 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       game.eliminatePair()
-      const countAfterFirst = game.cards.value.filter(
-        (c) => !c.isEliminated,
-      ).length
+      const countAfterFirst = game.cards.value.filter((c) => !c.isEliminated).length
 
       game.eliminatePair()
-      const countAfterSecond = game.cards.value.filter(
-        (c) => !c.isEliminated,
-      ).length
+      const countAfterSecond = game.cards.value.filter((c) => !c.isEliminated).length
 
       expect(countAfterSecond).toBe(countAfterFirst)
       expect(game.hints.value.eliminateUsed).toBe(1)
@@ -409,12 +401,8 @@ describe('useGame hints', () => {
       game.init(testPairs)
 
       // Match a pair first
-      const imageCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'image',
-      )!
-      const textCard = game.cards.value.find(
-        (c) => c.pairId === 'a' && c.type === 'text',
-      )!
+      const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+      const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
       game.flipCard(imageCard.id)
       game.flipCard(textCard.id)
       vi.advanceTimersByTime(1000)
@@ -536,11 +524,7 @@ function eliminatePair() {
   if (hints.value.eliminateAvailable <= 0) return
 
   const unmatchedPairIds = [
-    ...new Set(
-      cards.value
-        .filter((c) => !c.isMatched && !c.isEliminated)
-        .map((c) => c.pairId),
-    ),
+    ...new Set(cards.value.filter((c) => !c.isMatched && !c.isEliminated).map((c) => c.pairId)),
   ]
 
   if (unmatchedPairIds.length === 0) return
@@ -710,8 +694,7 @@ interface ScoreInput {
 }
 
 export function calculateScore(input: ScoreInput): number {
-  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } =
-    input
+  const { moves, totalPairs, timeElapsed, timeLimit, maxStreak, hintsUsed } = input
 
   const accuracy = Math.max(0, Math.min(1, totalPairs / moves))
   const accuracyScore = accuracy * 1000
@@ -1029,12 +1012,9 @@ const emit = defineEmits<{
   eliminate: []
 }>()
 
-const canPeek = computed(
-  () => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled,
-)
+const canPeek = computed(() => props.hints.peekAvailable > 0 && !props.isPeeking && !props.disabled)
 const canEliminate = computed(
-  () =>
-    props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled,
+  () => props.hints.eliminateAvailable > 0 && !props.isPeeking && !props.disabled,
 )
 </script>
 
@@ -1108,15 +1088,11 @@ const emit = defineEmits<{
   <div
     class="flex flex-col items-center gap-6 rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
   >
-    <div class="text-4xl font-bold text-primary-500">
-      Level {{ levelIndex + 1 }} Complete!
-    </div>
+    <div class="text-4xl font-bold text-primary-500">Level {{ levelIndex + 1 }} Complete!</div>
 
     <div class="text-lg text-surface-700 dark:text-surface-200">
       Score:
-      <span class="font-bold text-primary-600 dark:text-primary-400">{{
-        score
-      }}</span>
+      <span class="font-bold text-primary-600 dark:text-primary-400">{{ score }}</span>
     </div>
 
     <div class="text-sm text-surface-500 dark:text-surface-400">
@@ -1208,15 +1184,13 @@ Replace `app/pages/index.vue`:
 const modes = [
   {
     title: 'Daily Challenge',
-    description:
-      'A new puzzle every day. Same cards for everyone — compare your score!',
+    description: 'A new puzzle every day. Same cards for everyone — compare your score!',
     icon: '📅',
     to: '/daily',
   },
   {
     title: 'Topic Practice',
-    description:
-      'Pick a topic and master it through three progressively harder levels.',
+    description: 'Pick a topic and master it through three progressively harder levels.',
     icon: '📚',
     to: '/topics',
   },
@@ -1232,9 +1206,7 @@ const modes = [
 <template>
   <div class="mx-auto max-w-3xl px-4 py-12">
     <div class="mb-12 text-center">
-      <h1 class="mb-3 text-4xl font-bold text-surface-900 dark:text-surface-50">
-        Memojo
-      </h1>
+      <h1 class="mb-3 text-4xl font-bold text-surface-900 dark:text-surface-50">Memojo</h1>
       <p class="text-lg text-surface-600 dark:text-surface-400">
         Match images to text. Train your memory. Beat your best.
       </p>
@@ -1355,9 +1327,7 @@ onMounted(() => {
 <template>
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="mb-6 text-center">
-      <h1 class="mb-1 text-2xl font-bold text-surface-900 dark:text-surface-50">
-        Daily Challenge
-      </h1>
+      <h1 class="mb-1 text-2xl font-bold text-surface-900 dark:text-surface-50">Daily Challenge</h1>
       <p class="text-sm text-surface-500 dark:text-surface-400">
         {{ formattedDate }}
       </p>
@@ -1388,9 +1358,7 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="level.gridCols"
-        :disabled="
-          game.isProcessing.value || game.isPeeking.value || isGameOver
-        "
+        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver"
         @flip="handleFlip"
       />
 
@@ -1405,8 +1373,8 @@ onMounted(() => {
           Score: <span class="font-bold">{{ finalScore }}</span>
         </p>
         <p class="text-sm text-surface-500">
-          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs
-          matched in {{ game.moves.value }} moves
+          {{ game.matchedPairs.value }} / {{ game.totalPairs.value }} pairs matched in
+          {{ game.moves.value }} moves
         </p>
         <NuxtLink
           to="/"
@@ -1518,9 +1486,7 @@ Create `app/pages/topics/index.vue`:
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
 
-const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>(
-  '/topics/index.json',
-)
+const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
 
 const topics = computed(() => manifest.value?.topics ?? [])
 </script>
@@ -1531,12 +1497,9 @@ const topics = computed(() => manifest.value?.topics ?? [])
       <NuxtLink to="/" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to menu
       </NuxtLink>
-      <h1 class="mt-2 text-3xl font-bold text-surface-900 dark:text-surface-50">
-        Topic Practice
-      </h1>
+      <h1 class="mt-2 text-3xl font-bold text-surface-900 dark:text-surface-50">Topic Practice</h1>
       <p class="mt-1 text-surface-600 dark:text-surface-400">
-        Choose a topic and master it through three levels of increasing
-        difficulty.
+        Choose a topic and master it through three levels of increasing difficulty.
       </p>
     </div>
 
@@ -1704,31 +1667,19 @@ onMounted(() => {
 <template>
   <div class="mx-auto max-w-3xl px-4 py-8">
     <div class="mb-6">
-      <NuxtLink
-        to="/topics"
-        class="text-sm text-primary-500 hover:text-primary-600"
-      >
+      <NuxtLink to="/topics" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to topics
       </NuxtLink>
-      <h1
-        v-if="topicData"
-        class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50"
-      >
+      <h1 v-if="topicData" class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
         {{ topicData.name }}
       </h1>
     </div>
 
-    <div v-if="isLoading" class="py-20 text-center text-surface-500">
-      Loading topic...
-    </div>
+    <div v-if="isLoading" class="py-20 text-center text-surface-500">Loading topic...</div>
 
     <template v-else-if="practice.isAllComplete.value">
-      <div
-        class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800"
-      >
-        <h2 class="mb-4 text-3xl font-bold text-primary-500">
-          All Levels Complete!
-        </h2>
+      <div class="rounded-2xl bg-surface-50 p-8 text-center shadow-lg dark:bg-surface-800">
+        <h2 class="mb-4 text-3xl font-bold text-primary-500">All Levels Complete!</h2>
         <p class="mb-2 text-lg text-surface-700 dark:text-surface-200">
           Total Score:
           <span class="font-bold">{{ practice.totalScore.value }}</span>
@@ -1758,25 +1709,18 @@ onMounted(() => {
         :level-index="practice.currentLevelIndex.value"
         :total-levels="practice.totalLevels.value"
         :score="practice.lastLevelScore.value"
-        :is-last-level="
-          practice.currentLevelIndex.value >= practice.totalLevels.value - 1
-        "
+        :is-last-level="practice.currentLevelIndex.value >= practice.totalLevels.value - 1"
         @next="handleNext"
       />
     </template>
 
     <template v-else>
-      <div
-        class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400"
-      >
+      <div class="mb-4 text-center text-sm font-medium text-surface-500 dark:text-surface-400">
         Level {{ practice.currentLevelIndex.value + 1 }} /
         {{ practice.totalLevels.value }}
       </div>
 
-      <div
-        v-if="hasPreview"
-        class="mb-4 text-center text-sm font-medium text-primary-500"
-      >
+      <div v-if="hasPreview" class="mb-4 text-center text-sm font-medium text-primary-500">
         Memorize the cards...
       </div>
 
@@ -1800,12 +1744,7 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="practice.currentLevel.value.gridCols"
-        :disabled="
-          game.isProcessing.value ||
-          game.isPeeking.value ||
-          isGameOver ||
-          hasPreview
-        "
+        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver || hasPreview"
         @flip="handleFlip"
       />
     </template>
@@ -1954,14 +1893,10 @@ onMounted(() => {
       <NuxtLink to="/" class="text-sm text-primary-500 hover:text-primary-600">
         &larr; Back to menu
       </NuxtLink>
-      <h1 class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">
-        Quick Play
-      </h1>
+      <h1 class="mt-2 text-2xl font-bold text-surface-900 dark:text-surface-50">Quick Play</h1>
     </div>
 
-    <div v-if="isLoading" class="py-20 text-center text-surface-500">
-      Loading...
-    </div>
+    <div v-if="isLoading" class="py-20 text-center text-surface-500">Loading...</div>
 
     <template v-else>
       <GameHud
@@ -1984,9 +1919,7 @@ onMounted(() => {
       <GameBoard
         :cards="game.cards.value"
         :grid-cols="level.gridCols"
-        :disabled="
-          game.isProcessing.value || game.isPeeking.value || isGameOver
-        "
+        :disabled="game.isProcessing.value || game.isPeeking.value || isGameOver"
         @flip="handleFlip"
       />
 
@@ -2066,15 +1999,8 @@ const visibleCards = computed(
 </script>
 
 <template>
-  <div
-    class="grid gap-3"
-    :style="{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }"
-  >
-    <div
-      v-for="card in cards"
-      :key="card.id"
-      :class="{ invisible: card.isEliminated }"
-    >
+  <div class="grid gap-3" :style="{ gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))` }">
+    <div v-for="card in cards" :key="card.id" :class="{ invisible: card.isEliminated }">
       <GameCard
         v-if="!card.isEliminated"
         :card="card"

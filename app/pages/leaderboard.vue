@@ -75,7 +75,7 @@ function formatTime(seconds: number): string {
     <div class="mb-6 flex flex-wrap gap-4">
       <select
         v-model="selectedTopic"
-        class="rounded-lg border border-gray-300 bg-white px-4 py-2 dark:border-gray-600 dark:bg-gray-800"
+        class="rounded-lg border border-surface-200 bg-white px-4 py-2 dark:border-surface-700 dark:bg-surface-800"
       >
         <option value="all">All Topics</option>
         <option v-for="topic in topics" :key="topic" :value="topic">
@@ -85,7 +85,7 @@ function formatTime(seconds: number): string {
 
       <select
         v-model="selectedMode"
-        class="rounded-lg border border-gray-300 bg-white px-4 py-2 dark:border-gray-600 dark:bg-gray-800"
+        class="rounded-lg border border-surface-200 bg-white px-4 py-2 dark:border-surface-700 dark:bg-surface-800"
       >
         <option value="all">All Modes</option>
         <option value="quick-play">Quick Play</option>
@@ -100,7 +100,7 @@ function formatTime(seconds: number): string {
 
       <div
         v-if="personalBests.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         No games played yet. Start playing to see your scores!
       </div>
@@ -108,7 +108,7 @@ function formatTime(seconds: number): string {
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead
-            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+            class="border-b border-surface-200 text-xs uppercase text-surface-500 dark:text-surface-400 dark:border-surface-700"
           >
             <tr>
               <th class="px-4 py-3">Rank</th>
@@ -125,7 +125,7 @@ function formatTime(seconds: number): string {
             <tr
               v-for="(result, index) in personalBests"
               :key="result.id"
-              class="border-b border-gray-100 dark:border-gray-800"
+              class="border-b border-surface-100 dark:border-surface-800"
             >
               <td class="px-4 py-3 font-bold">{{ index + 1 }}</td>
               <td class="px-4 py-3">{{ result.topic }}</td>
@@ -147,7 +147,7 @@ function formatTime(seconds: number): string {
 
       <div
         v-if="filteredResults.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         No matching results.
       </div>
@@ -155,7 +155,7 @@ function formatTime(seconds: number): string {
       <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead
-            class="border-b border-gray-200 text-xs uppercase text-gray-500 dark:border-gray-700"
+            class="border-b border-surface-200 text-xs uppercase text-surface-500 dark:text-surface-400 dark:border-surface-700"
           >
             <tr>
               <th class="px-4 py-3">#</th>
@@ -170,14 +170,12 @@ function formatTime(seconds: number): string {
             <tr
               v-for="(result, index) in filteredResults"
               :key="result.id"
-              class="border-b border-gray-100 dark:border-gray-800"
+              class="border-b border-surface-100 dark:border-surface-800"
             >
               <td class="px-4 py-3">{{ index + 1 }}</td>
               <td class="px-4 py-3">{{ result.topic }}</td>
               <td class="px-4 py-3 font-semibold">{{ result.score }}</td>
-              <td class="px-4 py-3">
-                {{ Math.round(result.accuracy * 100) }}%
-              </td>
+              <td class="px-4 py-3">{{ Math.round(result.accuracy * 100) }}%</td>
               <td class="px-4 py-3">{{ result.maxStreak }}</td>
               <td class="px-4 py-3">{{ formatDate(result.date) }}</td>
             </tr>
@@ -192,7 +190,7 @@ function formatTime(seconds: number): string {
 
       <div
         v-if="dailyHistory.length === 0"
-        class="rounded-lg bg-gray-100 p-6 text-center text-gray-500 dark:bg-gray-800"
+        class="rounded-lg bg-surface-100 dark:bg-surface-800 p-6 text-center text-surface-500 dark:text-surface-400"
       >
         No daily challenges completed yet.
       </div>
@@ -201,18 +199,18 @@ function formatTime(seconds: number): string {
         <div
           v-for="result in dailyHistory"
           :key="result.id"
-          class="flex items-center justify-between rounded-lg border border-gray-200 p-4 dark:border-gray-700"
+          class="flex items-center justify-between rounded-lg border border-surface-200 p-4 dark:border-surface-700"
         >
           <div>
             <p class="font-medium">{{ formatDate(result.date) }}</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-surface-500 dark:text-surface-400">
               {{ result.moves }} moves &middot;
               {{ formatTime(result.timeElapsed) }}
             </p>
           </div>
           <div class="text-right">
             <p class="text-2xl font-bold">{{ result.score }}</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-surface-500 dark:text-surface-400">
               {{ Math.round(result.accuracy * 100) }}% accuracy
             </p>
           </div>

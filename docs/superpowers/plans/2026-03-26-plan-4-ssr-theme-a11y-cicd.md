@@ -92,14 +92,7 @@ export default createConfigForNuxt({
 })
   .prepend({
     name: 'app/global-ignores',
-    ignores: [
-      '.nuxt/',
-      '.output/',
-      'node_modules/',
-      'dist/',
-      'public/',
-      '.vercel/',
-    ],
+    ignores: ['.nuxt/', '.output/', 'node_modules/', 'dist/', 'public/', '.vercel/'],
   })
   .append({
     name: 'app/custom-rules',
@@ -107,10 +100,7 @@ export default createConfigForNuxt({
       'vue/multi-word-component-names': 'off',
       'vue/no-multiple-template-root': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_' },
-      ],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   })
@@ -341,9 +331,7 @@ const theme = ref<'light' | 'dark' | 'system'>('system')
 const resolvedTheme = computed<'light' | 'dark'>(() => {
   if (theme.value !== 'system') return theme.value
   if (import.meta.client) {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
   }
   return 'light'
 })
@@ -393,9 +381,7 @@ onMounted(() => {
   <button
     type="button"
     :aria-label="
-      userStore.resolvedTheme === 'dark'
-        ? 'Switch to light mode'
-        : 'Switch to dark mode'
+      userStore.resolvedTheme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
     "
     class="rounded-lg p-2 text-surface-700 transition-colors hover:bg-surface-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
     @click="userStore.toggleTheme()"
@@ -502,9 +488,7 @@ onMounted(() => {
     <SkipToContent />
 
     <header class="border-b border-surface-200 bg-white dark:bg-surface-100">
-      <div
-        class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"
-      >
+      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <NuxtLink
           to="/"
           class="text-lg font-bold text-primary-600 hover:text-primary-700"
@@ -520,10 +504,7 @@ onMounted(() => {
           >
             Topics
           </NuxtLink>
-          <NuxtLink
-            to="/daily"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600"
-          >
+          <NuxtLink to="/daily" class="text-sm font-medium text-surface-700 hover:text-primary-600">
             Daily
           </NuxtLink>
           <NuxtLink
@@ -548,12 +529,7 @@ onMounted(() => {
     </main>
 
     <!-- Screen reader announcements -->
-    <div
-      id="sr-announcements"
-      aria-live="assertive"
-      aria-atomic="true"
-      class="sr-only"
-    />
+    <div id="sr-announcements" aria-live="assertive" aria-atomic="true" class="sr-only" />
   </div>
 </template>
 ```
@@ -1016,19 +992,16 @@ useHead({
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
         name: 'Memojo Topics',
-        description:
-          'Browse memory game topic packs for cross-modal matching practice.',
+        description: 'Browse memory game topic packs for cross-modal matching practice.',
         url: 'https://memojo.vercel.app/topics',
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: (manifest.value?.topics ?? []).map(
-            (topic, index) => ({
-              '@type': 'ListItem',
-              position: index + 1,
-              name: topic.name,
-              url: `https://memojo.vercel.app/topics/${topic.slug}`,
-            }),
-          ),
+          itemListElement: (manifest.value?.topics ?? []).map((topic, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: topic.name,
+            url: `https://memojo.vercel.app/topics/${topic.slug}`,
+          })),
         },
       }),
     },
@@ -1732,9 +1705,7 @@ After a mismatch, return focus to the first unmatched card. After a match, move 
 function focusNextUnmatched() {
   if (import.meta.client) {
     nextTick(() => {
-      const gridCells = document.querySelectorAll(
-        '[role="gridcell"] button:not([disabled])',
-      )
+      const gridCells = document.querySelectorAll('[role="gridcell"] button:not([disabled])')
       if (gridCells.length > 0) {
         ;(gridCells[0] as HTMLElement).focus()
       }

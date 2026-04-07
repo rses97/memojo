@@ -3,17 +3,7 @@ title: Properly Handle Async Updates with nextTick and flushPromises
 impact: HIGH
 impactDescription: Race conditions and flaky tests occur when async DOM updates or API calls complete after assertions run
 type: gotcha
-tags:
-  [
-    vue3,
-    testing,
-    async,
-    flushPromises,
-    nextTick,
-    vitest,
-    vue-test-utils,
-    race-condition,
-  ]
+tags: [vue3, testing, async, flushPromises, nextTick, vitest, vue-test-utils, race-condition]
 ---
 
 # Properly Handle Async Updates with nextTick and flushPromises

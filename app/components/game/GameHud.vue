@@ -12,30 +12,25 @@ defineProps<{
 
 <template>
   <div
-    class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 px-6 py-3"
+    class="flex items-center justify-between gap-4 rounded-xl bg-surface-100 dark:bg-surface-800 px-6 py-3"
   >
     <div class="flex items-center gap-6">
       <div class="text-center">
-        <div class="text-sm text-surface-700">Moves</div>
+        <div class="text-sm text-surface-700 dark:text-surface-300">Moves</div>
         <div class="text-2xl font-bold">{{ moves }}</div>
       </div>
       <div class="text-center">
-        <div class="text-sm text-surface-700">Matched</div>
-        <div class="text-2xl font-bold">
-          {{ matchedPairs }}/{{ totalPairs }}
-        </div>
+        <div class="text-sm text-surface-700 dark:text-surface-300">Matched</div>
+        <div class="text-2xl font-bold">{{ matchedPairs }}/{{ totalPairs }}</div>
       </div>
       <div v-if="streak > 1" class="text-center">
-        <div class="text-sm text-surface-700">Streak</div>
+        <div class="text-sm text-surface-700 dark:text-surface-300">Streak</div>
         <div class="text-2xl font-bold text-primary-500">{{ streak }}x</div>
       </div>
     </div>
     <div class="text-center">
-      <div class="text-sm text-surface-700">Time</div>
-      <div
-        class="text-2xl font-bold tabular-nums"
-        :class="{ 'text-danger': timeRemaining <= 10 }"
-      >
+      <div class="text-sm text-surface-700 dark:text-surface-300">Time</div>
+      <div class="text-2xl font-bold tabular-nums" :class="{ 'text-danger': timeRemaining <= 10 }">
         {{ formatTime(timeRemaining) }}
       </div>
     </div>

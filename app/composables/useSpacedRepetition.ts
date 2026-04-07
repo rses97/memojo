@@ -14,10 +14,7 @@ export function useSpacedRepetition(clock?: () => number) {
     return new Date(getClock())
   }
 
-  async function getOrCreateCard(
-    pairId: string,
-    topic: string,
-  ): Promise<SpacedRepetitionCard> {
+  async function getOrCreateCard(pairId: string, topic: string): Promise<SpacedRepetitionCard> {
     const existing = await db.getSRCard(pairId, topic)
     if (existing) return existing
 

@@ -603,11 +603,7 @@ Create `tests/unit/sm2.test.ts`:
 
 ```typescript
 import { describe, it, expect } from 'vitest'
-import {
-  calculateSM2,
-  type SM2Input,
-  type SM2Output,
-} from '../../app/utils/sm2'
+import { calculateSM2, type SM2Input, type SM2Output } from '../../app/utils/sm2'
 
 describe('calculateSM2', () => {
   const defaultInput: SM2Input = {
@@ -887,11 +883,7 @@ describe('useSpacedRepetition', () => {
     vi.setSystemTime(new Date('2026-03-28T12:00:00Z'))
 
     const allPairIds = ['p1', 'p2', 'p3', 'p4', 'p5']
-    const selected = await sr.selectPairsForSession(
-      'world-flags',
-      allPairIds,
-      4,
-    )
+    const selected = await sr.selectPairsForSession('world-flags', allPairIds, 4)
 
     expect(selected).toHaveLength(4)
     // p1 should be included because it's due
@@ -917,10 +909,7 @@ import type { SpacedRepetitionCard } from '~/types'
 export function useSpacedRepetition() {
   const db = useIndexedDB()
 
-  async function getOrCreateCard(
-    pairId: string,
-    topic: string,
-  ): Promise<SpacedRepetitionCard> {
+  async function getOrCreateCard(pairId: string, topic: string): Promise<SpacedRepetitionCard> {
     const existing = await db.getSRCard(pairId)
     if (existing) return existing
 
@@ -1046,9 +1035,7 @@ import { useIndexedDB } from '../../app/composables/useIndexedDB'
 import { LEVELS } from '../../app/types'
 import type { SessionPerformance } from '../../app/types'
 
-function makeSession(
-  overrides: Partial<SessionPerformance> = {},
-): SessionPerformance {
+function makeSession(overrides: Partial<SessionPerformance> = {}): SessionPerformance {
   return {
     id: crypto.randomUUID(),
     topic: 'world-flags',
@@ -1080,9 +1067,7 @@ describe('useAdaptive', () => {
 
     // Store 3 high-accuracy sessions for level 0
     for (let i = 0; i < 3; i++) {
-      await db.putSessionPerformance(
-        makeSession({ id: `s${i}`, accuracy: 0.9, level: 0 }),
-      )
+      await db.putSessionPerformance(makeSession({ id: `s${i}`, accuracy: 0.9, level: 0 }))
     }
 
     const adaptive = useAdaptive()
@@ -1090,8 +1075,7 @@ describe('useAdaptive', () => {
 
     // Should increase pairs or reduce time
     const base = LEVELS[0]
-    const isHarder =
-      adjustment.pairs > base.pairs || adjustment.timeLimit < base.timeLimit
+    const isHarder = adjustment.pairs > base.pairs || adjustment.timeLimit < base.timeLimit
     expect(isHarder).toBe(true)
   })
 
@@ -1229,10 +1213,7 @@ export function useAdaptive() {
     }
 
     // Check for consecutive high accuracy (increase difficulty)
-    const recentSessions = levelSessions.slice(
-      0,
-      CONSECUTIVE_SESSIONS_FOR_INCREASE,
-    )
+    const recentSessions = levelSessions.slice(0, CONSECUTIVE_SESSIONS_FOR_INCREASE)
     const allHighAccuracy =
       recentSessions.length >= CONSECUTIVE_SESSIONS_FOR_INCREASE &&
       recentSessions.every((s) => s.accuracy > HIGH_ACCURACY_THRESHOLD)
@@ -1266,17 +1247,14 @@ export function useAdaptive() {
     }
   }
 
-  async function categorizePairs(
-    topic: string,
-  ): Promise<{ weak: string[]; strong: string[] }> {
+  async function categorizePairs(topic: string): Promise<{ weak: string[]; strong: string[] }> {
     const performances = await db.getPairPerformanceByTopic(topic)
 
     const weak: string[] = []
     const strong: string[] = []
 
     for (const perf of performances) {
-      const accuracy =
-        perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
+      const accuracy = perf.attempts > 0 ? perf.correctMatches / perf.attempts : 0
       if (accuracy < WEAK_PAIR_ACCURACY_THRESHOLD) {
         weak.push(perf.pairId)
       } else if (accuracy >= STRONG_PAIR_ACCURACY_THRESHOLD) {
@@ -1305,9 +1283,7 @@ export function useAdaptive() {
     }
 
     // 2. Fill with unseen/neutral pairs (not strong)
-    const neutral = allPairIds.filter(
-      (id) => !selected.includes(id) && !strong.includes(id),
-    )
+    const neutral = allPairIds.filter((id) => !selected.includes(id) && !strong.includes(id))
     for (const id of neutral) {
       if (selected.length >= count) break
       selected.push(id)
@@ -1458,10 +1434,7 @@ interface SaveGameOptions {
   mode: GameMode
   level: number
   hintsUsed: number
-  pairAttempts: Map<
-    string,
-    { attempts: number; timeMs: number; matched: boolean }
-  >
+  pairAttempts: Map<string, { attempts: number; timeMs: number; matched: boolean }>
 }
 
 export function useGamePersistence() {
@@ -1473,8 +1446,7 @@ export function useGamePersistence() {
     const now = new Date().toISOString()
     const id = `${topic}-${mode}-${Date.now()}`
 
-    const accuracy =
-      result.totalPairs > 0 ? result.score / (result.totalPairs * 100) : 0
+    const accuracy = result.totalPairs > 0 ? result.score / (result.totalPairs * 100) : 0
 
     // 1. Store game result
     const storedResult: StoredGameResult = {
@@ -1495,15 +1467,9 @@ export function useGamePersistence() {
     await db.putGameResult(storedResult)
 
     // 2. Store session performance
-    const totalTimeMs = Array.from(pairAttempts.values()).reduce(
-      (sum, p) => sum + p.timeMs,
-      0,
-    )
-    const matchedPairs = Array.from(pairAttempts.values()).filter(
-      (p) => p.matched,
-    )
-    const avgMatchTime =
-      matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
+    const totalTimeMs = Array.from(pairAttempts.values()).reduce((sum, p) => sum + p.timeMs, 0)
+    const matchedPairs = Array.from(pairAttempts.values()).filter((p) => p.matched)
+    const avgMatchTime = matchedPairs.length > 0 ? totalTimeMs / matchedPairs.length : 0
 
     const session: SessionPerformance = {
       id: `session-${id}`,
@@ -1525,19 +1491,14 @@ export function useGamePersistence() {
         pairId,
         topic,
         attempts: (existing?.attempts ?? 0) + data.attempts,
-        correctMatches:
-          (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
+        correctMatches: (existing?.correctMatches ?? 0) + (data.matched ? 1 : 0),
         totalTimeMs: (existing?.totalTimeMs ?? 0) + data.timeMs,
         lastPlayed: now,
       }
       await db.putPairPerformance(updated)
 
       // Update spaced repetition
-      const quality = rateMatchQuality(
-        data.matched ? data.attempts : 0,
-        data.timeMs,
-        avgMatchTime,
-      )
+      const quality = rateMatchQuality(data.matched ? data.attempts : 0, data.timeMs, avgMatchTime)
       await sr.recordReview(pairId, topic, quality)
     }
 
@@ -1775,9 +1736,7 @@ function formatTime(seconds: number): string {
               <td class="px-4 py-3">{{ index + 1 }}</td>
               <td class="px-4 py-3">{{ result.topic }}</td>
               <td class="px-4 py-3 font-semibold">{{ result.score }}</td>
-              <td class="px-4 py-3">
-                {{ Math.round(result.accuracy * 100) }}%
-              </td>
+              <td class="px-4 py-3">{{ Math.round(result.accuracy * 100) }}%</td>
               <td class="px-4 py-3">{{ result.maxStreak }}</td>
               <td class="px-4 py-3">{{ formatDate(result.date) }}</td>
             </tr>
@@ -1812,9 +1771,7 @@ function formatTime(seconds: number): string {
           </div>
           <div class="text-right">
             <p class="text-2xl font-bold">{{ result.score }}</p>
-            <p class="text-sm text-gray-500">
-              {{ Math.round(result.accuracy * 100) }}% accuracy
-            </p>
+            <p class="text-sm text-gray-500">{{ Math.round(result.accuracy * 100) }}% accuracy</p>
           </div>
         </div>
       </div>
@@ -2081,9 +2038,7 @@ function formatDate(iso: string): string {
         </div>
       </div>
       <div class="mt-1 flex justify-between text-xs text-gray-400">
-        <span v-if="accuracyTrend.length > 0">{{
-          formatDate(accuracyTrend[0].date)
-        }}</span>
+        <span v-if="accuracyTrend.length > 0">{{ formatDate(accuracyTrend[0].date) }}</span>
         <span v-if="accuracyTrend.length > 1">{{
           formatDate(accuracyTrend[accuracyTrend.length - 1].date)
         }}</span>
@@ -2361,11 +2316,7 @@ describe('persistence integration', () => {
       lastPlayed: new Date().toISOString(),
     })
 
-    const selected = await adaptive.buildMixedSession(
-      'world-flags',
-      allPairIds,
-      4,
-    )
+    const selected = await adaptive.buildMixedSession('world-flags', allPairIds, 4)
     expect(selected).toContain('flag-jp') // weak pair prioritized
   })
 

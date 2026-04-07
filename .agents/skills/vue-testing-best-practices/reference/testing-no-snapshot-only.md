@@ -56,9 +56,7 @@ test('UserCard displays user information', () => {
   })
 
   expect(wrapper.find('[data-testid="user-name"]').text()).toBe('John')
-  expect(wrapper.find('[data-testid="user-email"]').text()).toBe(
-    'john@example.com',
-  )
+  expect(wrapper.find('[data-testid="user-email"]').text()).toBe('john@example.com')
 })
 
 test('UserCard email link is clickable', async () => {
@@ -96,9 +94,7 @@ test('ErrorBoundary renders error message', () => {
 
   // Primary assertions - verify behavior
   expect(wrapper.find('.error-title').text()).toBe('Error')
-  expect(wrapper.find('.error-message').text()).toContain(
-    'Something went wrong',
-  )
+  expect(wrapper.find('.error-message').text()).toContain('Something went wrong')
 
   // Secondary snapshot - catches unexpected structural changes
   expect(wrapper.find('.error-container').html()).toMatchSnapshot()

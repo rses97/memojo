@@ -47,12 +47,8 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const imageCard = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const textCard = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const imageCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const textCard = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
 
     game.flipCard(imageCard.id)
     game.flipCard(textCard.id)
@@ -72,30 +68,20 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const cardA = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const cardB = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const cardA = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const cardB = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
 
     game.flipCard(cardA.id)
     game.flipCard(cardB.id)
 
     await nextTick()
-    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
-      true,
-    )
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(true)
 
     vi.advanceTimersByTime(1000)
     await nextTick()
 
-    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(
-      false,
-    )
-    expect(game.cards.value.find((c) => c.id === cardB.id)!.isFlipped).toBe(
-      false,
-    )
+    expect(game.cards.value.find((c) => c.id === cardA.id)!.isFlipped).toBe(false)
+    expect(game.cards.value.find((c) => c.id === cardB.id)!.isFlipped).toBe(false)
 
     vi.useRealTimers()
   })
@@ -118,23 +104,15 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
-    const b1 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'image',
-    )!
-    const b2 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const b1 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'image')!
+    const b2 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
     game.flipCard(b1.id)
     game.flipCard(b2.id)
     await nextTick()
@@ -147,23 +125,15 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
     expect(game.streak.value).toBe(1)
 
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
@@ -180,12 +150,8 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const a1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const a2 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'text',
-    )!
+    const a1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const a2 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'text')!
     game.flipCard(a1.id)
     game.flipCard(a2.id)
     await nextTick()
@@ -214,19 +180,13 @@ describe('useGame', () => {
     const game = useGame()
     game.init(testPairs)
 
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()
 
-    const c3 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'image',
-    )!
+    const c3 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'image')!
     game.flipCard(c3.id)
     expect(game.cards.value.find((c) => c.id === c3.id)!.isFlipped).toBe(false)
 
@@ -239,12 +199,8 @@ describe('useGame', () => {
     game.init(testPairs)
 
     for (const pairId of ['a', 'b', 'c', 'd']) {
-      const img = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'image',
-      )!
-      const txt = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'text',
-      )!
+      const img = game.cards.value.find((c) => c.pairId === pairId && c.type === 'image')!
+      const txt = game.cards.value.find((c) => c.pairId === pairId && c.type === 'text')!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
@@ -264,12 +220,8 @@ describe('useGame', () => {
     })
     game!.init(testPairs)
 
-    const c1 = game!.cards.value.find(
-      (c) => c.pairId === 'a' && c.type === 'image',
-    )!
-    const c2 = game!.cards.value.find(
-      (c) => c.pairId === 'b' && c.type === 'text',
-    )!
+    const c1 = game!.cards.value.find((c) => c.pairId === 'a' && c.type === 'image')!
+    const c2 = game!.cards.value.find((c) => c.pairId === 'b' && c.type === 'text')!
     game!.flipCard(c1.id)
     game!.flipCard(c2.id)
     await nextTick()
@@ -296,24 +248,16 @@ describe('useGame', () => {
     game.init(testPairs)
 
     for (const pairId of ['a', 'b']) {
-      const img = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'image',
-      )!
-      const txt = game.cards.value.find(
-        (c) => c.pairId === pairId && c.type === 'text',
-      )!
+      const img = game.cards.value.find((c) => c.pairId === pairId && c.type === 'image')!
+      const txt = game.cards.value.find((c) => c.pairId === pairId && c.type === 'text')!
       game.flipCard(img.id)
       game.flipCard(txt.id)
       await nextTick()
     }
     expect(game.maxStreak.value).toBe(2)
 
-    const c1 = game.cards.value.find(
-      (c) => c.pairId === 'c' && c.type === 'image',
-    )!
-    const c2 = game.cards.value.find(
-      (c) => c.pairId === 'd' && c.type === 'text',
-    )!
+    const c1 = game.cards.value.find((c) => c.pairId === 'c' && c.type === 'image')!
+    const c2 = game.cards.value.find((c) => c.pairId === 'd' && c.type === 'text')!
     game.flipCard(c1.id)
     game.flipCard(c2.id)
     await nextTick()

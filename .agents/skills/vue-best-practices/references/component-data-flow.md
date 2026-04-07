@@ -217,10 +217,7 @@ const emit = defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <input
-    :value="props.modelValue"
-    @input="emit('update:modelValue', $event.target.value)"
-  />
+  <input :value="props.modelValue" @input="emit('update:modelValue', $event.target.value)" />
 </template>
 ```
 
@@ -233,18 +230,25 @@ Use provide/inject for cross-tree state, but keep mutations centralized in the p
 **BAD:**
 
 ```vue
-// Provider.vue provide('theme', reactive({ dark: false })) // Consumer.vue
-const theme = inject('theme') // Mutating shared state from any depth becomes
-hard to track theme.dark = true
+// Provider.vue provide('theme', reactive({ dark: false })) // Consumer.vue const theme =
+inject('theme') // Mutating shared state from any depth becomes hard to track theme.dark = true
 ```
 
 **GOOD:**
 
+<!-- prettier-ignore -->
 ```vue
-// Provider.vue const theme = reactive({ dark: false }) const toggleTheme = ()
-=> { theme.dark = !theme.dark } provide(themeKey, readonly(theme))
-provide(themeActionsKey, { toggleTheme }) // Consumer.vue const theme =
-inject(themeKey) const { toggleTheme } = inject(themeActionsKey)
+// Provider.vue
+const theme = reactive({ dark: false })
+const toggleTheme = () => {
+  theme.dark = !theme.dark
+}
+provide(themeKey, readonly(theme))
+provide(themeActionsKey, { toggleTheme })
+
+// Consumer.vue
+const theme = inject(themeKey)
+const { toggleTheme } = inject(themeActionsKey)
 ```
 
 Use symbols for keys to avoid collisions in large apps:
