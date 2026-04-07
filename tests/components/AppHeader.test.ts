@@ -16,7 +16,10 @@ describe('AppHeader', () => {
     }))
   })
 
-  afterEach(() => vi.unstubAllGlobals())
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    document.body.style.overflow = ''
+  })
 
   describe('logo', () => {
     it('renders logo as a link to /', async () => {

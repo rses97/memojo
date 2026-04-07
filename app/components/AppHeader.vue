@@ -78,7 +78,7 @@ onUnmounted(() => {
         data-testid="hamburger"
         :aria-label="isOpen ? 'Close menu' : 'Open menu'"
         class="rounded-lg p-2 text-surface-700 hover:bg-surface-200 dark:text-surface-200 dark:hover:bg-surface-700 md:hidden"
-        @click="isOpen = true"
+        @click="isOpen = !isOpen"
       >
         <svg
           width="24"
