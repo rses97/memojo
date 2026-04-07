@@ -114,6 +114,29 @@ Scroll lock and `Escape` listener managed via `watch(isOpen, …)` + cleanup in 
 
 ---
 
+## Favicon
+
+Replace `public/favicon.ico` with a brain SVG favicon for consistent branding across the browser tab and the header.
+
+**Approach:** Create `public/favicon.svg` — an SVG file with the 🧠 emoji centred in a `viewBox`. SVG favicons are supported in all modern browsers. Keep `public/favicon.ico` as-is for legacy fallback.
+
+Register both in `nuxt.config.ts` `app.head.link`:
+
+```ts
+{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+```
+
+The SVG embeds the emoji via a `<text>` element:
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <text y=".9em" font-size="90">🧠</text>
+</svg>
+```
+
+---
+
 ## Files Changed
 
 | File                                | Change                                        |
@@ -121,3 +144,5 @@ Scroll lock and `Escape` listener managed via `watch(isOpen, …)` + cleanup in 
 | `app/components/AppHeader.vue`      | **New** — full component                      |
 | `app/layouts/default.vue`           | Remove inline `<header>`, add `<AppHeader />` |
 | `app/components/ui/ThemeToggle.vue` | No changes                                    |
+| `public/favicon.svg`                | **New** — brain emoji SVG favicon             |
+| `nuxt.config.ts`                    | Add `link` entries for SVG + ICO favicon      |
