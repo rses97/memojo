@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/rses97/memojo/compare/v1.0.0...v1.0.1) (2026-04-07)
+
+### Bug Fixes
+
+- **ci:** set NITRO_PRESET=vercel to fix prebuilt deploy output ([67bab26](https://github.com/rses97/memojo/commit/67bab264ccf14de08e8de76a4ef33ec817d50601))
+
 # 1.0.0 (2026-04-07)
 
 ### Bug Fixes
