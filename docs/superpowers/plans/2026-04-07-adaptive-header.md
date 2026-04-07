@@ -174,7 +174,7 @@ function close() {
         aria-label="Memojo — Home"
       >
         <div
-          class="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-primary-400 text-lg leading-none"
+          class="flex h-7 w-7 items-center justify-center rounded-xl bg-linear-to-br from-primary-600 to-primary-400 text-lg leading-none"
         >
           🧠
         </div>
@@ -413,7 +413,7 @@ onUnmounted(() => {
         aria-label="Memojo — Home"
       >
         <div
-          class="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-primary-400 text-lg leading-none"
+          class="flex h-7 w-7 items-center justify-center rounded-xl bg-linear-to-br from-primary-600 to-primary-400 text-lg leading-none"
         >
           🧠
         </div>
@@ -496,7 +496,7 @@ onUnmounted(() => {
             @click="close"
           >
             <div
-              class="flex h-7 w-7 items-center justify-center rounded-xl bg-gradient-to-br from-primary-600 to-primary-400 text-lg leading-none"
+              class="flex h-7 w-7 items-center justify-center rounded-xl bg-linear-to-br from-primary-600 to-primary-400 text-lg leading-none"
             >
               🧠
             </div>
@@ -533,7 +533,7 @@ onUnmounted(() => {
           <NuxtLink
             to="/profile"
             data-testid="profile-hero"
-            class="mb-4 flex items-center gap-4 rounded-card bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-4"
+            class="mb-4 flex items-center gap-4 rounded-card bg-linear-to-r from-primary-600 to-primary-500 px-5 py-4"
             @click="close"
           >
             <span class="text-3xl">👤</span>

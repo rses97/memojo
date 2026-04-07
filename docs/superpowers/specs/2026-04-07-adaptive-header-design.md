@@ -32,7 +32,7 @@ Replace the inline `<header>` in `default.vue` with a responsive `AppHeader` com
 
 A `<NuxtLink to="/">` containing:
 
-- A `28×28` div: `bg-gradient` (primary-600 → primary-400), `rounded-xl`, displaying 🧠 emoji at `text-lg`
+- A `28×28` div: `bg-linear-to-br from-primary-600 to-primary-400`, `rounded-xl`, displaying 🧠 emoji at `text-lg`
 - `"Memojo"` wordmark: `font-bold text-surface-900 dark:text-surface-50`
 
 Same markup on both breakpoints. Replaces the current plain text `NuxtLink`.
