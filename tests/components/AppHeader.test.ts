@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
+import { nextTick } from 'vue'
 import { setActivePinia, createPinia } from 'pinia'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 import AppHeader from '~/components/AppHeader.vue'
