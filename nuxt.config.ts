@@ -1,6 +1,10 @@
 import tailwindcss from '@tailwindcss/vite'
+import { version } from './package.json'
 
 export default defineNuxtConfig({
+  appConfig: {
+    version,
+  },
   compatibilityDate: '2024-11-01',
 
   future: {
