@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/rses97/memojo/compare/v1.0.1...v1.1.0) (2026-04-07)
+
+### Features
+
+- **release:** bump package.json version via semantic-release and expose via appConfig ([e8800da](https://github.com/rses97/memojo/commit/e8800da8e40fe1e037c420b77cc5328f93601a3d))
+
 ## [1.0.1](https://github.com/rses97/memojo/compare/v1.0.0...v1.0.1) (2026-04-07)
 
 ### Bug Fixes
