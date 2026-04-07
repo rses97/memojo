@@ -10,7 +10,7 @@ on:
         required: true
       environment:
         type: choice
-        options: [staging, production]
+        options: [preview, production]
 
 jobs:
   deploy:
@@ -26,7 +26,6 @@ jobs:
           node-version: '24'
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
       - name: Deploy to Vercel
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
