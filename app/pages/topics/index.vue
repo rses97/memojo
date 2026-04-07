@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
 
-const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
+const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/manifest.json')
 
 const topics = computed(() => manifest.value?.topics ?? [])
 
