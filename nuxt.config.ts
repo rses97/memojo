@@ -15,14 +15,18 @@ export default defineNuxtConfig({
     '/daily': { ssr: false },
     '/profile': { ssr: false },
     '/leaderboard': { ssr: false },
+    // Topics index is static — prerender at build time so the manifest fetch
+    // runs against the local filesystem (not the Vercel CDN-only function bundle).
+    // Topic slug pages are interactive game pages; SSR is not needed.
+    '/topics': { prerender: true },
+    '/topics/**': { ssr: false },
   },
 
-  // In dev, Vite transforms modules on-demand and the SSR worker runs out of heap
-  // on memory-constrained machines. Disable SSR for topic pages in dev only.
-  // Production build uses pre-bundled chunks and SSR works fine there (verified).
   $development: {
     routeRules: {
-      '/topics/**': { ssr: false },
+      // In dev, override prerender with ssr:false so Vite's SSR worker isn't used
+      // (it runs out of heap on memory-constrained machines).
+      '/topics': { prerender: false, ssr: false },
     },
   },
 
