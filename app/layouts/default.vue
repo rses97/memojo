@@ -12,45 +12,7 @@ onMounted(() => {
   >
     <SkipToContent />
 
-    <header class="border-b border-surface-200 bg-white dark:bg-surface-800">
-      <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <NuxtLink
-          to="/"
-          class="text-lg font-bold text-primary-600 hover:text-primary-700"
-          aria-label="Memojo — Home"
-        >
-          Memojo
-        </NuxtLink>
-
-        <nav class="flex items-center gap-4" aria-label="Main navigation">
-          <NuxtLink
-            to="/topics"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
-          >
-            Topics
-          </NuxtLink>
-          <NuxtLink
-            to="/daily"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
-          >
-            Daily
-          </NuxtLink>
-          <NuxtLink
-            to="/leaderboard"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
-          >
-            Leaderboard
-          </NuxtLink>
-          <NuxtLink
-            to="/profile"
-            class="text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-primary-400"
-          >
-            Profile
-          </NuxtLink>
-          <ThemeToggle />
-        </nav>
-      </div>
-    </header>
+    <AppHeader />
 
     <main id="main-content" class="w-full mx-auto max-w-5xl px-4 py-8" tabindex="-1">
       <slot />

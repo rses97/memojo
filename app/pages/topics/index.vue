@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
+import manifestData from '~~/public/topics/manifest.json'
 
-const { data: manifest } = await useFetch<{ topics: TopicManifestEntry[] }>('/topics/index.json')
-
-const topics = computed(() => manifest.value?.topics ?? [])
+const topics = manifestData.topics as TopicManifestEntry[]
 
 useSeoMeta({
   title: 'Topics — Memojo',
@@ -29,7 +28,7 @@ useHead({
         url: 'https://memojo.vercel.app/topics',
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: (manifest.value?.topics ?? []).map((topic, index) => ({
+          itemListElement: topics.map((topic, index) => ({
             '@type': 'ListItem',
             position: index + 1,
             name: topic.name,
