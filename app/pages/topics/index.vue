@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TopicManifestEntry } from '~/types'
-import manifestData from '~/public/topics/manifest.json'
+import manifestData from '~~/public/topics/manifest.json'
 
 const topics = manifestData.topics as TopicManifestEntry[]
 
