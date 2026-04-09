@@ -20,6 +20,7 @@ export default defineNuxtConfig({
     // Topic slug pages are interactive game pages; SSR is not needed.
     '/topics': { prerender: true },
     '/topics/**': { ssr: false },
+    '/play/**': { ssr: false },
   },
 
   $development: {
