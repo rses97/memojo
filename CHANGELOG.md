@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/rses97/memojo/compare/v1.1.0...v1.2.0) (2026-04-13)
+
+### Bug Fixes
+
+- import nextTick from vue in AppHeader test ([997d27e](https://github.com/rses97/memojo/commit/997d27ef59e3c1195b637e40437b383d6ad12d24))
+- replace useFetch with static imports and ssr:false to fix 500 on /topics ([a55a1a9](https://github.com/rses97/memojo/commit/a55a1a9e5f9deb4550b137b9effac7864ba09c1f))
+- toggle hamburger isOpen and reset body scroll in afterEach ([57f023c](https://github.com/rses97/memojo/commit/57f023c42d2e4f67315380430172b227c7117fe9))
+- use ~~ alias for project root in manifest.json import ([ec7844d](https://github.com/rses97/memojo/commit/ec7844d2941e5f1222a6ce025d1a0d978ac1ca2d))
+
+### Features
+
+- add AppHeader with logo and desktop nav ([b17659e](https://github.com/rses97/memojo/commit/b17659ed636ee895fe9197192014c8acfea00603))
+- add brain emoji SVG favicon ([d9e2c1a](https://github.com/rses97/memojo/commit/d9e2c1a98d1030a638a032b213ed1da2509a393d))
+- add mobile overlay to AppHeader ([340f6bd](https://github.com/rses97/memojo/commit/340f6bd9fa67153660856b4c3a6f0d5901dd1e85))
+- wire AppHeader into default layout ([e51a8bc](https://github.com/rses97/memojo/commit/e51a8bc825e7b42b0939926dfb23e59bfc6f7c32))
+
 # [1.1.0](https://github.com/rses97/memojo/compare/v1.0.1...v1.1.0) (2026-04-07)
 
 ### Features
