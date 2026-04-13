@@ -26,7 +26,7 @@ Commits must follow Conventional Commits (enforced by commitlint + husky). Lint-
 
 **Types** (`app/types/index.ts`) are the source of truth for data shapes: `TopicPair`, `TopicPack`, `GameCard` (includes `isEliminated`), `GameLevel`, `GameResult`, `HintState`, `GameMode`, and the `LEVELS` constant (3 difficulty levels driving pairs count, grid cols, time limit, and optional preview time). `HINT_COSTS` and `INITIAL_HINTS` are also exported constants.
 
-**Topic packs** are static JSON files served from `public/topics/{slug}.json`. Images are SVGs under `public/img/{category}/`. Topic manifest at `public/topics/index.json`. No backend — all game data is client-side static.
+**Topic packs** are static JSON files served from `public/topics/{slug}.json`. Images are SVGs under `public/img/{category}/`. Topic manifest at `public/topics/manifest.json`. No backend — all game data is client-side static.
 
 **Core composables:**
 

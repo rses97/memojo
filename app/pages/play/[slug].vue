@@ -5,11 +5,7 @@ import { calculateScore } from '~/utils/scoring'
 
 const route = useRoute()
 const slug = route.params.slug as string
-const { origin } = useRequestURL()
-
-const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`, {
-  baseURL: origin,
-})
+const { data: topicPack, error } = await useFetch<TopicPack>(`/topics/${slug}.json`)
 
 if (error.value || !topicPack.value) {
   throw createError({
